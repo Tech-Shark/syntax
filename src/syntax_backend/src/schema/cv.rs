@@ -1,21 +1,20 @@
-use candid::{CandidType, Decode, Deserialize, Encode, Principal};
-use ic_stable_structures::storable::{Bound, Storable};
 use std::borrow::Cow;
+use std::collections::HashMap;
+use serde::{Serialize, Deserialize};
 
-const MAX_VALUE_SIZE: u32 = 1000;
+use candid::{CandidType, Decode, Encode};
+use ic_stable_structures::storable::{Bound, Storable};
 
-#[derive(CandidType, Deserialize, Debug, Clone)]
-pub struct UserInput {
-    pub name: String,
+const MAX_VALUE_SIZE: u32 = 10000;
+
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+pub struct CVUserInput {
     pub job_title: String,
-    pub experience_years: u32,
-    pub skills: Vec<String>,
-    pub current_role: String,
     pub job_description: String,
     pub cv_text: String,
 }
 
-impl Storable for UserInput {
+impl Storable for CVUserInput {
     fn to_bytes(&self) -> Cow<[u8]> {
         Cow::Owned(Encode!(self).unwrap())
     }
@@ -30,11 +29,11 @@ impl Storable for UserInput {
     };
 }
 
-#[derive(CandidType, Deserialize, Debug, Clone)]
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct AnalysisResult {
-    pub cv_analysis: String,
-    pub error_highlights: Vec<String>,
-    pub suggestions: Vec<String>,
+    pub skills: String,
+    pub work_experience: String,
+    pub suggestions: String,
 }
 
 impl Storable for AnalysisResult {
@@ -55,8 +54,8 @@ impl Storable for AnalysisResult {
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct CVAnalysis {
     pub idx: String,
-    pub identity: Principal,
-    pub request: UserInput,
+    pub identity: String,
+    pub request: CVUserInput,
     pub result: AnalysisResult,
 }
 
@@ -77,12 +76,12 @@ impl Storable for CVAnalysis {
 
 // Wrapper struct for Vec<CVAnalysis>
 #[derive(CandidType, Deserialize, Debug, Clone)]
-pub struct CVAnalysisList {
-    pub analyses: Vec<CVAnalysis>,
+pub struct CVAnalysisMap {
+    pub analyses: HashMap<String, CVAnalysis>,
 }
 
 // Implement Storable for CVAnalysisList
-impl Storable for CVAnalysisList {
+impl Storable for CVAnalysisMap {
     fn to_bytes(&self) -> Cow<[u8]> {
         Cow::Owned(Encode!(self).unwrap())
     }
@@ -99,7 +98,7 @@ impl Storable for CVAnalysisList {
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct CVAnalysisResponse {
     pub idx: String,
-    pub request: UserInput,
+    pub request: CVUserInput,
     pub result: AnalysisResult,
 }
 

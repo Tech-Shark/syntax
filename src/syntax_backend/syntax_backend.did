@@ -1,22 +1,18 @@
-type UserInput = record {
-    name : text;
+type CVUserInput = record {
     job_title : text;
-    experience_years : nat32;
-    skills : vec text;
-    current_role : text;
     job_description : text;
     cv_text: text;
 };
 
 type AnalysisResult = record {
-    cv_analysis : text;
-    error_highlights : vec text;
-    suggestions : vec text;
+    skills : text;
+    work_experience : text;
+    suggestions : text;
 };
 
 type CVAnalysisResponse = record {
     idx : text;
-    request : UserInput;
+    request : CVUserInput;
     result : AnalysisResult;
 };
 
@@ -30,8 +26,8 @@ type Error = record {
 };
 
 service : {
-    analyze_cv : (UserInput) -> (CVResponse);
-    get_cv_analysis: (text) -> (CVResponse);
-    get_all_cv_analysis_for_identity: () -> (vec CVAnalysisResponse);
-    delete_cv_analysis: (text) -> (text);
+    analyze_cv : (text, CVUserInput) -> (CVResponse);
+    get_cv_analysis: (text, text) -> (CVResponse);
+    get_all_cv_analysis_for_identity: (text) -> (vec CVAnalysisResponse);
+    delete_cv_analysis: (text, text) -> (text);
 }
