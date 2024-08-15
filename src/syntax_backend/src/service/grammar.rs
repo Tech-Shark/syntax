@@ -1,25 +1,34 @@
 use std::str::FromStr;
-use crate::schema::grammar::{GrammarCheckResult, GrammarAnalysisResponse,
-                             GrammarUserInput, GrammarResponse, Error};
+
+use crate::schema::grammar::{Error, GrammarAnalysisResponse,
+                             GrammarCheckResult, GrammarResponse, GrammarUserInput};
+use crate::service::ai;
 use crate::storage;
 
 #[ic_cdk::update]
-fn analyze_grammar(principal: String, request: GrammarUserInput) -> GrammarResponse {
-    let grammar_analysis = format!("Grammar corrections: {}", request.text);
-
-    let error_highlights = vec![
-        "No grammatical errors found.".to_string(),
-        "No spelling mistakes detected.".to_string(),];
-
-    let suggestions = vec![
-        "Consider making sentence more concise.".to_string(),
-        "Make use of active speech.".to_string(),
-    ];
-
-    let result = GrammarCheckResult {
-        text: grammar_analysis.to_string(),
-        error_highlights,
-        suggestions,
+async fn analyze_grammar(principal: String, request: GrammarUserInput) -> GrammarResponse {
+    let json_value = serde_json::to_value(request.clone());
+    let json_value = match json_value {
+        Ok(json_value) => json_value,
+        Err(e) => {
+            return GrammarResponse::Err(
+                Error {
+                    message: format!("error validating request: {e}"),
+                }
+            )
+        }
+    };
+    let response = ai::call_ai_service(json_value, "grammar-analysis").await;
+    let result = serde_json::from_str(&response);
+    let result: GrammarCheckResult = match result {
+        Ok(result) => result,
+        Err(e) => {
+            return GrammarResponse::Err(
+                Error {
+                    message: format!("error validating result, string response {response}: {e}"),
+                }
+            )
+        }
     };
 
     let idx = storage::grammar::add_grammar_analysis(principal, request.clone(), result.clone());

@@ -21,6 +21,28 @@ type CVResponse = variant {
   Err: Error;
 };
 
+type GrammarUserInput = record {
+    text : text;
+};
+
+type GrammarCheckResult = record {
+    grammatical_errors : text;
+    syntactic_errors : text;
+    general_suggestions : text;
+    rewrite : text;
+};
+
+type GrammarAnalysisResponse = record {
+    idx : text;
+    request : GrammarUserInput;
+    result : GrammarCheckResult;
+};
+
+type GrammarResponse = variant {
+  Ok: GrammarAnalysisResponse;
+  Err: Error;
+};
+
 type Error = record {
   message: text;
 };
@@ -30,4 +52,9 @@ service : {
     get_cv_analysis: (text, text) -> (CVResponse);
     get_all_cv_analysis_for_identity: (text) -> (vec CVAnalysisResponse);
     delete_cv_analysis: (text, text) -> (text);
+
+    analyze_grammar : (text, GrammarUserInput) -> (GrammarResponse);
+    get_grammar_analysis: (text, text) -> (GrammarResponse);
+    get_all_grammar_analysis_for_identity: (text) -> (vec GrammarAnalysisResponse);
+    delete_grammar_analysis: (text, text) -> (text);
 }

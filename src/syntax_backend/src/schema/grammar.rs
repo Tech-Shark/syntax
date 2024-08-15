@@ -1,11 +1,12 @@
-use candid::{CandidType, Decode, Deserialize, Encode};
+use candid::{CandidType, Decode, Encode};
+use serde::{Serialize, Deserialize};
 use ic_stable_structures::storable::{Bound, Storable};
 use std::borrow::Cow;
 use std::collections::HashMap;
 
 const MAX_VALUE_SIZE: u32 = 1000;
 
-#[derive(CandidType, Deserialize, Debug, Clone)]
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct GrammarUserInput {
     pub text: String,
 }
@@ -27,9 +28,10 @@ impl Storable for GrammarUserInput {
 
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct GrammarCheckResult {
-    pub text: String,
-    pub error_highlights: Vec<String>,
-    pub suggestions: Vec<String>,
+    pub grammatical_errors: String,
+    pub syntactic_errors: String,
+    pub general_suggestions: String,
+    pub rewrite: String,
 }
 
 impl Storable for GrammarCheckResult {
