@@ -6,6 +6,16 @@
       "wasm": "target/wasm32-unknown-unknown/release/syntax_backend.wasm",
       "package": "syntax_backend",
       "type": "rust"
+    },
+    "syntax_frontend": {
+      "dependencies": [
+        "syntax_backend"
+      ],
+      "source": [
+        "src/syntax_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "syntax_frontend"
     }
   },
   "defaults": {
