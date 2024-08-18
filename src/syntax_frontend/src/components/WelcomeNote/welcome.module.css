@@ -1,0 +1,8 @@
+.welcome_note h1{
+    margin-bottom: 0.1rem;
+}
+
+.welcome_note p{
+    margin-top: 0;
+    font-weight: 300; 
+}

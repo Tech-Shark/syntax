@@ -1,0 +1,242 @@
+.grammar_section{
+    background: #F7F7F7;
+    min-height: 100vh;
+    width: 100%;
+}
+.main_container{
+    display: flex;
+    gap: 2rem;
+    margin-top: 50px;
+    margin-left: 300px;
+    font-family: "Work Sans";
+}
+
+
+  
+  .auto_textarea {
+    margin-top: 1rem;
+    width: 100%;
+    min-height: 50px; 
+    max-height: 500px; 
+    resize: none; 
+    padding: 8px;
+    box-sizing: border-box;
+    font-family: "Work Sans";
+    font-size: 0.9rem;
+    font-weight: 500; 
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+  }
+
+.icon_container, .result_container{
+    height: 650px;
+    background: #ffffff;
+    border: 1px solid #E4E7EC;
+    border-radius: 10px;
+    width: 45%;
+    padding: 1rem;
+    box-shadow: 0 -1px 5px #E4E7EC;;
+}
+
+.icon_container img{
+    cursor: pointer;
+}
+
+.left_container{
+    display: flex;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #E4E7EC;
+}
+
+.left_container div{
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.text_container p{
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+.result_container{
+    width: 40%;
+}
+.img_container {
+  display: flex;
+}
+
+.img_container img{
+    height: 18px;
+}
+
+.text_container img{
+    margin-left: -0.3rem;
+}
+
+.color_picker_container{
+    height: 30px;
+}
+
+.color_picker_container img:last-child{
+    margin-left: -0.3rem;
+}
+
+.button_container{
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.button_container button{
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-family: "Work Sans";
+    border: 1px solid #d2d7e0;
+    cursor: pointer;
+}
+
+
+.upload_button{
+    background-color: #E4E7EC;
+    display: flex;
+    gap: 0.5rem;
+}
+.paste_button{
+    background-color: #FFECE5;
+    border: 1px solid #FCD2C2;
+}
+
+
+.text_heading{
+    color: #c9d0da;
+    border-bottom: 1px solid #E4E7EC;
+    padding-left: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+.text_responses{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+}
+.text_responses div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #D0D5DD;
+    border-radius: 5px;
+    padding: 0 1rem;
+    cursor: pointer;
+    /* background-color: #92C755;
+    color: aliceblue; */
+}
+
+.text_responses div:hover{
+    background-color: #FCD2C2;
+    /* color: aliceblue; */
+}
+
+
+.text_responses div p{
+    font-size: 0.8rem;
+}
+.response_container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-height: 480px;
+    overflow-y: auto;
+    margin-top: 2rem;
+}
+.response{
+    height: auto;
+    background-color: #FFECE5;
+    border: 2px dotted #FCD2C2;
+    border-radius: 10px;
+    padding: 0 0.8rem 0.5rem 0.8rem;
+    
+
+}
+
+.response p{
+    color: #b9491c;
+}
+.response div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.response div img{
+    height: 15px;
+    cursor: pointer;
+}
+
+.tooltip_container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip {
+    visibility: visible;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 20%; 
+    transform: translateX(-50%);
+    opacity: 0.8;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* Arrow on top */
+    /* left: 50%; */
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+.spinner_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spinner{
+    display: none;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .main_container{
+        flex-direction: column;
+        width: 100%;
+        margin: 50px 15px;
+        
+        
+    }
+    .icon_container, .result_container{
+        width: 90%;
+    }
+    .text_heading{
+        padding-left: 2rem;
+    }
+    .text_responses{
+        justify-content: space-evenly;
+    }
+    .left_container{
+        padding-left: 3rem;
+    }
+}

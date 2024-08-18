@@ -14,5 +14,13 @@
   "type": "module",
   "workspaces": [
     "src/syntax_frontend"
-  ]
+  ],
+  "devDependencies": {
+    "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "@dfinity/auth-client": "^2.0.0",
+    "@dfinity/authentication": "^0.14.2",
+    "react-router-dom": "^6.26.1"
+  }
 }
