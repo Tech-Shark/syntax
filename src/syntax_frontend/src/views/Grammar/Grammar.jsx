@@ -263,68 +263,6 @@ function Grammar() {
             </div>
             {(rewrite || syntacticErrors || grammaticErrors || suggestions) && (
                 <div className={loading ? styles.spinner : styles.response_container }>
-                {/* <div className={styles.response}>
-                <div>
-                    <p>Syntactic Errors</p>
-                    <div className={styles.tooltip_container}>
-                                             <img 
-                                                src={copy_icon} 
-                                                alt="copy-icon" 
-                                                onClick={() => handleCopy(syntacticErrors, 'syntacticErrors')}
-                                            />
-                                            {tooltip.visible && tooltip.id === 'syntacticErrors' && (
-                                                <span className={styles.tooltip}>Copied</span>
-                                            )}
-                                        </div>
-                    </div>
-                    {syntacticErrors || "No syntactic errors available"}  
-                </div>
-                <div className={styles.response}>
-                <div>
-                    <p>Grammatical errors</p>
-                    <div className={styles.tooltip_container}>
-                                             <img 
-                                                src={copy_icon} 
-                                                alt="copy-icon" 
-                                                onClick={() => handleCopy(grammaticErrors, 'grammaticErrors')}
-                                            />
-                                            {tooltip.visible && tooltip.id === 'grammaticErrors' && (
-                                                <span className={styles.tooltip}>Copied</span>
-                                            )}
-                                        </div>            </div>
-                    {grammaticErrors || "No grammatical errors"}  
-                </div>
-                <div className={styles.response}>
-                <div>
-                    <p>Suggestions</p>
-                    <div className={styles.tooltip_container}>
-                                             <img 
-                                                src={copy_icon} 
-                                                alt="copy-icon" 
-                                                onClick={() => handleCopy(suggestions, 'suggestions')}
-                                            />
-                                            {tooltip.visible && tooltip.id === 'suggestions' && (
-                                                <span className={styles.tooltip}>Copied</span>
-                                            )}
-                                        </div>            </div>
-                    {suggestions || "No suggestions available"}  
-                </div>
-                <div className={styles.response}>
-                    <div>
-                    <p>Rewrite</p>
-                    <div className={styles.tooltip_container}>
-                                             <img 
-                                                src={copy_icon} 
-                                                alt="copy-icon" 
-                                                onClick={() => handleCopy(rewrite, 'rewrite')}
-                                            />
-                                            {tooltip.visible && tooltip.id === 'rewrite' && (
-                                                <span className={styles.tooltip}>Copied</span>
-                                            )}
-                                        </div>            </div>
-                    
-                    {rewrite || "No rewrite available"}  
-                </div> */}
                 {renderSectionContent()}
                 </div >
             )}

@@ -8,46 +8,38 @@ function BioData() {
     
   return (
     <div className={styles.main_container}>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Header />
-        <section className={styles.main_section} >
-            <div className={styles.welcome}>
-            <Welcome />
+        
+        <section className={styles.main_body}>
+            <div className={styles.container}>
+                <h1 className={styles.form_title}>Bio data</h1>    
+                <form >
+                    <div className={styles.main_user_info}>
+                        <div className={styles.user_info}>
+                            <label htmlFor="firstName">First Name</label>
+                            <input type="text" placeholder='Enter first name'/>
+                        </div>
+                        <div className={styles.user_info}>
+                            <label htmlFor="lastName">Last Name</label>
+                            <input type="text" placeholder='Enter last name'/>
+                        </div>
+                        <div className={styles.user_info}>
+                            <label htmlFor="phoneNumber">Phone Number</label>
+                            <input type="text" placeholder='Enter phone number'/>
+                        </div>
+                        <div className={styles.user_info}>
+                            <label htmlFor="email">Email Address</label>
+                            <input type="email" placeholder='Enter email address'/>
+                        </div>
+                        
+                    </div>
+                    <div className={styles.form_submit_btn}>
+                        <button type="submit" >Next Step</button>   
+                    </div>
+                </form>
             </div>
-            
-            <section className={styles.form_section}>
-            <header>BioData</header>
-            <form action="">
-               <div className={styles.column}>
-               <div className={styles.input_box}>
-                    <label htmlFor="">First Name</label>
-                    <input type="text" placeholder='Enter your first name' />
-                </div>
-                <div className={styles.input_box}>
-                    <label htmlFor="">Last Name</label>
-                    <input type="text" placeholder='Enter your last name' />
-                </div>
-               </div>
-               <div className={styles.column}>
-               <div className={styles.input_box}>
-                    <label htmlFor="">Phone Number</label>
-                    <input type="text" placeholder='Enter your phone number' />
-                </div>
-                <div className={styles.input_box}>
-                    <label htmlFor="">Email Address</label>
-                    <input type="email" placeholder='samuel@example.com' />
-                </div>
-               </div>
 
-               <div className={styles.home_input}>
-                    <label htmlFor="">Home Address</label>
-                    <input type="text" placeholder='Enter address here' />
-                </div>
-                <div className={styles.button_box}>
-                <button>Next Step</button>
-                </div>
-            </form>
-        </section>
         </section>
         
                 
