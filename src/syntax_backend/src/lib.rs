@@ -3,4 +3,5 @@ pub mod storage;
 pub mod schema;
 pub mod service;
 
-pub const MEMORY_ID: u8 = 3;
+pub const CV_MEMORY_ID: u8 = 0;
+pub const GM_MEMORY_ID: u8 = 2;

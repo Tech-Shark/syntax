@@ -31,7 +31,6 @@ async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
             )
         }
     };
-    println!("#######{}", result.suggestions);
     let idx = storage::cv::add_cv_analysis(principal, request.clone(), result.clone());
     if idx.is_none() {
         CVResponse::Err(
