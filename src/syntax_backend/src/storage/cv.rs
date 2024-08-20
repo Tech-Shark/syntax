@@ -10,7 +10,7 @@ use std::ffi::c_void;
 use ic_cdk::caller;
 use uuid::Uuid;
 use crate::schema::cv::{AnalysisResult, CVAnalysis, CVAnalysisMap, CVAnalysisResponse, CVUserInput};
-use crate::MEMORY_ID;
+use crate::CV_MEMORY_ID;
 
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
@@ -20,7 +20,7 @@ thread_local! {
 
     static MAP: RefCell<StableBTreeMap<String, CVAnalysisMap, Memory>> = RefCell::new(
         StableBTreeMap::init(
-            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(MEMORY_ID))),
+            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(CV_MEMORY_ID))),
         )
     );
 }

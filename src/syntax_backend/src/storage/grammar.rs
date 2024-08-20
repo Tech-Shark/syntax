@@ -11,7 +11,7 @@ use ic_cdk::caller;
 use uuid::Uuid;
 use crate::schema::grammar::{GrammarCheckResult, GrammarAnalysis, GrammarAnalysisMap,
                              GrammarAnalysisResponse, GrammarUserInput};
-use crate::MEMORY_ID;
+use crate::GM_MEMORY_ID;
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
 thread_local! {
@@ -20,7 +20,7 @@ thread_local! {
 
     static MAP: RefCell<StableBTreeMap<String, GrammarAnalysisMap, Memory>> = RefCell::new(
         StableBTreeMap::init(
-            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(MEMORY_ID))),
+            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(GM_MEMORY_ID))),
         )
     );
 }
