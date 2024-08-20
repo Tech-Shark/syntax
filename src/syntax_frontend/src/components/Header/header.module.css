@@ -33,6 +33,7 @@
     padding: 0 50px; 
     height: 40px; 
     border: none; 
+    outline: none;
     width: 400px;   
 }
 .logo_div{

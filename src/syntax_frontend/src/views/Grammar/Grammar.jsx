@@ -21,6 +21,7 @@ import copy_icon from '../../assets/copy_icon.png'
 import { syntax_backend } from "declarations/syntax_backend";
 import { useState } from 'react'
 import spinner from "../../assets/spinner.svg"
+import { AuthClient } from "@dfinity/auth-client";
 
 function Grammar() {
     const [text, setText] = useState('');
@@ -61,6 +62,14 @@ function Grammar() {
         }
          setLoading(true)
           const identifier = "2599809"; 
+        // const authClient = await AuthClient.create();
+        
+        // // Retrieve the user's principal (identifier)
+        // const identity = authClient.getIdentity();
+        // const principal = identity.getPrincipal().toText();
+
+        // // Use the principal as the identifier
+        // console.log("User Principal: ", principal);
           const userInput = { text: text }; 
       
           const result = await syntax_backend.analyze_grammar(identifier, userInput);

@@ -7,13 +7,13 @@ import { syntax_backend } from 'declarations/syntax_backend'
 
 function NewCv() {
     const [title, setTitle] = useState('');
-    const [role, setRole] = useState('');
     const [description, setDescription] = useState('');
+    const [cvText, setCvText] = useState('');
 
-    function handleRole(event) {
+    function handleCVText(event) {
         event.target.style.height = "auto"; 
         event.target.style.height = `${event.target.scrollHeight}px`; 
-        setRole(event.target.value);
+        setCvText(event.target.value);
       }
     function handleDescription(event) {
         event.target.style.height = "auto"; 
@@ -50,9 +50,51 @@ function NewCv() {
     
   return (
     <div className={styles.new_cv_container}>
-        <Sidebar />
         <Header />
+        <div className={styles.main_body}>
+        <div className={styles.sidebar_container}>
+        <Sidebar />
+        </div>
         <section className={styles.main_section}>
+        <h2>Create New CV</h2>
+            <div className={styles.cv_container}>
+                
+            <div className={styles.left_container}>
+            <div className={styles.input_box}>
+                <label htmlFor="job_title">Job Title</label>
+                <input type="text" placeholder='Enter job title' />
+            </div>
+            <div className={styles.input_box}>
+                <label htmlFor="job_title">Job Description</label>
+                <textarea 
+                        className={styles.textarea}
+                        placeholder="Paste your job description"
+                        onInput={handleDescription}
+                        value={description}
+                        >
+                </textarea> 
+            </div>
+            </div>
+            <div className={styles.right_container}>
+            <div className={styles.left_input_box}>
+                <label htmlFor="job_title">CV text</label>
+                <textarea 
+                        className={styles.textarea}
+                        placeholder="Paste your job CV"
+                        onInput={handleCVText}
+                        value={cvText}
+                        >
+                </textarea> 
+            </div>
+            </div>
+            </div>
+            <button onClick={handleSubmit}>Generate CV</button>
+            
+        </section>
+        </div>
+        
+        
+        {/* <section className={styles.main_section}>
         <header>New CV</header>
             <div className={styles.big_container}>
             <div className={styles.text_container}>
@@ -92,7 +134,8 @@ function NewCv() {
                 <button onClick={handleSubmit}>Generate CV</button>
             </div>
             
-        </section>
+        </section> */}
+       
     </div>
   )
 }

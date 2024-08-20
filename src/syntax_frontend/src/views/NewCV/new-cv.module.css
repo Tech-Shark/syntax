@@ -1,141 +1,98 @@
-.new_cv_container{
-    background: #F7F7F7;
-    min-height: 100vh;
+.main_body{
+    display: flex;
+    gap: 1.5rem;
+    font-family: "Work Sans";
+
+}
+.sidebar_container{
+    flex-basis: 20%;
 }
 .main_section{
-    margin-top: 50px;
-    margin-left: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 5%;
+    min-height: 700px;
+    flex-basis: 80%;
+    
 }
-.big_container{
-    margin-top: 30px;
+.cv_container{
     display: flex;
-    gap: 1rem;
-}
-.text_container, .role_container{
-    background: #fff;
-    height: 600px;
-    width: 45%;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 15px rgb(0, 
-    0, 0, 0.1);
-
+    gap: 1.5rem;
 }
 
-.section{
-    width: 100%;
-    padding: 1.5rem;
+.cv_container div{
+    flex-basis: 43%;
 }
-.main_section header{
+.main_section h2{
     text-align: center;
-    font-size: 1.5rem;
-}
-form{
-    width: 100%;
-    font-family: "Work Sans";
-}
-.input_box, .text_area_box{
-    width: 85%;
-    margin-top: 1.2rem;
 }
 
-.input_box input{
-    height: 50px;
-    width: 100%;
-    outline: none;
-    font-size: 1rem;
-    margin-top: 8px;
-    border: 1px solid #E4E7EC;
-    border-radius: 6px;
-    padding: 0 15px;
+.input_box, .left_input_box{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
 }
 
-.auto_textarea {
-    box-shadow: 0 0 15px rgb(0, 
-        0, 0, 0.3);
-    /* background-color: #FFECE5; */
-    margin-top: 1rem;
-    width: 91%;
-    min-height: 50px; 
-    max-height: 500px; 
-    resize: none; 
-    padding: 8px;
-    box-sizing: border-box;
-    font-family: "Work Sans";
-    font-size: 0.9rem;
-    font-weight: 500; 
-    line-height: 1.5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-  }
-  .textarea{
-    box-shadow: 0 0 15px rgb(0, 
-        0, 0, 0.3);
-        /* background: #000; */
-    margin-top: 1rem;
-    width: 91%;
-    min-height: 50px; 
-    max-height: 900px; 
-    resize: none; 
-    padding: 8px;
-    box-sizing: border-box;
-    font-family: "Work Sans";
-    font-size: 0.9rem;
-    font-weight: 500; 
-    line-height: 1.5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-  }
-
-  form .text_area_box{
-    max-height: 400px;
-    overflow-y: auto;
-    width: 100%;
-  }
-
-  .role_container .text_area_box {
-    padding: 0.8rem;
-    font-family: "Work Sans";
-    width: 105%;
-    max-height: 700px;
-
-  }
-
-  .button_container{
-    margin-top: 1rem;
-    width: 100%;
-  }
-.button_container button{
-    width: 91.5%;
+.left_container, .right_container{
+    border: 1px solid gray;
+    box-shadow: 0 0 2px;
     border-radius: 6px;
     padding: 1rem;
-    font-family: "Work Sans";
-    font-weight: 400;
-    font-size: 1.2rem;
-    color: #fff;
-    background-color: #8BC34A;
+    
+}
+.left_container{
+    min-height: 500px;
+}
+
+.input_box input, .input_box textarea, .left_input_box textarea{
+    width: 100%;
+    padding: 1rem;
+    border-radius: 6px;
     outline: none;
+    border: 1px solid gray;
+    box-shadow: 0 0 3px gray;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: green;
+}
+
+.input_box textarea{
+    max-height: 400px;
+}
+
+.left_input_box textarea{
+    max-height: 500px;
+}
+
+.main_section button{
+    width: 94.5%;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
     border: none;
+    background-color: green;
+    color: aliceblue;
+    font-size: 1.2rem;
     cursor: pointer;
 }
 
-@media screen and (max-width: 1024px) {
+.main_section button:hover{
+    background-color: hsla(120, 100%, 25%, 0.747);
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar_container{
+        display: none;
+    }
     .main_section{
-        margin: 0;
+        flex-basis: 100%;
+        
     }
-    .big_container{
-        margin: 0 auto;
+    .cv_container div{
+       flex-basis: 40%;
     }
-    .button_container{
-        margin-top: 20px;
-        margin-left: 175px;
-        width: 71%;
+    .cv_container{
+        justify-content: center;
+    }
+    .main_section button{
+        width: 92%;
+        margin-left: 23px;
     }
 }
