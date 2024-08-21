@@ -18,7 +18,7 @@
 }
 
 .search_icon {
-    width: 20px;
+    max-width: 20px;
     position: absolute;
     left: 10px;
     top: 50%;
@@ -28,13 +28,12 @@
 
 .search_input {
     border-radius: 5px;
-    /* background-color: #f2f4f7; */
     background: #F7F7F7;
     padding: 0 50px; 
     height: 40px; 
     border: none; 
     outline: none;
-    width: 400px;   
+    max-width: 400px;   
 }
 .logo_div{
     margin-right: 1.2rem;
@@ -56,7 +55,7 @@
 
 @media screen and (max-width: 1024px) {
     .search_icon {
-        width: 20px;
+        max-width: 20px;
         position: absolute;
         left: 10px;
         top: 50%;  
@@ -70,7 +69,7 @@
         justify-content: space-between;
     }
     .search_input {
-        width: 500px;  
+        max-width: 500px;  
         margin-right: 20px; 
     }
 }
@@ -85,5 +84,11 @@
     }
     .search_input{
         width: 300px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .header{
+        display: none;
     }
 }

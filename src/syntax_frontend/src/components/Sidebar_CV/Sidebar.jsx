@@ -39,7 +39,7 @@ function Sidebar() {
                         <option value="/grammar">
                             Grammar
                         </option>
-                        <option value="/cv-enhancer">CV Enhancer</option>
+                        <option value="/new-cv">CV Enhancer</option>
                     </select>
                 </li>
             </ul> 

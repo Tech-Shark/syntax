@@ -61,21 +61,21 @@ function Grammar() {
           return;
         }
          setLoading(true)
-          const identifier = "2599809"; 
-        // const authClient = await AuthClient.create();
+        //   const identifier = "2599809"; 
+        const authClient = await AuthClient.create();
         
-        // // Retrieve the user's principal (identifier)
-        // const identity = authClient.getIdentity();
-        // const principal = identity.getPrincipal().toText();
+        // Retrieve the user's principal (identifier)
+        const identity = authClient.getIdentity();
+        const principal = identity.getPrincipal().toText();
 
-        // // Use the principal as the identifier
+        // Use the principal as the identifier
         // console.log("User Principal: ", principal);
           const userInput = { text: text }; 
       
-          const result = await syntax_backend.analyze_grammar(identifier, userInput);
+          const result = await syntax_backend.analyze_grammar(principal, userInput);
           
           if ('Ok' in result) {
-            console.log('Analysis Result:', result.Ok);
+            // console.log('Analysis Result:', result.Ok);
             setRewrite(result.Ok.result.rewrite)
             setGrammaticErrors(result.Ok.result.grammatical_errors)
             setSuggestions(result.Ok.result.general_suggestions)
