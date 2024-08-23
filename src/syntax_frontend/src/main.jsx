@@ -43,29 +43,29 @@ const router = createBrowserRouter([
  
 ]);
 
-const init = async () => {
+// const init = async () => {
      
-        const authClient = await AuthClient.create();
-        if( await authClient.isAuthenticated()){
-          handleAuth(authClient);
-        }else{
-          await authClient.login({
-            identityProvider: "https://identity.ic0.app/#authorize",
-            onSuccess: () => {
-                handleAuth(authClient);
-            }
-          })
-        }
+//         const authClient = await AuthClient.create();
+//         if( await authClient.isAuthenticated()){
+//           handleAuth(authClient);
+//         }else{
+//           await authClient.login({
+//             identityProvider: "https://identity.ic0.app/#authorize",
+//             onSuccess: () => {
+//                 handleAuth(authClient);
+//             }
+//           })
+//         }
         
-}
+// }
 
-async function handleAuth(authClient){
+// async function handleAuth(authClient){
   ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <RouterProvider router={router} />
     </React.StrictMode>
   )
-}
+// }
 
-init();
+// init();
 

@@ -29,12 +29,12 @@ function NewCv() {
     }
 
     async function handleSubmit() {
-        // const identifier = "2599809"; 
-        const authClient = await AuthClient.create();
+        const identifier = "2599809"; 
+        // const authClient = await AuthClient.create();
         
         // Retrieve the user's principal (identifier)
-        const identity = authClient.getIdentity();
-        const principal = identity.getPrincipal().toText();
+        // const identity = authClient.getIdentity();
+        // const principal = identity.getPrincipal().toText();
 
         // Use the principal as the identifier
         // console.log("User Principal: ", principal);
@@ -46,7 +46,7 @@ function NewCv() {
             cv_text: cvText,
         };
         
-        const result = await syntax_backend.analyze_cv(principal, userInput);
+        const result = await syntax_backend.analyze_cv(identifier, userInput);
         
         if ('Ok' in result) {
             const analysis = result.Ok.result;
@@ -100,7 +100,7 @@ function NewCv() {
                             <Sidebar />
                         </div>
                         <section className={styles.main_section}>
-                            <Header />
+                            {/* <Header /> */}
                             <h2>Create New CV</h2>
                             <div className={styles.main_cv_container}>
                                 <div className={styles.cv_container}>

@@ -204,7 +204,9 @@ function Grammar() {
   return (
     <div className={styles.grammar_section}>
         <Sidebar />
+        <div className={styles.header_container}>
         <Header />
+        </div>
              <div className={styles.main_container}>
          <div className={styles.icon_container}>
             <div className={styles.left_container}>                

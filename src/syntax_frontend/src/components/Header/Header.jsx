@@ -6,7 +6,7 @@ import logo_icon from '../../assets/logo.svg'
 
 function Header() {
   return (
-    <div className={styles.header}>
+    // <div className={styles.header}>
     <div className={styles.header_container}>
         <div className={styles.input_wrapper}>
         <img src={search_icon} alt="search-icon" className={styles.search_icon}  />
@@ -20,7 +20,7 @@ function Header() {
             <img src={logo_icon} alt="" />
             </div>
         </div>
-    </div>
+    {/* </div> */}
     </div>
   )
 }
