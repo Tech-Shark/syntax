@@ -102,7 +102,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
 
     //Note: in Rust, `http_request()` already sends the cycles needed
     //so no need for explicit Cycles.add() as in Motoko
-    match http_request(request, 2_000_000_000).await {
+    match http_request(request, 1_000_000_000_000).await {
         //4. DECODE AND RETURN THE RESPONSE
 
         //See:https://docs.rs/ic-cdk/latest/ic_cdk/api/management_canister/http_request/struct.HttpResponse.html
