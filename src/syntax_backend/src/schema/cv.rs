@@ -5,7 +5,7 @@ use serde::{Serialize, Deserialize};
 use candid::{CandidType, Decode, Encode};
 use ic_stable_structures::storable::{Bound, Storable};
 
-const MAX_VALUE_SIZE: u32 = 10000;
+const MAX_VALUE_SIZE: u32 = 1000000;
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct CVUserInput {
@@ -33,7 +33,7 @@ impl Storable for CVUserInput {
 pub struct AnalysisResult {
     pub skills: String,
     pub work_experience: String,
-    pub suggestions: String,
+    pub professional_summary: String,
 }
 
 impl Storable for AnalysisResult {

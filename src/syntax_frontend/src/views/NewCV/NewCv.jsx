@@ -152,8 +152,8 @@ function NewCv() {
                                 <p>{response.skills}</p>
                                 <h1>Work Experience</h1>
                                 <p>{response.work_experience}</p>
-                                <h1>Suggestions</h1>
-                                <p>{response.suggestions}</p>
+                                <h1>Professional Summary</h1>
+                                <p>{response.professional_summary}</p>
                             </div>
                         </div>
                         <button onClick={downloadPDF}>Download PDF</button>

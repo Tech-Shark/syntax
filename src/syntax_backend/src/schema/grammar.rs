@@ -4,7 +4,7 @@ use ic_stable_structures::storable::{Bound, Storable};
 use std::borrow::Cow;
 use std::collections::HashMap;
 
-const MAX_VALUE_SIZE: u32 = 1000;
+const MAX_VALUE_SIZE: u32 = 1000000;
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct GrammarUserInput {

@@ -7,7 +7,7 @@ type CVUserInput = record {
 type AnalysisResult = record {
     skills : text;
     work_experience : text;
-    suggestions : text;
+    professional_summary : text;
 };
 
 type CVAnalysisResponse = record {
