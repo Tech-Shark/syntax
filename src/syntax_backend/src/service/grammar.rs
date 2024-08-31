@@ -4,6 +4,7 @@ use crate::schema::grammar::{Error, GrammarAnalysisResponse,
                              GrammarCheckResult, GrammarResponse, GrammarUserInput};
 use crate::service::ai;
 use crate::storage;
+use crate::QUOTA_ERROR;
 
 #[ic_cdk::update]
 async fn analyze_grammar(principal: String, request: GrammarUserInput) -> GrammarResponse {
@@ -31,7 +32,7 @@ async fn analyze_grammar(principal: String, request: GrammarUserInput) -> Gramma
         }
     };
 
-    let idx = storage::grammar::add_grammar_analysis(principal, request.clone(), result.clone());
+    let idx = storage::grammar::add_grammar_analysis(principal, request.clone(), result.clone()).await;
     if idx.is_none() {
         GrammarResponse::Err(
             Error{
@@ -39,8 +40,16 @@ async fn analyze_grammar(principal: String, request: GrammarUserInput) -> Gramma
             }
         )
     }else {
+        let val = idx.unwrap();
+        if val.to_string() == QUOTA_ERROR.to_string() {
+            return GrammarResponse::Err(
+                Error{
+                    message: "Quota Error: number of trails exceeded.".to_string(),
+                }
+            );
+        }
         GrammarResponse::Ok(GrammarAnalysisResponse{
-            idx: idx.unwrap(),
+            idx: val,
             request,
             result,
         })

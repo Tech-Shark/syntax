@@ -2,6 +2,7 @@ use std::str::FromStr;
 use crate::schema::cv::{AnalysisResult, CVAnalysisResponse, CVResponse, Error, CVUserInput};
 use crate::service::ai;
 use crate::storage;
+use crate::QUOTA_ERROR;
 
 #[ic_cdk::update]
 async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
@@ -31,7 +32,7 @@ async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
             )
         }
     };
-    let idx = storage::cv::add_cv_analysis(principal, request.clone(), result.clone());
+    let idx = storage::cv::add_cv_analysis(principal, request.clone(), result.clone()).await;
     if idx.is_none() {
         CVResponse::Err(
             Error{
@@ -39,8 +40,16 @@ async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
             }
         )
     }else {
+        let val = idx.unwrap();
+        if val.to_string() == QUOTA_ERROR.to_string() {
+            return CVResponse::Err(
+                Error{
+                    message: "Quota Error: number of trails exceeded.".to_string(),
+                }
+            );  
+        }
         CVResponse::Ok(CVAnalysisResponse{
-            idx: idx.unwrap(),
+            idx: val,
             request,
             result,
         })
