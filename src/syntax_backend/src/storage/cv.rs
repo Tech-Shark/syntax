@@ -8,9 +8,10 @@ use std::collections::HashMap;
 use std::convert::identity;
 use std::ffi::c_void;
 use ic_cdk::caller;
-use uuid::Uuid;
 use crate::schema::cv::{AnalysisResult, CVAnalysis, CVAnalysisMap, CVAnalysisResponse, CVUserInput};
 use crate::CV_MEMORY_ID;
+use crate::service::util;
+use crate::QUOTA_ERROR;
 
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
@@ -26,34 +27,44 @@ thread_local! {
 }
 
 #[ic_cdk_macros::update]
-pub fn add_cv_analysis(identity: String, user_input: CVUserInput, result: AnalysisResult) -> Option<String> {
+pub async fn add_cv_analysis(identity: String, user_input: CVUserInput, result: AnalysisResult) -> Option<String> {
+    let new_idx: Option<String> = util::generate_random_string().await;
     let idx = {
         MAP.with(|map| {
             let mut map = map.borrow_mut();
             let res = map.get(&identity);
             if let Some(mut analyses) = res {
-                let new_idx: String = Uuid::new_v3(&Uuid::NAMESPACE_DNS, b"rust-lang. org").to_string();
-                analyses.analyses.insert(new_idx.to_string(), CVAnalysis {
-                    idx: new_idx.to_string(),
-                    identity: identity.to_string(),
-                    request: user_input,
-                    result,
-                });
-                map.insert(identity, analyses);
-                Some(new_idx)
+                if analyses.analyses.len() >= 2 {
+                    return Some(QUOTA_ERROR.to_string());
+                }
+                if let Some(id) = new_idx {
+                    analyses.analyses.insert(id.to_string(), CVAnalysis {
+                        idx: id.to_string(),
+                        identity: identity.to_string(),
+                        request: user_input,
+                        result,
+                    });
+                    map.insert(identity, analyses);
+                    Some(id)
+                }else {
+                    None
+                }
             }else {
-                let new_idx: String = Uuid::new_v3(&Uuid::NAMESPACE_DNS, b"rust-lang. org").to_string();
-                let mut cva_list = CVAnalysisMap {
-                    analyses: HashMap::new(),
-                };
-                cva_list.analyses.insert(new_idx.to_string(), CVAnalysis {
-                    idx: new_idx.to_string(),
-                    identity: identity.to_string(),
-                    request: user_input,
-                    result,
-                });
-                map.insert(identity, cva_list);
-                Some(new_idx)
+                if let Some(id) = new_idx {
+                    let mut cva_list = CVAnalysisMap {
+                        analyses: HashMap::new(),
+                    };
+                    cva_list.analyses.insert(id.to_string(), CVAnalysis {
+                        idx: id.to_string(),
+                        identity: identity.to_string(),
+                        request: user_input,
+                        result,
+                    });
+                    map.insert(identity, cva_list);
+                    Some(id)
+                }else {
+                    None
+                }
             }
         })
     };
