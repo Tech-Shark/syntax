@@ -8,6 +8,7 @@ use ic_cdk::api::management_canister::http_request::{
 use ic_cdk_macros::{self, query, update};
 use serde::{Serialize, Deserialize};
 use serde_json::{self, Value};
+use crate::service::util;
 
 // This struct is legacy code and is not really used in the code.
 #[derive(Serialize, Deserialize)]
@@ -21,9 +22,14 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
     //2. SETUP ARGUMENTS FOR HTTP GET request
 
     // 2.1 Setup the URL
-    let host = "https://icp-ai-service.fly.dev/";
-    let url = format!("https://icp-ai-service.fly.dev/{endpoint}");
-
+    let host = "https://icp-proxy.fly.dev/";
+    let url = format!("https://icp-proxy.fly.dev/{endpoint}");
+    let new_idx: Option<String> = util::generate_random_string().await;
+    if new_idx.is_none() {
+        return "Failed to generate Idempotency key".to_string();
+    }
+    let idempotency_key = new_idx.unwrap();
+    
     // 2.2 prepare headers for the system http_request call
     //Note that `HttpHeader` is declared in line 4
     let request_headers = vec![
@@ -39,7 +45,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
         //it should be generated via code and unique to each POST request. Common to create helper methods for this
         HttpHeader {
             name: "Idempotency-Key".to_string(),
-            value: "UUID-123456789".to_string(),
+            value: idempotency_key,
         },
         HttpHeader {
             name: "Content-Type".to_string(),

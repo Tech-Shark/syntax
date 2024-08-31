@@ -8,11 +8,12 @@ use std::collections::HashMap;
 use std::convert::identity;
 use std::ffi::c_void;
 use ic_cdk::caller;
-use uuid::Uuid;
 use crate::schema::grammar::{GrammarCheckResult, GrammarAnalysis, GrammarAnalysisMap,
                              GrammarAnalysisResponse, GrammarUserInput};
 use crate::GM_MEMORY_ID;
 type Memory = VirtualMemory<DefaultMemoryImpl>;
+use crate::service::util;
+use crate::QUOTA_ERROR;
 
 thread_local! {
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> =
@@ -26,34 +27,44 @@ thread_local! {
 }
 
 #[ic_cdk_macros::update]
-pub fn add_grammar_analysis(identity: String, user_input: GrammarUserInput, result: GrammarCheckResult) -> Option<String> {
+pub async fn add_grammar_analysis(identity: String, user_input: GrammarUserInput, result: GrammarCheckResult) -> Option<String> {
+    let new_idx: Option<String> = util::generate_random_string().await;
     let idx = {
         MAP.with(|map| {
             let mut map = map.borrow_mut();
             let res = map.get(&identity);
             if let Some(mut analyses) = res {
-                let new_idx: String = Uuid::new_v3(&Uuid::NAMESPACE_DNS, b"rust-lang. org").to_string();
-                analyses.analyses.insert(new_idx.to_string(), GrammarAnalysis {
-                    idx: new_idx.to_string(),
-                    identity: identity.to_string(),
-                    request: user_input,
-                    result,
-                });
-                map.insert(identity, analyses);
-                Some(new_idx)
+                if analyses.analyses.len() >= 2 {
+                    return Some(QUOTA_ERROR.to_string());
+                }
+                if let Some(id) = new_idx {
+                    analyses.analyses.insert(id.to_string(), GrammarAnalysis {
+                        idx: id.to_string(),
+                        identity: identity.to_string(),
+                        request: user_input,
+                        result,
+                    });
+                    map.insert(identity, analyses);
+                    Some(id)
+                } else {
+                    None
+                }
             }else {
-                let new_idx: String = Uuid::new_v3(&Uuid::NAMESPACE_DNS, b"rust-lang. org").to_string();
-                let mut g_list = GrammarAnalysisMap {
-                    analyses: HashMap::new(),
-                };
-                g_list.analyses.insert(new_idx.to_string(), GrammarAnalysis {
-                    idx: new_idx.to_string(),
-                    identity: identity.to_string(),
-                    request: user_input,
-                    result,
-                });
-                map.insert(identity, g_list);
-                Some(new_idx)
+                if let Some(id) = new_idx {
+                    let mut g_list = GrammarAnalysisMap {
+                        analyses: HashMap::new(),
+                    };
+                    g_list.analyses.insert(id.to_string(), GrammarAnalysis {
+                        idx: id.to_string(),
+                        identity: identity.to_string(),
+                        request: user_input,
+                        result,
+                    });
+                    map.insert(identity, g_list);
+                    Some(id)
+                } else {
+                    None
+                }
             }
         })
     };
