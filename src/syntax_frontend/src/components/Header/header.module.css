@@ -1,16 +1,28 @@
 
 .header_container{
     width: 100%;
+    display: flex;
+    justify-content: flex-end;
     background: #fff;
     padding: 0.5rem;
+    margin-right: 2rem;
     /* border: 3px solid black; */
     display: flex;
+}
+.sidebarToggle {
+    display: block;
+}
+
+.sidebarToggle button{
+    cursor: pointer;
+    margin-right: 2rem;
+    font-size: 1.3rem;
 }
 
 .input_wrapper{
     /* border: 2px solid red; */
     margin-left: 150px;
-    flex-basis: 70%;
+    flex-basis: 130%;
     position: relative;
     display: flex;
     justify-content: center;
@@ -18,19 +30,24 @@
 }
 
 .input_wrapper input{
+    width: 2rem;
+}
+
+.input_wrapper input{
     width: 60%;
     border-radius: 5px;
     background: #F7F7F7;
     padding: 0 50px; 
-    height: 40px; 
+    height: 30px; 
     border: none; 
     outline: none;
+    align-items: center;
  
 }
 .logo_div{
     flex-basis: 25%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     margin-right: 5px;
@@ -53,26 +70,23 @@
     width: 40px;
     height: 40px;
 }
+@media screen and (min-width: 769px) {
+    .sidebarToggle {
+        display: none; /* Hide the sidebarToggle button */
+    }
+}
 
-@media screen and (max-width: 768px) {
-    .search_icon{
-        margin-left: -38px;
-        /* background: #000; */
-    }
-}
-@media screen and (max-width: 1024px) {
-    .search_icon{
-        left: 100px;
-    }
-}
+/* Adjustments for very small screens */
 @media screen and (max-width: 425px) {
-    .logo_div{
-        display: none
+    .logo_div {
+        display: none; /* Hide the logo_div */
     }
-    .input_wrapper{
-        flex-basis: 100%;
+
+    .input_wrapper {
+        flex-basis: 70%;
     }
-    .search_icon{
-        margin-left: -60px;
+
+    .search_icon {
+        margin-left: -70px;
     }
 }

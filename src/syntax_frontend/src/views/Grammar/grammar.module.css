@@ -235,7 +235,8 @@
         padding-left: 2rem;
     }
     .text_responses{
-        justify-content: space-evenly;
+        flex-direction: column; 
+        align-items: stretch;
     }
     .left_container{
         padding-left: 3rem;

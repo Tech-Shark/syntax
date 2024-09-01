@@ -25,23 +25,43 @@ import { AuthClient } from "@dfinity/auth-client";
 
 function Grammar() {
     const [text, setText] = useState('');
-    const [rewrite, setRewrite] = useState('')
-    const [syntacticErrors, setSyntacticErrors] = useState('')
-    const [grammaticErrors, setGrammaticErrors] = useState('')
-    const [suggestions, setSuggestions] = useState('')
+    const [rewrite, setRewrite] = useState('');
+    const [syntacticErrors, setSyntacticErrors] = useState('');
+    const [grammaticErrors, setGrammaticErrors] = useState('');
+    const [suggestions, setSuggestions] = useState('');
     const [tooltip, setTooltip] = useState({ visible: false, id: null });
-    const [activeSection, setActiveSection ] = useState("All")
+    const [activeSection, setActiveSection] = useState('All');
     const [loading, setLoading] = useState(false); // Loading state
+    const [wordCount, setWordCount] = useState(0);
+    const maxCharacters = 10000;
 
-    
+  function handleInput(event) {
+    const value = event.target.value;
+    const characterCount = value.length;
 
-   
+    // Check if the character count exceeds the maximum limit
+    if (characterCount <= maxCharacters) {
+        setText(value);
 
-    function handleInput(event) {
-        event.target.style.height = "auto"; 
-        event.target.style.height = `${event.target.scrollHeight}px`; 
+        // Count words and update state
+        const words = value.split(/\s+/).filter(Boolean);
+        const count = words.length;
+        setWordCount(count);
+
+        event.target.style.height = 'auto';
+        event.target.style.height = `${event.target.scrollHeight}px`;
+    } else {
+        // Truncate the text to the maximum allowed length
+        event.target.value = value.slice(0, maxCharacters);
         setText(event.target.value);
-      }
+
+        // Optionally, you can update word count or any other state as needed
+        const words = event.target.value.split(/\s+/).filter(Boolean);
+        const count = words.length;
+        setWordCount(count);
+    }
+}
+
 
     function handleCopy(textToCopy, id) {
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -54,40 +74,30 @@ function Grammar() {
         });
     }
 
-
     async function handleSubmit() {
         if (text.length < 25) {
-          alert('Please enter at least 25 words.');
-          return;
+            alert('Please enter at least 25 words.');
+            return;
         }
-         setLoading(true)
-        //   const identifier = "2599809"; 
+        setLoading(true);
         const authClient = await AuthClient.create();
-        
-        // Retrieve the user's principal (identifier)
         const identity = authClient.getIdentity();
         const principal = identity.getPrincipal().toText();
+        const userInput = { text: text };
+        const result = await syntax_backend.analyze_grammar(principal, userInput);
 
-        // Use the principal as the identifier
-        // console.log("User Principal: ", principal);
-          const userInput = { text: text }; 
-      
-          const result = await syntax_backend.analyze_grammar(principal, userInput);
-          
-          if ('Ok' in result) {
-            // console.log('Analysis Result:', result.Ok);
-            setRewrite(result.Ok.result.rewrite)
-            setGrammaticErrors(result.Ok.result.grammatical_errors)
-            setSuggestions(result.Ok.result.general_suggestions)
-            setSyntacticErrors(result.Ok.result.syntactic_errors)
-            setLoading(false)
-          } else {
+        if ('Ok' in result) {
+            setRewrite(result.Ok.result.rewrite);
+            setGrammaticErrors(result.Ok.result.grammatical_errors);
+            setSuggestions(result.Ok.result.general_suggestions);
+            setSyntacticErrors(result.Ok.result.syntactic_errors);
+            setLoading(false);
+        } else {
             console.error('Error:', result.Err.message);
-          }
-     
-      }
+        }
+    }
 
-      const renderSectionContent = () => {
+    const renderSectionContent = () => {
         switch (activeSection) {
             case 'All':
                 return (
@@ -106,7 +116,7 @@ function Grammar() {
                                     )}
                                 </div>
                             </div>
-                            {syntacticErrors || "No syntactic errors available"}
+                            {syntacticErrors || 'No syntactic errors available'}
                         </div>}
                         {grammaticErrors && <div className={styles.response}>
                             <div>
@@ -122,7 +132,7 @@ function Grammar() {
                                     )}
                                 </div>
                             </div>
-                            {grammaticErrors || "No grammatical errors"}
+                            {grammaticErrors || 'No grammatical errors'}
                         </div>}
                         {suggestions && <div className={styles.response}>
                             <div>
@@ -138,7 +148,7 @@ function Grammar() {
                                     )}
                                 </div>
                             </div>
-                            {suggestions || "No suggestions available"}
+                            {suggestions || 'No suggestions available'}
                         </div>}
                         {rewrite && <div className={styles.response}>
                             <div>
@@ -154,7 +164,7 @@ function Grammar() {
                                     )}
                                 </div>
                             </div>
-                            {rewrite || "No rewrite available"}
+                            {rewrite || 'No rewrite available'}
                         </div>}
                     </>
                 );
@@ -174,7 +184,7 @@ function Grammar() {
                                 )}
                             </div>
                         </div>
-                        {grammaticErrors || "No grammatical errors"}
+                        {grammaticErrors || 'No grammatical errors'}
                     </div>
                 );
             case 'Recommendations':
@@ -193,7 +203,7 @@ function Grammar() {
                                 )}
                             </div>
                         </div>
-                        {suggestions || "No suggestions available"}
+                        {suggestions || 'No suggestions available'}
                     </div>
                 );
             default:
@@ -201,88 +211,78 @@ function Grammar() {
         }
     };
 
-  return (
-    <div className={styles.grammar_section}>
-        <Sidebar />
-        <div className={styles.header_container}>
-        <Header />
-        </div>
-             <div className={styles.main_container}>
-         <div className={styles.icon_container}>
-            <div className={styles.left_container}>                
-                <img src={menu_bar_right} alt="" />
-                <img src={menu_bar_left} alt="" />
-                <div className={styles.text_container}>
-                    <p>Normal text</p>
-                    <img src={chevron_icon} alt="chevron-icon" />
-                </div>
-                <div className={styles.img_container}>
-                <img src={vector_icon} alt="" />
-                <img src={chevron_icon} alt="chevron-icon" />
-                </div>
-                <div className={styles.color_picker_container}>
-                <img src={color_picker} alt="" />
-                <img src={chevron_icon} alt="chevron-icon" />
-                </div>
-                <div className={styles.other_icon}>
-                <img src={bold_icon} alt="bold-icon" />
-                <img src={italics_icon} alt="italics-icon" />
-                <img src={underline_icon} alt="underline-icon" />
-                <img src={dollar_icon} alt="dollar-icon" />
-                <img src={arrow_icon} alt="arrow-icon" />
-                <img src={cap_icon} alt="cap-icon" />
-                <img src={list1_icon} alt="list1-icon" />
-                <img src={list2_icon} alt="list2-icon" />
-                </div>
-                
+    return (
+        <div className={styles.grammar_section}>
+            <Sidebar />
+            <div className={styles.header_container}>
+                <Header />
             </div>
-            <div className="input_container">
-            <textarea 
-              className={styles.auto_textarea}
-              placeholder="Start typing...pasting(Ctrl + V)text.."
-              onInput={handleInput}
-              value={text}
-            >{}</textarea>            </div>
-           
-            <div className={styles.button_container}>
-                <button className={styles.paste_button} >Paste text</button>                   
-                    <button className={styles.upload_button} onClick={handleSubmit} disabled={loading}>
-                    Analyze text
-                    </button>
-            </div>
-         </div>
-            
-         <div className={styles.result_container}>
-            <p className={styles.text_heading}>Enter at least 25 words to see score</p>
-            <div className={styles.text_responses}>
-                <div onClick={() => setActiveSection('All')}>
-                    <p>All</p>
-                    <img src={badge_icon} alt="badge-icon" />
-                </div>
-                <div onClick={() => setActiveSection('Grammar')}>
-                    <p>Grammar</p>
-                    <img src={badge_icon} alt="badge-icon" />
-                </div>
-                <div onClick={() => setActiveSection('Recommendations')}>
-                    <p>Recommendations</p>
-                    <img src={badge_icon} alt="" />
-                </div>
+            <div className={styles.main_container}>
+                <div className={styles.icon_container}>
+                    <div className={styles.left_container}>
+                        <img src={menu_bar_right} alt="" />
+                        <img src={menu_bar_left} alt="" />
+                        <div className={styles.text_container}>
+                            <p>Normal text</p>
+                            <img src={chevron_icon} alt="chevron-icon" />
+                        </div>
+                        <div className={styles.img_container}>
+                            <img src={vector_icon} alt="" />
+                            <img src={chevron_icon} alt="chevron-icon" />
+                        </div>
+                        <div className={styles.color_picker_container}>
+                            <img src={color_picker} alt="" />
+                            <img src={chevron_icon} alt="chevron-icon" />
+                        </div>
+                    </div>
+                    <div className="input_container">
+                        <textarea
+                            className={styles.auto_textarea}
+                            placeholder="Start typing...pasting(Ctrl + V)text.. Input not more than 10,000 characters"
+                            onInput={handleInput}
+                            value={text}
+                        ></textarea>
+                            <div className={styles.word_count_container}>
+                                <p>Character count: {text.length} / {maxCharacters}</p>
+                            </div>
+                    </div>
+                    <div className={styles.button_container}>
+                        <button className={styles.paste_button}>Paste text</button>
+                        <button className={styles.upload_button} onClick={handleSubmit} disabled={loading}>
+                            Analyze text
+                        </button>
+                    </div>
                
+
+                </div>
+                <div className={styles.result_container}>
+                    <p className={styles.text_heading}>Enter at least 25 words to see score</p>
+                    <div className={styles.text_responses}>
+                        <div onClick={() => setActiveSection('All')}>
+                            <p>All</p>
+                            <img src={badge_icon} alt="badge-icon" />
+                        </div>
+                        <div onClick={() => setActiveSection('Grammar')}>
+                            <p>Grammar</p>
+                            <img src={badge_icon} alt="badge-icon" />
+                        </div>
+                        <div onClick={() => setActiveSection('Recommendations')}>
+                            <p>Recommendations</p>
+                            <img src={badge_icon} alt="" />
+                        </div>
+                    </div>
+                    <div className={styles.spinner_container}>
+                        <img src={spinner} alt="spinner-img" className={loading ? '' : styles.spinner} />
+                    </div>
+                    {(rewrite || syntacticErrors || grammaticErrors || suggestions) && (
+                        <div className={loading ? styles.spinner : styles.response_container}>
+                            {renderSectionContent()}
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className={styles.spinner_container}>
-                <img src={spinner} alt="spinner-img" className={loading ? '' : styles.spinner} />
-            </div>
-            {(rewrite || syntacticErrors || grammaticErrors || suggestions) && (
-                <div className={loading ? styles.spinner : styles.response_container }>
-                {renderSectionContent()}
-                </div >
-            )}
-        
-        
-         </div>
-        </div>       
-    </div>
-  )
+        </div>
+    );
 }
 
-export default Grammar
+export default Grammar;

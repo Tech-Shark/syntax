@@ -1,20 +1,41 @@
-import React from 'react'
-import Sidebar from '../../components/Sidebar_CV/Sidebar'
-import Header from '../../components/Header/Header'
-import styles from './new-cv.module.css'
-import { useState } from 'react'
-import { syntax_backend } from 'declarations/syntax_backend'
-import spinner from '../../assets/spinner.svg'
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../../components/Sidebar_CV/Sidebar';
+import Header from '../../components/Header/Header';
+import styles from './new-cv.module.css';
+import { syntax_backend } from 'declarations/syntax_backend';
+import spinner from '../../assets/spinner.svg';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
+import { AuthClient } from '@dfinity/auth-client';
 
 function NewCv() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [cvText, setCvText] = useState('');
     const [loading, setLoading] = useState(false); 
-    const [response, setResponse] = useState(null); 
+    const [response, setResponse] = useState(null);
+    const [principal, setPrincipal] = useState(null);
+
+    // Retrieve the principal once when the component mounts
+    useEffect(() => {
+        async function fetchPrincipal() {
+            try {
+                const authClient = await AuthClient.create();
+                if (await authClient.isAuthenticated()) {
+                    const identity = authClient.getIdentity();
+                    const principal = identity.getPrincipal().toText();
+                    setPrincipal(principal);
+                    console.log("User Principal: ", principal);
+                } else {
+                    console.error("User is not authenticated");
+                }
+            } catch (error) {
+                console.error("Error retrieving principal:", error);
+            }
+        }
+
+        fetchPrincipal();
+    }, []); // Empty dependency array ensures this runs only once
 
     function handleCVText(event) {
         event.target.style.height = "auto"; 
@@ -29,15 +50,11 @@ function NewCv() {
     }
 
     async function handleSubmit() {
-        const identifier = "2599809"; 
-        // const authClient = await AuthClient.create();
-        
-        // Retrieve the user's principal (identifier)
-        // const identity = authClient.getIdentity();
-        // const principal = identity.getPrincipal().toText();
+        if (!principal) {
+            console.error("Principal is not available");
+            return;
+        }
 
-        // Use the principal as the identifier
-        // console.log("User Principal: ", principal);
         setLoading(true);
     
         let userInput = {
@@ -46,7 +63,7 @@ function NewCv() {
             cv_text: cvText,
         };
         
-        const result = await syntax_backend.analyze_cv(identifier, userInput);
+        const result = await syntax_backend.analyze_cv(principal, userInput);
         
         if ('Ok' in result) {
             const analysis = result.Ok.result;
@@ -56,7 +73,6 @@ function NewCv() {
             console.error('Error:', result.Err.message);
         }
     }
-
 
     function downloadPDF() {
         const content = document.querySelector('#response_content'); 
@@ -87,20 +103,19 @@ function NewCv() {
             content.style.maxHeight = originalStyle;
         });
     }
-    
+
     return (
         <div>
             {!response ? (
                 <div className={styles.new_cv_container}>
                     <div className={styles.header_container}>
-                    <Header />
+                        <Header />
                     </div>
                     <div className={styles.main_body}>
                         <div className={styles.sidebar_container}>
                             <Sidebar />
                         </div>
                         <section className={styles.main_section}>
-                            {/* <Header /> */}
                             <h2>Create New CV</h2>
                             <div className={styles.main_cv_container}>
                                 <div className={styles.cv_container}>
@@ -110,7 +125,7 @@ function NewCv() {
                                             <input type="text" placeholder='Enter job title' value={title} onChange={(e) => setTitle(e.target.value)} />
                                         </div>
                                         <div className={styles.input_box}>
-                                            <label htmlFor="job_title">Job Description</label>
+                                            <label htmlFor="job_description">Job Description</label>
                                             <textarea
                                                 className={styles.textarea}
                                                 placeholder="Enter job description"
@@ -121,7 +136,7 @@ function NewCv() {
                                     </div>
                                     <div className={styles.right_container}>
                                         <div className={styles.left_input_box}>
-                                            <label htmlFor="job_title">CV text</label>
+                                            <label htmlFor="cv_text">CV text</label>
                                             <textarea
                                                 className={styles.textarea}
                                                 placeholder="Enter CV"

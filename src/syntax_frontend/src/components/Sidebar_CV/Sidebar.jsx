@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 import styles from './sidebar.module.css'
 
-function Sidebar() {
+function Sidebar({isOpen}) {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState(""); 
 
@@ -25,8 +25,8 @@ function Sidebar() {
       };
 
   return (
-    <div className={styles.sidebar_bg}>
-        <header className={styles.logo_container} >
+    <div className={`${styles.sidebar_bg} ${isOpen ? styles.open : styles.closed}`}>
+    <header className={styles.logo_container} >
             <img src={syntax_logo} alt="syntax-logo" />
             
         </header>

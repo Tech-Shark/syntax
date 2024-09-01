@@ -1,15 +1,18 @@
-.sidebar_bg{
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 1.5rem;
-    height: 100vh;
+.sidebar_bg {
     width: 200px;
+    height: 100vh;
     position: fixed;
-    background: #212121;
+    top: 0;
+    left: 0; /* Align the sidebar to the left */
+    background-color: #212121;
     color: aliceblue;
     font-family: "Work Sans";
     font-weight: 400;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0); /* Show by default */
+    z-index: 1000;
 }
+
 .logo_container{
     width: 70%;
 }
@@ -48,6 +51,9 @@
 .logout_nav li{
     margin: 1.5rem;
 }
+.sidebar_bg.open {
+    transform: translateX(0); /* Ensure it is visible */
+}
 
 select{
     width: 100%;
@@ -60,8 +66,17 @@ select{
     font-size: 1rem;
 }
 
-@media screen and (max-width: 1024px) {
-    .sidebar_bg{
-        display: none;
+@media screen and (max-width: 768px) {
+    .sidebar_bg {
+        width: 150px; /* Adjust width for smaller screens */
+        transform: translateX(-100%); /* Hide the sidebar by default */
+    }
+    
+    .sidebar_bg.open {
+        transform: translateX(0); /* Show the sidebar when open */
+    }
+    
+    .edit_cv_container {
+        margin-left: 0; /* Remove left margin on smaller screens */
     }
 }
