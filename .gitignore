@@ -18,6 +18,8 @@ target/
 
 # frontend code
 node_modules/
+canister_ids.json
+deps/
 dist/
 .svelte-kit/
 
