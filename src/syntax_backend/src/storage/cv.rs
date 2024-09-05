@@ -92,6 +92,14 @@ pub fn fetch_cv_analysis(identity: String, idx: String) -> Option<CVAnalysisResp
 }
 
 #[ic_cdk_macros::query]
+pub fn cv_total_users() -> i64 {
+    MAP.with(|map| {
+        map.borrow().len() as i64
+    })
+}
+
+
+#[ic_cdk_macros::query]
 pub fn fetch_all_cv_analysis_for_identity(identity: String) -> Vec<CVAnalysisResponse> {
     MAP.with(|map| {
         let cv_analysis_map = map.borrow().get(&identity);
