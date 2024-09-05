@@ -26,6 +26,13 @@ thread_local! {
     );
 }
 
+#[ic_cdk_macros::query]
+pub fn gr_total_users() -> i64 {
+    MAP.with(|map| {
+        map.borrow().len() as i64
+    })
+}
+
 #[ic_cdk_macros::update]
 pub async fn add_grammar_analysis(identity: String, user_input: GrammarUserInput, result: GrammarCheckResult) -> Option<String> {
     let new_idx: Option<String> = util::generate_random_string().await;
