@@ -16,6 +16,7 @@
     "src/syntax_frontend"
   ],
   "devDependencies": {
+    "tailwindcss": "^3.4.14",
     "vite": "^5.4.1"
   },
   "dependencies": {
