@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
-use serde::{Serialize, Deserialize};
 
 use candid::{CandidType, Decode, Encode};
 use ic_stable_structures::storable::{Bound, Storable};
@@ -78,6 +78,7 @@ impl Storable for CVAnalysis {
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct CVAnalysisMap {
     pub analyses: HashMap<String, CVAnalysis>,
+    pub last_analysed: String,
 }
 
 // Implement Storable for CVAnalysisList
@@ -112,4 +113,3 @@ pub enum CVResponse {
     Ok(CVAnalysisResponse),
     Err(Error),
 }
-
