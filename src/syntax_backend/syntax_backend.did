@@ -58,14 +58,27 @@ type UserResponse = variant {
 };
 
 type UserInput = record {
-    name : opt text;
-    bio : opt text;
+    bio : opt UserBio;
 };
 
 type User = record {
     id : text;
     plan : UserPlan;
     other : UserInput;
+};
+
+type UserBio = record {
+    address : opt text;
+    full_name : opt text;
+    date_of_birth : opt text;
+    contact_number : opt text;
+    email : opt text;
+    nationality : opt text;
+    education : opt text;
+    marital_status : opt text;
+    linkedin : opt text;
+    github : opt text;
+    summary : opt text;
 };
 
 service : {
