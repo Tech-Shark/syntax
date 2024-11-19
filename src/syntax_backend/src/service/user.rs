@@ -4,7 +4,9 @@ use crate::schema::user::{
 use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap};
 use std::cell::RefCell;
 
-use super::util::generate_random_string;
+use super::util::{
+    generate_random_string, map_biodata_for_add_new_user, map_biodata_for_update_user,
+};
 
 thread_local! {
     static USER_MAP: RefCell<StableBTreeMap<String, User, DefaultMemoryImpl>> = RefCell::new(
@@ -56,8 +58,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
         plan: UserPlan::FREE,
         cv_last_checked: None,
         other: UserInput {
-            bio: profile.bio,
-            name: profile.name,
+            bio: map_biodata_for_add_new_user(profile.clone()),
         },
     };
 
@@ -75,8 +76,7 @@ async fn update_user(principal: String, profile: UserInput) -> UserResponse {
         Some(data) => {
             let updated_data = User {
                 other: UserInput {
-                    name: profile.name.or_else(|| data.other.name),
-                    bio: profile.bio.or_else(|| data.other.bio),
+                    bio: map_biodata_for_update_user(profile, data.clone()),
                 },
                 ..data
             };

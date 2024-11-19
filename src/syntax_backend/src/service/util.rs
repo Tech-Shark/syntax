@@ -1,4 +1,7 @@
-use crate::storage;
+use crate::{
+    schema::user::{BioData, User, UserInput},
+    storage,
+};
 use hex;
 use ic_cdk::api::management_canister::main::raw_rand;
 use time::{macros::format_description, Duration, OffsetDateTime, PrimitiveDateTime};
@@ -56,4 +59,91 @@ pub fn get_current_time() -> OffsetDateTime {
     ic_cdk::api::print(format!("current time is {:?}", &current_time));
 
     current_time
+}
+
+pub fn map_biodata_for_add_new_user(profile: UserInput) -> std::option::Option<BioData> {
+    Some(BioData {
+        address: profile.clone().bio.unwrap().address,
+        full_name: profile.clone().bio.unwrap().full_name,
+        date_of_birth: profile.clone().bio.unwrap().date_of_birth,
+        contact_number: profile.clone().bio.unwrap().contact_number,
+        email: profile.clone().bio.unwrap().email,
+        nationality: profile.clone().bio.unwrap().nationality,
+        education: profile.clone().bio.unwrap().education,
+        marital_status: profile.clone().bio.unwrap().marital_status,
+        linkedin: profile.clone().bio.unwrap().linkedin,
+        github: profile.clone().bio.unwrap().github,
+        summary: profile.clone().bio.unwrap().summary,
+    })
+}
+
+pub fn map_biodata_for_update_user(profile: UserInput, user: User) -> std::option::Option<BioData> {
+    Some(BioData {
+        address: profile
+            .clone()
+            .bio
+            .unwrap()
+            .address
+            .or_else(|| user.clone().other.bio.unwrap().address),
+        full_name: profile
+            .clone()
+            .bio
+            .unwrap()
+            .full_name
+            .or_else(|| user.clone().other.bio.unwrap().full_name),
+        date_of_birth: profile
+            .clone()
+            .bio
+            .unwrap()
+            .date_of_birth
+            .or_else(|| user.clone().other.bio.unwrap().date_of_birth),
+        contact_number: profile
+            .clone()
+            .bio
+            .unwrap()
+            .contact_number
+            .or_else(|| user.clone().other.bio.unwrap().contact_number),
+        email: profile
+            .clone()
+            .bio
+            .unwrap()
+            .email
+            .or_else(|| user.clone().other.bio.unwrap().email),
+        nationality: profile
+            .clone()
+            .bio
+            .unwrap()
+            .nationality
+            .or_else(|| user.clone().other.bio.unwrap().nationality),
+        education: profile
+            .clone()
+            .bio
+            .unwrap()
+            .education
+            .or_else(|| user.clone().other.bio.unwrap().education),
+        marital_status: profile
+            .clone()
+            .bio
+            .unwrap()
+            .marital_status
+            .or_else(|| user.clone().other.bio.unwrap().marital_status),
+        linkedin: profile
+            .clone()
+            .bio
+            .unwrap()
+            .linkedin
+            .or_else(|| user.clone().other.bio.unwrap().linkedin),
+        github: profile
+            .clone()
+            .bio
+            .unwrap()
+            .github
+            .or_else(|| user.clone().other.bio.unwrap().github),
+        summary: profile
+            .clone()
+            .bio
+            .unwrap()
+            .summary
+            .or_else(|| user.clone().other.bio.unwrap().summary),
+    })
 }
