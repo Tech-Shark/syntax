@@ -1,7 +1,7 @@
 type CVUserInput = record {
     job_title : text;
     job_description : text;
-    cv_text: text;
+    cv_text : text;
 };
 
 type AnalysisResult = record {
@@ -17,8 +17,8 @@ type CVAnalysisResponse = record {
 };
 
 type CVResponse = variant {
-  Ok: CVAnalysisResponse;
-  Err: Error;
+    Ok : CVAnalysisResponse;
+    Err : Error;
 };
 
 type GrammarUserInput = record {
@@ -39,24 +39,63 @@ type GrammarAnalysisResponse = record {
 };
 
 type GrammarResponse = variant {
-  Ok: GrammarAnalysisResponse;
-  Err: Error;
+    Ok : GrammarAnalysisResponse;
+    Err : Error;
 };
 
 type Error = record {
-  message: text;
+    message : text;
+};
+
+type UserPlan = variant {
+    FREE;
+    PREMIUM;
+};
+
+type UserResponse = variant {
+    Ok : User;
+    Err : Error;
+};
+
+type UserInput = record {
+    bio : opt UserBio;
+};
+
+type User = record {
+    id : text;
+    plan : UserPlan;
+    other : UserInput;
+};
+
+type UserBio = record {
+    address : opt text;
+    full_name : opt text;
+    date_of_birth : opt text;
+    contact_number : opt text;
+    email : opt text;
+    nationality : opt text;
+    education : opt text;
+    marital_status : opt text;
+    linkedin : opt text;
+    github : opt text;
+    summary : opt text;
 };
 
 service : {
     analyze_cv : (text, CVUserInput) -> (CVResponse);
-    get_cv_analysis: (text, text) -> (CVResponse);
-    get_all_cv_analysis_for_identity: (text) -> (vec CVAnalysisResponse);
-    delete_cv_analysis: (text, text) -> (text);
+    get_cv_analysis : (text, text) -> (CVResponse);
+    get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse);
+    delete_cv_analysis : (text, text) -> (text);
 
     analyze_grammar : (text, GrammarUserInput) -> (GrammarResponse);
-    get_grammar_analysis: (text, text) -> (GrammarResponse);
-    get_all_grammar_analysis_for_identity: (text) -> (vec GrammarAnalysisResponse);
-    delete_grammar_analysis: (text, text) -> (text);
+    get_grammar_analysis : (text, text) -> (GrammarResponse);
+    get_all_grammar_analysis_for_identity : (text) -> (vec GrammarAnalysisResponse);
+    delete_grammar_analysis : (text, text) -> (text);
 
-    total_users: () -> (int64);
-}
+    total_users : () -> (int64);
+
+    add_new_user : (profile : UserInput) -> (UserResponse);
+    update_user : (id : text, new_profile_changes : UserInput) -> (UserResponse);
+    get_single_user : (id : text) -> (UserResponse);
+    get_all_user_profile : () -> (vec User);
+};
