@@ -81,6 +81,16 @@ type UserBio = record {
     summary : opt text;
 };
 
+type Credit = record {
+    name : opt text;
+    value : opt nat16;
+};
+
+type CreditResponse = variant {
+    Ok : Credit;
+    Err : Error;
+};
+
 service : {
     analyze_cv : (text, CVUserInput) -> (CVResponse);
     get_cv_analysis : (text, text) -> (CVResponse);
@@ -98,4 +108,9 @@ service : {
     update_user : (id : text, new_profile_changes : UserInput) -> (UserResponse);
     get_single_user : (id : text) -> (UserResponse);
     get_all_user_profile : () -> (vec User);
+
+    get_all_credit_plan : () -> (vec Credit);
+    add_single_credit_plan : (plan : text, credit : nat16) -> (CreditResponse);
+    update_single_credit_plan : (plan : text, credit : nat16) -> (CreditResponse);
+    delete_single_credit_plan : (plan : text) -> (CreditResponse);
 };
