@@ -1,10 +1,9 @@
+use super::util::has_used_up_trials;
 use crate::schema::cv::{AnalysisResult, CVAnalysisResponse, CVResponse, CVUserInput, Error};
 use crate::service::ai;
-use crate::storage::cv::CV_STORAGE_MAP;
+use crate::storage::thread_local::CV_STORAGE_MAP;
 use crate::QUOTA_ERROR;
 use crate::{storage, MONTHLY_TRIAL_ERROR};
-
-use super::util::has_used_up_trials;
 
 #[ic_cdk::update]
 async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {

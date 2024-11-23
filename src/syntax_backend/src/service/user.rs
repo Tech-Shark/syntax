@@ -1,18 +1,12 @@
-use crate::schema::user::{
-    Error, User, UserInput, UserPlan, UserResponse, ID_GENERATION_FAILED, NO_USER_FOUND,
-};
-use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap};
-use std::cell::RefCell;
-
 use super::util::{
     generate_random_string, map_biodata_for_add_new_user, map_biodata_for_update_user,
 };
-
-thread_local! {
-    static USER_MAP: RefCell<StableBTreeMap<String, User, DefaultMemoryImpl>> = RefCell::new(
-        StableBTreeMap::init(DefaultMemoryImpl::default())
-    );
-}
+use crate::{
+    schema::user::{
+        Error, User, UserInput, UserPlan, UserResponse, ID_GENERATION_FAILED, NO_USER_FOUND,
+    },
+    storage::thread_local::USER_MAP,
+};
 
 #[ic_cdk::query]
 async fn get_all_user_profile() -> Vec<User> {

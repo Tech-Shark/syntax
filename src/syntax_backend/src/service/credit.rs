@@ -1,12 +1,7 @@
-use crate::schema::credit::{Credit, CreditResponse, Error, NO_CREDIT_PLAN_FOUND};
-use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap};
-use std::cell::RefCell;
-
-thread_local! {
-    static CREDIT_MAP: RefCell<StableBTreeMap<String, Credit, DefaultMemoryImpl>> = RefCell::new(
-        StableBTreeMap::init(DefaultMemoryImpl::default())
-    );
-}
+use crate::{
+    schema::credit::{Credit, CreditResponse, Error, NO_CREDIT_PLAN_FOUND},
+    storage::thread_local::CREDIT_MAP,
+};
 
 #[ic_cdk::query]
 async fn get_all_credit_plan() -> Vec<Credit> {
