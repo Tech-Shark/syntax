@@ -63,17 +63,17 @@ pub fn get_current_time() -> OffsetDateTime {
 
 pub fn map_biodata_for_add_new_user(profile: UserInput) -> std::option::Option<BioData> {
     Some(BioData {
-        address: profile.clone().bio.unwrap().address,
-        full_name: profile.clone().bio.unwrap().full_name,
-        date_of_birth: profile.clone().bio.unwrap().date_of_birth,
-        contact_number: profile.clone().bio.unwrap().contact_number,
-        email: profile.clone().bio.unwrap().email,
-        nationality: profile.clone().bio.unwrap().nationality,
-        education: profile.clone().bio.unwrap().education,
-        marital_status: profile.clone().bio.unwrap().marital_status,
-        linkedin: profile.clone().bio.unwrap().linkedin,
-        github: profile.clone().bio.unwrap().github,
-        summary: profile.clone().bio.unwrap().summary,
+        address: profile.clone().bio.unwrap_or_default().address,
+        full_name: profile.clone().bio.unwrap_or_default().full_name,
+        date_of_birth: profile.clone().bio.unwrap_or_default().date_of_birth,
+        contact_number: profile.clone().bio.unwrap_or_default().contact_number,
+        email: profile.clone().bio.unwrap_or_default().email,
+        nationality: profile.clone().bio.unwrap_or_default().nationality,
+        education: profile.clone().bio.unwrap_or_default().education,
+        marital_status: profile.clone().bio.unwrap_or_default().marital_status,
+        linkedin: profile.clone().bio.unwrap_or_default().linkedin,
+        github: profile.clone().bio.unwrap_or_default().github,
+        summary: profile.clone().bio.unwrap_or_default().summary,
     })
 }
 

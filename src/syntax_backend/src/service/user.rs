@@ -17,7 +17,11 @@ async fn get_all_user_profile() -> Vec<User> {
             .collect::<Vec<User>>()
     });
 
-    res
+    if res.len() < 1 {
+        vec![]
+    } else {
+        res
+    }
 }
 
 #[ic_cdk::query]

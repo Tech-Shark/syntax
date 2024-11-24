@@ -26,7 +26,7 @@ pub struct UserInput {
     pub bio: Option<BioData>,
 }
 
-#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone, Default)]
 pub struct BioData {
     pub full_name: Option<String>,      // Full name of the individual
     pub date_of_birth: Option<String>,  // Date of birth in ISO format (e.g., "YYYY-MM-DD")
