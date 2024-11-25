@@ -1,6 +1,7 @@
 use crate::{
     schema::{
-        admin::Admin, credit::Credit, cv::CVAnalysisMap, grammar::GrammarAnalysisMap, user::User,
+        admin::Admin, credit::Credit, cv::CVAnalysisMap, grammar::GrammarAnalysisMap,
+        setting::Setting, user::User,
     },
     CV_MEMORY_ID, GM_MEMORY_ID,
 };
@@ -33,5 +34,8 @@ thread_local! {
     ));
 
     pub static CREDIT_MAP: RefCell<StableBTreeMap<String, Credit, DefaultMemoryImpl>> =
+    RefCell::new(StableBTreeMap::init(DefaultMemoryImpl::default()));
+
+    pub static SETTING_MAP: RefCell<StableBTreeMap<String, Setting, DefaultMemoryImpl>> =
     RefCell::new(StableBTreeMap::init(DefaultMemoryImpl::default()));
 }
