@@ -51,7 +51,13 @@ pub struct Error {
 }
 
 #[derive(CandidType, Deserialize)]
+pub enum CreditResponseOk {
+    Message(String),
+    Credit(Credit),
+}
+
+#[derive(CandidType, Deserialize)]
 pub enum CreditResponse {
-    Ok(Credit),
+    Ok(CreditResponseOk),
     Err(Error),
 }
