@@ -1,3 +1,4 @@
+pub mod admin;
 pub mod credit;
 pub mod cv;
 pub mod grammar;
