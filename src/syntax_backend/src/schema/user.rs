@@ -6,24 +6,20 @@ use std::borrow::Cow;
 const MAX_VALUE_SIZE: u32 = 1000000;
 pub const NO_USER_FOUND: &str = "No user with this ID was found!";
 pub const ID_GENERATION_FAILED: &str = "There was an error while generating the ID for this user!";
-
-#[derive(Serialize, Deserialize, CandidType, Debug, Clone)]
-pub enum UserPlan {
-    FREE,
-    PREMIUM,
-}
+pub const FREE_PLAN: &str = "FREE";
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct User {
     pub id: String,
-    pub plan: UserPlan,
     pub cv_last_checked: Option<String>,
+    pub amount_of_credits: u64,
     pub other: UserInput,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct UserInput {
     pub bio: Option<BioData>,
+    pub plan: String,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone, Default)]
