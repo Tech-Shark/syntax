@@ -1,6 +1,6 @@
 use candid::{CandidType, Decode, Encode};
-use serde::{Serialize, Deserialize};
 use ic_stable_structures::storable::{Bound, Storable};
+use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
 
@@ -81,11 +81,29 @@ pub struct GrammarAnalysisMap {
 // Implement Storable for CVAnalysisList
 impl Storable for GrammarAnalysisMap {
     fn to_bytes(&self) -> Cow<[u8]> {
-        Cow::Owned(Encode!(self).unwrap())
+        match Encode!(self) {
+            Ok(bytes) => Cow::Owned(bytes),
+            Err(err) => {
+                ic_cdk::api::print(format!(
+                    "Failed to encode GrammarAnalysisMap: {} \nSelf is: {:#?}",
+                    err, &self
+                ));
+                panic!("Encoding GrammarAnalysisMap failed");
+            }
+        }
     }
 
     fn from_bytes(bytes: Cow<[u8]>) -> Self {
-        Decode!(bytes.as_ref(), Self).unwrap()
+        match Decode!(bytes.as_ref(), Self) {
+            Ok(user) => user,
+            Err(err) => {
+                ic_cdk::api::print(format!(
+                    "Failed to decode GrammarAnalysisMap: {} \nBytes is: {:#?}",
+                    err, &bytes
+                ));
+                panic!("Decoding GrammarAnalysisMap failed");
+            }
+        }
     }
 
     const BOUND: Bound = Bound::Bounded {
@@ -110,4 +128,3 @@ pub enum GrammarResponse {
     Ok(GrammarAnalysisResponse),
     Err(Error),
 }
-
