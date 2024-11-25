@@ -3,7 +3,10 @@ use crate::{
         setting::{Setting, SETTING_KEY},
         user::{BioData, User, UserInput},
     },
-    storage::{self, thread_local::SETTING_MAP},
+    storage::{
+        self,
+        thread_local::{CREDIT_MAP, SETTING_MAP},
+    },
 };
 use hex;
 use ic_cdk::api::management_canister::main::raw_rand;
@@ -159,4 +162,17 @@ pub fn load_default_setting() -> String {
     });
 
     "Try agin!".to_string()
+}
+
+pub fn plan_is_valid(input_tier: &String) -> bool {
+    let valid_tier = CREDIT_MAP
+        .with(|map| {
+            map.borrow()
+                .iter()
+                .map(|(_, value)| value.name.unwrap())
+                .collect::<Vec<String>>()
+        })
+        .contains(&input_tier);
+
+    valid_tier
 }

@@ -1,5 +1,6 @@
 use super::util::{
     generate_random_string, map_biodata_for_add_new_user, map_biodata_for_update_user,
+    plan_is_valid,
 };
 use crate::{
     schema::{
@@ -41,6 +42,7 @@ async fn get_single_user(principal: String) -> UserResponse {
 #[ic_cdk::update]
 async fn add_new_user(profile: UserInput) -> UserResponse {
     let input_tier = profile.clone().plan;
+    let valid_tier = plan_is_valid(&input_tier);
 
     let total_users = USER_MAP.with(|map| {
         map.borrow()
@@ -55,15 +57,6 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
             .get(&SETTING_KEY.to_string())
             .unwrap_or_default()
     });
-
-    let valid_tier = CREDIT_MAP
-        .with(|map| {
-            map.borrow()
-                .iter()
-                .map(|(_, value)| value.name.unwrap())
-                .collect::<Vec<String>>()
-        })
-        .contains(&input_tier);
 
     if !valid_tier {
         return UserResponse::Err(Error {
@@ -106,15 +99,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
 #[ic_cdk::update]
 async fn update_user(principal: String, profile: UserInput) -> UserResponse {
     let input_tier = profile.clone().plan;
-
-    let valid_tier = CREDIT_MAP
-        .with(|map| {
-            map.borrow()
-                .iter()
-                .map(|(_, value)| value.name.unwrap())
-                .collect::<Vec<String>>()
-        })
-        .contains(&input_tier);
+    let valid_tier = plan_is_valid(&input_tier);
 
     if !valid_tier {
         return UserResponse::Err(Error {
