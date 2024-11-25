@@ -65,13 +65,13 @@ pub struct Error {
 }
 
 #[derive(CandidType, Deserialize)]
-pub enum AdminResponse {
-    Ok(Admin),
-    Err(Error),
+pub enum AdminResponseOk {
+    Message(String),
+    Admin(Admin),
 }
 
 #[derive(CandidType, Deserialize)]
-pub enum AdminAuthResponse {
-    Ok(String),
+pub enum AdminResponse {
+    Ok(AdminResponseOk),
     Err(Error),
 }

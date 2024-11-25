@@ -1,8 +1,8 @@
-use super::util::{generate_random_string, load_default_setting_on_admin};
+use super::util::{generate_random_string, load_default_setting};
 use crate::{
     schema::{
         admin::{
-            Admin, AdminAuthResponse, AdminInput, AdminPlan, AdminResponse, Error,
+            Admin, AdminInput, AdminPlan, AdminResponse, AdminResponseOk, Error,
             ID_GENERATION_FAILED, INVALID_AUTH, NO_ADMIN_FOUND,
         },
         setting::SETTING_KEY,
@@ -31,7 +31,7 @@ async fn get_all_admin_profile() -> Vec<Admin> {
 #[ic_cdk::query]
 async fn get_single_admin(principal: String) -> AdminResponse {
     match ADMIN_MAP.with(|map| map.borrow().get(&principal)) {
-        Some(data) => AdminResponse::Ok(data),
+        Some(data) => AdminResponse::Ok(AdminResponseOk::Admin(data)),
         None => AdminResponse::Err(Error {
             message: NO_ADMIN_FOUND.to_string(),
         }),
@@ -61,7 +61,7 @@ async fn add_new_admin(_profile: AdminInput) -> AdminResponse {
             .insert(admin_id.unwrap(), admin_profile.clone())
     });
 
-    AdminResponse::Ok(admin_profile)
+    AdminResponse::Ok(AdminResponseOk::Admin(admin_profile))
 }
 
 #[ic_cdk::update]
@@ -80,7 +80,7 @@ async fn update_admin(principal: String, profile: AdminInput) -> AdminResponse {
                 None => AdminResponse::Err(Error {
                     message: NO_ADMIN_FOUND.to_string(),
                 }),
-                Some(_) => AdminResponse::Ok(updated_data),
+                Some(_) => AdminResponse::Ok(AdminResponseOk::Admin(updated_data)),
             }
         }
         None => AdminResponse::Err(Error {
@@ -93,83 +93,99 @@ async fn update_admin(principal: String, profile: AdminInput) -> AdminResponse {
 /*                                      -                                     */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
-/*                               Clear Data Map                               */
+/*                               CLEAR DATA MAP                               */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
 /*                                      -                                     */
 /* -------------------------------------------------------------------------- */
 
 #[ic_cdk::update]
-async fn remove_all_user(pwd: String) -> AdminAuthResponse {
+async fn remove_all_user(pwd: String) -> AdminResponse {
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
-        None => load_default_setting_on_admin(),
+        None => AdminResponse::Err(Error {
+            message: load_default_setting(),
+        }),
 
         Some(data) => {
             if data.password.value != pwd {
-                AdminAuthResponse::Err(Error {
+                AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
             } else {
                 USER_MAP.with(|map| map.borrow_mut().clear_new());
 
-                AdminAuthResponse::Ok("User map has been cleared!".to_string())
+                AdminResponse::Ok(AdminResponseOk::Message(
+                    "User map has been cleared!".to_string(),
+                ))
             }
         }
     }
 }
 
 #[ic_cdk::update]
-async fn remove_all_credit(pwd: String) -> AdminAuthResponse {
+async fn remove_all_credit(pwd: String) -> AdminResponse {
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
-        None => load_default_setting_on_admin(),
+        None => AdminResponse::Err(Error {
+            message: load_default_setting(),
+        }),
 
         Some(data) => {
             if data.password.value != pwd {
-                AdminAuthResponse::Err(Error {
+                AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
             } else {
                 CREDIT_MAP.with(|map| map.borrow_mut().clear_new());
 
-                AdminAuthResponse::Ok("Credit map has been cleared!".to_string())
+                AdminResponse::Ok(AdminResponseOk::Message(
+                    "Credit map has been cleared!".to_string(),
+                ))
             }
         }
     }
 }
 
 #[ic_cdk::update]
-async fn remove_all_cv_analysis(pwd: String) -> AdminAuthResponse {
+async fn remove_all_cv_analysis(pwd: String) -> AdminResponse {
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
-        None => load_default_setting_on_admin(),
+        None => AdminResponse::Err(Error {
+            message: load_default_setting(),
+        }),
 
         Some(data) => {
             if data.password.value != pwd {
-                AdminAuthResponse::Err(Error {
+                AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
             } else {
                 CV_STORAGE_MAP.with(|map| map.borrow_mut().clear_new());
 
-                AdminAuthResponse::Ok("CV Analysis map has been cleared!".to_string())
+                AdminResponse::Ok(AdminResponseOk::Message(
+                    "CV Analysis map has been cleared!".to_string(),
+                ))
             }
         }
     }
 }
 
 #[ic_cdk::update]
-async fn remove_all_grammar(pwd: String) -> AdminAuthResponse {
+async fn remove_all_grammar(pwd: String) -> AdminResponse {
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
-        None => load_default_setting_on_admin(),
+        None => AdminResponse::Err(Error {
+            message: load_default_setting(),
+        }),
 
         Some(data) => {
             if data.password.value != pwd {
-                AdminAuthResponse::Err(Error {
+                AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
             } else {
                 GRAMMAR_MAP.with(|map| map.borrow_mut().clear_new());
 
-                AdminAuthResponse::Ok("Grammar map has been cleared!".to_string())
+                AdminResponse::Ok(AdminResponseOk::Message(
+                    "Grammar map has been cleared!".to_string(),
+                ))
             }
         }
     }

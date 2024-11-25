@@ -1,6 +1,5 @@
 use crate::{
     schema::{
-        admin::AdminAuthResponse,
         setting::{Setting, SETTING_KEY},
         user::{BioData, User, UserInput},
     },
@@ -152,12 +151,12 @@ pub fn map_biodata_for_update_user(profile: UserInput, user: User) -> std::optio
     })
 }
 
-pub fn load_default_setting_on_admin() -> AdminAuthResponse {
+pub fn load_default_setting() -> String {
     // Add the default setting to the tree if it doesn't exist
     SETTING_MAP.with(|map| {
         map.borrow_mut()
             .insert(SETTING_KEY.to_string(), Setting::default())
     });
 
-    AdminAuthResponse::Ok("Try agin!".to_string())
+    "Try agin!".to_string()
 }
