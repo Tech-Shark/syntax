@@ -6,6 +6,7 @@ use std::borrow::Cow;
 const MAX_VALUE_SIZE: u32 = 1000000;
 pub const NO_ADMIN_FOUND: &str = "No admin with this ID was found!";
 pub const ID_GENERATION_FAILED: &str = "There was an error while generating the ID for this admin!";
+pub const INVALID_AUTH: &str = "Invalid auth password!";
 
 #[derive(Serialize, Deserialize, CandidType, Debug, Clone)]
 pub enum AdminPlan {
@@ -66,5 +67,11 @@ pub struct Error {
 #[derive(CandidType, Deserialize)]
 pub enum AdminResponse {
     Ok(Admin),
+    Err(Error),
+}
+
+#[derive(CandidType, Deserialize)]
+pub enum AdminAuthResponse {
+    Ok(String),
     Err(Error),
 }

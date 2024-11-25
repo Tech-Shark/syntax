@@ -2,10 +2,13 @@ use super::util::{
     generate_random_string, map_biodata_for_add_new_user, map_biodata_for_update_user,
 };
 use crate::{
-    schema::user::{
-        Error, User, UserInput, UserPlan, UserResponse, ID_GENERATION_FAILED, NO_USER_FOUND,
+    schema::{
+        setting::SETTING_KEY,
+        user::{
+            Error, User, UserInput, UserPlan, UserResponse, ID_GENERATION_FAILED, NO_USER_FOUND,
+        },
     },
-    storage::thread_local::USER_MAP,
+    storage::thread_local::{SETTING_MAP, USER_MAP},
 };
 
 #[ic_cdk::query]
@@ -37,7 +40,13 @@ async fn get_single_user(principal: String) -> UserResponse {
 #[ic_cdk::update]
 async fn add_new_user(profile: UserInput) -> UserResponse {
     let total_users: u64 = USER_MAP.with(|map| map.borrow().len());
-    if total_users >= 150 {
+    let setting = SETTING_MAP.with(|map| {
+        map.borrow()
+            .get(&SETTING_KEY.to_string())
+            .unwrap_or_default()
+    });
+
+    if total_users >= setting.max_freemium_users.value {
         return UserResponse::Err(Error {
             message: "Maximum number of users on the free plan has been exhausted!".to_string(),
         });

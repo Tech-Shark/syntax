@@ -64,6 +64,7 @@ type UserInput = record {
 type User = record {
     id : text;
     plan : UserPlan;
+    cv_last_checked : opt text;
     other : UserInput;
 };
 
@@ -79,6 +80,31 @@ type UserBio = record {
     linkedin : opt text;
     github : opt text;
     summary : opt text;
+};
+
+type AdminPlan = variant {
+    READ;
+    EDIT;
+};
+
+type AdminResponse = variant {
+    Ok : Admin;
+    Err : Error;
+};
+
+type AdminAuthResponse = variant {
+    Ok : text;
+    Err : Error;
+};
+
+type AdminInput = record {
+    plan : opt AdminPlan;
+    bio : opt text;
+};
+
+type Admin = record {
+    id : text;
+    other : AdminInput;
 };
 
 type Credit = record {
@@ -109,8 +135,18 @@ service : {
     get_single_user : (id : text) -> (UserResponse);
     get_all_user_profile : () -> (vec User);
 
+    add_new_admin : (profile : AdminInput) -> (AdminResponse);
+    update_admin : (id : text, new_profile_changes : AdminInput) -> (AdminResponse);
+    get_single_admin : (id : text) -> (AdminResponse);
+    get_all_admin_profile : () -> (vec Admin);
+
     get_all_credit_plan : () -> (vec Credit);
     add_single_credit_plan : (plan : text, credit : nat16) -> (CreditResponse);
     update_single_credit_plan : (plan : text, credit : nat16) -> (CreditResponse);
     delete_single_credit_plan : (plan : text) -> (CreditResponse);
+
+    remove_all_user : (pwd : text) -> (AdminAuthResponse);
+    remove_all_credit : (pwd : text) -> (AdminAuthResponse);
+    remove_all_cv_analysis : (pwd : text) -> (AdminAuthResponse);
+    remove_all_grammar : (pwd : text) -> (AdminAuthResponse);
 };

@@ -1,6 +1,10 @@
 use crate::{
-    schema::user::{BioData, User, UserInput},
-    storage,
+    schema::{
+        admin::AdminAuthResponse,
+        setting::{Setting, SETTING_KEY},
+        user::{BioData, User, UserInput},
+    },
+    storage::{self, thread_local::SETTING_MAP},
 };
 use hex;
 use ic_cdk::api::management_canister::main::raw_rand;
@@ -146,4 +150,14 @@ pub fn map_biodata_for_update_user(profile: UserInput, user: User) -> std::optio
             .summary
             .or_else(|| user.clone().other.bio.unwrap().summary),
     })
+}
+
+pub fn load_default_setting_on_admin() -> AdminAuthResponse {
+    // Add the default setting to the tree if it doesn't exist
+    SETTING_MAP.with(|map| {
+        map.borrow_mut()
+            .insert(SETTING_KEY.to_string(), Setting::default())
+    });
+
+    AdminAuthResponse::Ok("Try agin!".to_string())
 }

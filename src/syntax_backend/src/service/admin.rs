@@ -1,9 +1,15 @@
-use super::util::generate_random_string;
+use super::util::{generate_random_string, load_default_setting_on_admin};
 use crate::{
-    schema::admin::{
-        Admin, AdminInput, AdminPlan, AdminResponse, Error, ID_GENERATION_FAILED, NO_ADMIN_FOUND,
+    schema::{
+        admin::{
+            Admin, AdminAuthResponse, AdminInput, AdminPlan, AdminResponse, Error,
+            ID_GENERATION_FAILED, INVALID_AUTH, NO_ADMIN_FOUND,
+        },
+        setting::SETTING_KEY,
     },
-    storage::thread_local::ADMIN_MAP,
+    storage::thread_local::{
+        ADMIN_MAP, CREDIT_MAP, CV_STORAGE_MAP, GRAMMAR_MAP, SETTING_MAP, USER_MAP,
+    },
 };
 
 #[ic_cdk::query]
@@ -80,5 +86,91 @@ async fn update_admin(principal: String, profile: AdminInput) -> AdminResponse {
         None => AdminResponse::Err(Error {
             message: NO_ADMIN_FOUND.to_string(),
         }),
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                               Clear Data Map                               */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+#[ic_cdk::update]
+async fn remove_all_user(pwd: String) -> AdminAuthResponse {
+    match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
+        None => load_default_setting_on_admin(),
+
+        Some(data) => {
+            if data.password.value != pwd {
+                AdminAuthResponse::Err(Error {
+                    message: INVALID_AUTH.to_string(),
+                })
+            } else {
+                USER_MAP.with(|map| map.borrow_mut().clear_new());
+
+                AdminAuthResponse::Ok("User map has been cleared!".to_string())
+            }
+        }
+    }
+}
+
+#[ic_cdk::update]
+async fn remove_all_credit(pwd: String) -> AdminAuthResponse {
+    match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
+        None => load_default_setting_on_admin(),
+
+        Some(data) => {
+            if data.password.value != pwd {
+                AdminAuthResponse::Err(Error {
+                    message: INVALID_AUTH.to_string(),
+                })
+            } else {
+                CREDIT_MAP.with(|map| map.borrow_mut().clear_new());
+
+                AdminAuthResponse::Ok("Credit map has been cleared!".to_string())
+            }
+        }
+    }
+}
+
+#[ic_cdk::update]
+async fn remove_all_cv_analysis(pwd: String) -> AdminAuthResponse {
+    match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
+        None => load_default_setting_on_admin(),
+
+        Some(data) => {
+            if data.password.value != pwd {
+                AdminAuthResponse::Err(Error {
+                    message: INVALID_AUTH.to_string(),
+                })
+            } else {
+                CV_STORAGE_MAP.with(|map| map.borrow_mut().clear_new());
+
+                AdminAuthResponse::Ok("CV Analysis map has been cleared!".to_string())
+            }
+        }
+    }
+}
+
+#[ic_cdk::update]
+async fn remove_all_grammar(pwd: String) -> AdminAuthResponse {
+    match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
+        None => load_default_setting_on_admin(),
+
+        Some(data) => {
+            if data.password.value != pwd {
+                AdminAuthResponse::Err(Error {
+                    message: INVALID_AUTH.to_string(),
+                })
+            } else {
+                GRAMMAR_MAP.with(|map| map.borrow_mut().clear_new());
+
+                AdminAuthResponse::Ok("Grammar map has been cleared!".to_string())
+            }
+        }
     }
 }
