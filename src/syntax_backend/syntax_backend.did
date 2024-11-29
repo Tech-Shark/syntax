@@ -99,6 +99,7 @@ type UserResponse = variant {
 
 type UserInput = record {
     bio : opt UserBio;
+    plan : text;
 };
 
 type User = record {
@@ -193,6 +194,8 @@ type CreditResponse = variant {
 /* -------------------------------------------------------------------------- */
 
 service : {
+    init : () -> ();
+
     analyze_cv : (text, CVUserInput) -> (CVResponse);
     get_cv_analysis : (text, text) -> (CVResponse);
     get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse);
