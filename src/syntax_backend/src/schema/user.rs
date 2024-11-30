@@ -24,16 +24,16 @@ pub struct UserInput {
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone, Default)]
 pub struct BioData {
-    pub full_name: Option<String>,      // Full name of the individual
-    pub date_of_birth: Option<String>,  // Date of birth in ISO format (e.g., "YYYY-MM-DD")
-    pub contact_number: Option<String>, // Phone number
-    pub email: Option<String>,          // Email address
     pub address: Option<String>,        // Residential address
-    pub nationality: Option<String>,    // Nationality
-    pub marital_status: Option<String>, // Marital status (e.g., Single, Married)
-    pub linkedin: Option<String>,       // LinkedIn profile URL
-    pub github: Option<String>,         // GitHub profile URL
+    pub contact_number: Option<String>, // Phone number
+    pub date_of_birth: Option<String>,  // Date of birth in ISO format (e.g., "YYYY-MM-DD")
     pub education: Option<String>,      // Education details
+    pub email: Option<String>,          // Email address
+    pub full_name: Option<String>,      // Full name of the individual
+    pub github: Option<String>,         // GitHub profile URL
+    pub linkedin: Option<String>,       // LinkedIn profile URL
+    pub marital_status: Option<String>, // Marital status (e.g., Single, Married)
+    pub nationality: Option<String>,    // Nationality
     pub summary: Option<String>,        // Short bio or summary
 }
 

@@ -87,11 +87,6 @@ type Error = record {
 /*                                      -                                     */
 /* -------------------------------------------------------------------------- */
 
-type UserPlan = variant {
-    FREE;
-    PREMIUM;
-};
-
 type UserResponse = variant {
     Ok : User;
     Err : Error;
@@ -104,22 +99,22 @@ type UserInput = record {
 
 type User = record {
     id : text;
-    plan : UserPlan;
     cv_last_checked : opt text;
+    amount_of_credits : nat64;
     other : UserInput;
 };
 
 type UserBio = record {
     address : opt text;
-    full_name : opt text;
-    date_of_birth : opt text;
     contact_number : opt text;
-    email : opt text;
-    nationality : opt text;
+    date_of_birth : opt text;
     education : opt text;
-    marital_status : opt text;
-    linkedin : opt text;
+    email : opt text;
+    full_name : opt text;
     github : opt text;
+    linkedin : opt text;
+    marital_status : opt text;
+    nationality : opt text;
     summary : opt text;
 };
 
@@ -170,7 +165,7 @@ type Admin = record {
 
 type Credit = record {
     name : opt text;
-    value : opt nat16;
+    value : opt nat64;
 };
 
 type CreditResponseOk = variant {
@@ -194,8 +189,6 @@ type CreditResponse = variant {
 /* -------------------------------------------------------------------------- */
 
 service : {
-    init : () -> ();
-
     analyze_cv : (text, CVUserInput) -> (CVResponse);
     get_cv_analysis : (text, text) -> (CVResponse);
     get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse);
@@ -212,6 +205,7 @@ service : {
     update_user : (id : text, new_profile_changes : UserInput) -> (UserResponse);
     get_single_user : (id : text) -> (UserResponse);
     get_all_user_profile : () -> (vec User);
+    add_credits_to_user : (id : text) -> (UserResponse);
 
     add_new_admin : (profile : AdminInput) -> (AdminResponse);
     update_admin : (id : text, new_profile_changes : AdminInput) -> (AdminResponse);
@@ -219,8 +213,8 @@ service : {
     get_all_admin_profile : () -> (vec Admin);
 
     get_all_credit_plan : () -> (vec Credit);
-    add_single_credit_plan : (plan : text, credit : nat16, pwd : text) -> (CreditResponse);
-    update_single_credit_plan : (plan : text, credit : nat16, pwd : text) -> (CreditResponse);
+    add_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
+    update_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
     delete_single_credit_plan : (plan : text, pwd : text) -> (CreditResponse);
 
     remove_all_user : (pwd : text) -> (AdminResponse);

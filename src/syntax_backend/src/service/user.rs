@@ -4,7 +4,7 @@ use super::util::{
 };
 use crate::{
     schema::{
-        credit::NO_CREDIT_PLAN_FOUND,
+        credit::INVALID_CREDIT_PLAN,
         setting::SETTING_KEY,
         user::{
             Error, User, UserInput, UserResponse, FREE_PLAN, ID_GENERATION_FAILED, NO_USER_FOUND,
@@ -22,11 +22,7 @@ async fn get_all_user_profile() -> Vec<User> {
             .collect::<Vec<User>>()
     });
 
-    if res.len() < 1 {
-        vec![]
-    } else {
-        res
-    }
+    res
 }
 
 #[ic_cdk::query]
@@ -60,7 +56,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
 
     if !valid_tier {
         return UserResponse::Err(Error {
-            message: NO_CREDIT_PLAN_FOUND.to_string(),
+            message: INVALID_CREDIT_PLAN.to_string(),
         });
     }
 
@@ -84,7 +80,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
         amount_of_credits: 0,
         other: UserInput {
             bio: map_biodata_for_add_new_user(profile.clone()),
-            plan: FREE_PLAN.to_string(),
+            plan: input_tier,
         },
     };
 
@@ -103,7 +99,7 @@ async fn update_user(principal: String, profile: UserInput) -> UserResponse {
 
     if !valid_tier {
         return UserResponse::Err(Error {
-            message: NO_CREDIT_PLAN_FOUND.to_string(),
+            message: INVALID_CREDIT_PLAN.to_string(),
         });
     }
 
@@ -122,6 +118,39 @@ async fn update_user(principal: String, profile: UserInput) -> UserResponse {
                     message: NO_USER_FOUND.to_string(),
                 }),
                 Some(_) => UserResponse::Ok(updated_data),
+            }
+        }
+        None => UserResponse::Err(Error {
+            message: NO_USER_FOUND.to_string(),
+        }),
+    }
+}
+
+#[ic_cdk::update]
+async fn add_credits_to_user(principal: String) -> UserResponse {
+    match USER_MAP.with(|map| map.borrow().get(&principal)) {
+        Some(data) => {
+            // Get Credits
+            match CREDIT_MAP.with(|map| map.borrow().get(&data.other.plan)) {
+                None => UserResponse::Err(Error {
+                    message: INVALID_CREDIT_PLAN.to_string(),
+                }),
+
+                Some(plan) => {
+                    let updated_data = User {
+                        amount_of_credits: data.amount_of_credits + plan.value.unwrap_or(0),
+                        ..data
+                    };
+
+                    match USER_MAP
+                        .with(|map| map.borrow_mut().insert(principal, updated_data.clone()))
+                    {
+                        None => UserResponse::Err(Error {
+                            message: NO_USER_FOUND.to_string(),
+                        }),
+                        Some(_) => UserResponse::Ok(updated_data),
+                    }
+                }
             }
         }
         None => UserResponse::Err(Error {
