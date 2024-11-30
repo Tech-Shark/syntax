@@ -2,7 +2,7 @@ use super::util::{generate_random_string, load_default_setting};
 use crate::{
     schema::{
         admin::{
-            Admin, AdminInput, AdminPlan, AdminResponse, AdminResponseOk, Error,
+            Admin, AdminInput, AdminResponse, AdminResponseOk, AdminRole, Error,
             ID_GENERATION_FAILED, INVALID_AUTH, NO_ADMIN_FOUND,
         },
         setting::SETTING_KEY,
@@ -48,7 +48,7 @@ async fn add_new_admin(_profile: AdminInput) -> AdminResponse {
         id: admin_id.clone().unwrap(),
         other: AdminInput {
             bio: None,
-            plan: Some(AdminPlan::READ),
+            plan: Some(AdminRole::READ),
         },
     };
 
@@ -66,7 +66,7 @@ async fn update_admin(principal: String, profile: AdminInput) -> AdminResponse {
         Some(data) => {
             let updated_data = Admin {
                 other: AdminInput {
-                    plan: profile.plan.or_else(|| Some(AdminPlan::READ)),
+                    plan: profile.plan.or_else(|| Some(AdminRole::READ)),
                     bio: profile.bio,
                 },
                 ..data

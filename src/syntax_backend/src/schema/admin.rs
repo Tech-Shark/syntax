@@ -9,7 +9,7 @@ pub const ID_GENERATION_FAILED: &str = "There was an error while generating the 
 pub const INVALID_AUTH: &str = "Invalid auth password!";
 
 #[derive(Serialize, Deserialize, CandidType, Debug, Clone)]
-pub enum AdminPlan {
+pub enum AdminRole {
     READ,
     WRITE,
 }
@@ -22,7 +22,7 @@ pub struct Admin {
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone, Default)]
 pub struct AdminInput {
-    pub plan: Option<AdminPlan>,
+    pub plan: Option<AdminRole>,
     pub bio: Option<String>,
 }
 
