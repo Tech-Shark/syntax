@@ -21,11 +21,7 @@ async fn get_all_admin_profile() -> Vec<Admin> {
             .collect::<Vec<Admin>>()
     });
 
-    if res.len() < 1 {
-        vec![]
-    } else {
-        res
-    }
+    res
 }
 
 #[ic_cdk::query]

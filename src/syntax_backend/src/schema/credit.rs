@@ -5,11 +5,13 @@ use std::borrow::Cow;
 
 const MAX_VALUE_SIZE: u32 = 1000000;
 pub const NO_CREDIT_PLAN_FOUND: &str = "No credit plan was found!";
+pub const INSUFFICIENT_CREDIT: &str = "No enough credit to perform this operation!";
+pub const INVALID_CREDIT_PLAN: &str = "Invalid credit plan!";
 
 #[derive(Serialize, Deserialize, CandidType, Debug, Clone)]
 pub struct Credit {
     pub name: Option<String>,
-    pub value: Option<u16>,
+    pub value: Option<u64>,
 }
 
 impl Storable for Credit {

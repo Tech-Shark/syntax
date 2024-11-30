@@ -22,7 +22,9 @@ async fn get_all_credit_plan() -> Vec<Credit> {
 }
 
 #[ic_cdk::update]
-async fn add_single_credit_plan(plan: String, credit: u16, pwd: String) -> CreditResponse {
+async fn add_single_credit_plan(plan: String, credit: u64, pwd: String) -> CreditResponse {
+    let new_credit = if credit < 1 { 1 } else { credit };
+
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
         None => CreditResponse::Err(Error {
             message: load_default_setting(),
@@ -36,7 +38,7 @@ async fn add_single_credit_plan(plan: String, credit: u16, pwd: String) -> Credi
             } else {
                 let updated_data = Credit {
                     name: Some(plan.clone()),
-                    value: Some(credit),
+                    value: Some(new_credit),
                 };
 
                 CREDIT_MAP.with(|map| map.borrow_mut().insert(plan, updated_data.clone()));
@@ -48,7 +50,7 @@ async fn add_single_credit_plan(plan: String, credit: u16, pwd: String) -> Credi
 }
 
 #[ic_cdk::update]
-async fn update_single_credit_plan(plan: String, credit: u16, pwd: String) -> CreditResponse {
+async fn update_single_credit_plan(plan: String, credit: u64, pwd: String) -> CreditResponse {
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
         None => CreditResponse::Err(Error {
             message: load_default_setting(),
