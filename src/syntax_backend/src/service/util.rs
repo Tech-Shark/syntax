@@ -1,6 +1,12 @@
 use crate::{
-    schema::user::{BioData, User, UserInput},
-    storage,
+    schema::{
+        setting::{Setting, SETTING_KEY},
+        user::{BioData, User, UserInput, FREE_PLAN, NO_USER_FOUND},
+    },
+    storage::{
+        self,
+        thread_local::{CREDIT_MAP, SETTING_MAP, USER_MAP},
+    },
 };
 use hex;
 use ic_cdk::api::management_canister::main::raw_rand;
@@ -63,17 +69,17 @@ pub fn get_current_time() -> OffsetDateTime {
 
 pub fn map_biodata_for_add_new_user(profile: UserInput) -> std::option::Option<BioData> {
     Some(BioData {
-        address: profile.clone().bio.unwrap().address,
-        full_name: profile.clone().bio.unwrap().full_name,
-        date_of_birth: profile.clone().bio.unwrap().date_of_birth,
-        contact_number: profile.clone().bio.unwrap().contact_number,
-        email: profile.clone().bio.unwrap().email,
-        nationality: profile.clone().bio.unwrap().nationality,
-        education: profile.clone().bio.unwrap().education,
-        marital_status: profile.clone().bio.unwrap().marital_status,
-        linkedin: profile.clone().bio.unwrap().linkedin,
-        github: profile.clone().bio.unwrap().github,
-        summary: profile.clone().bio.unwrap().summary,
+        address: profile.clone().bio.unwrap_or_default().address,
+        full_name: profile.clone().bio.unwrap_or_default().full_name,
+        date_of_birth: profile.clone().bio.unwrap_or_default().date_of_birth,
+        contact_number: profile.clone().bio.unwrap_or_default().contact_number,
+        email: profile.clone().bio.unwrap_or_default().email,
+        nationality: profile.clone().bio.unwrap_or_default().nationality,
+        education: profile.clone().bio.unwrap_or_default().education,
+        marital_status: profile.clone().bio.unwrap_or_default().marital_status,
+        linkedin: profile.clone().bio.unwrap_or_default().linkedin,
+        github: profile.clone().bio.unwrap_or_default().github,
+        summary: profile.clone().bio.unwrap_or_default().summary,
     })
 }
 
@@ -82,68 +88,114 @@ pub fn map_biodata_for_update_user(profile: UserInput, user: User) -> std::optio
         address: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .address
-            .or_else(|| user.clone().other.bio.unwrap().address),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().address),
         full_name: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .full_name
-            .or_else(|| user.clone().other.bio.unwrap().full_name),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().full_name),
         date_of_birth: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .date_of_birth
-            .or_else(|| user.clone().other.bio.unwrap().date_of_birth),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().date_of_birth),
         contact_number: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .contact_number
-            .or_else(|| user.clone().other.bio.unwrap().contact_number),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().contact_number),
         email: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .email
-            .or_else(|| user.clone().other.bio.unwrap().email),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().email),
         nationality: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .nationality
-            .or_else(|| user.clone().other.bio.unwrap().nationality),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().nationality),
         education: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .education
-            .or_else(|| user.clone().other.bio.unwrap().education),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().education),
         marital_status: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .marital_status
-            .or_else(|| user.clone().other.bio.unwrap().marital_status),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().marital_status),
         linkedin: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .linkedin
-            .or_else(|| user.clone().other.bio.unwrap().linkedin),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().linkedin),
         github: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .github
-            .or_else(|| user.clone().other.bio.unwrap().github),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().github),
         summary: profile
             .clone()
             .bio
-            .unwrap()
+            .unwrap_or_default()
             .summary
-            .or_else(|| user.clone().other.bio.unwrap().summary),
+            .or_else(|| user.clone().other.bio.unwrap_or_default().summary),
     })
+}
+
+pub fn load_default_setting() -> String {
+    // Add the default setting to the tree if it doesn't exist
+    SETTING_MAP.with(|map| {
+        map.borrow_mut()
+            .insert(SETTING_KEY.to_string(), Setting::default())
+    });
+
+    "Try agin!".to_string()
+}
+
+pub fn plan_is_valid(input_tier: &String) -> bool {
+    let valid_tier = CREDIT_MAP
+        .with(|map| {
+            map.borrow()
+                .iter()
+                .filter(|(_key, value)| Option::is_some(&value.name))
+                .map(|(_, value)| value.name.unwrap())
+                .collect::<Vec<String>>()
+        })
+        .contains(&input_tier);
+
+    valid_tier
+}
+
+pub fn subtract_credit_from_user(user_id: &String) -> Option<String> {
+    match USER_MAP.with(|map| map.borrow().get(&user_id)) {
+        Some(data) => {
+            if data.other.plan != FREE_PLAN {
+                let updated_data = User {
+                    amount_of_credits: data.amount_of_credits - 1,
+                    ..data
+                };
+
+                USER_MAP.with(|map| {
+                    map.borrow_mut()
+                        .insert(user_id.to_string(), updated_data.clone())
+                });
+            }
+
+            None
+        }
+
+        None => Some(NO_USER_FOUND.to_string()),
+    }
 }
