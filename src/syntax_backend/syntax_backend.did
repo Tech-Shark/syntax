@@ -182,6 +182,140 @@ type CreditResponse = variant {
 /*                                      -                                     */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
+/*                         NOTIFICATION FOR EVERYBODY                         */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+type NotificationForEverybody = record {
+    id : text;
+    title : text;
+    body : text;
+    date_created : text;
+    category : opt text;
+};
+
+type NotificationForEverybodyInput = record {
+    title : text;
+    body : text;
+    category : opt text;
+};
+
+type NotificationForEverybodyResponseOk = variant {
+    NotificationForEverybody : NotificationForEverybody;
+    Message : text;
+};
+
+type NotificationForEverybodyResponse = variant {
+    Ok : NotificationForEverybodyResponseOk;
+    Err : Error;
+};
+
+type NotificationForEverybodyResponseVectorOk = variant {
+    NotificationForEverybody : vec NotificationForEverybody;
+    Message : text;
+};
+
+type NotificationForEverybodyResponseVector = variant {
+    Ok : NotificationForEverybodyResponseVectorOk;
+    Err : Error;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                        NOTIFICATION FOR SINGLE USER                        */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+type IndividualNotificationForSingleUser = record {
+    id : text;
+    title : text;
+    body : text;
+    date_created : text;
+    has_read : bool;
+    category : opt text;
+};
+
+type NotificationForSingleUser = record {
+    has_read : bool;
+    notifications : vec IndividualNotificationForSingleUserHashMap;
+};
+
+// Hashmap is "vec record {key_type; value_type;}"
+type IndividualNotificationForSingleUserHashMap = vec record {
+    text;
+    IndividualNotificationForSingleUser;
+};
+
+type NotificationForSingleUserInput = record {
+    title : text;
+    body : text;
+    category : opt text;
+};
+
+type NotificationForSingleUserResponseOk = variant {
+    Message : text;
+    NotificationForSingleUser : NotificationForSingleUser;
+};
+
+type NotificationForSingleUserResponse = variant {
+    Ok : NotificationForSingleUserResponseOk;
+    Err : Error;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                            NOTIFICATION FOR TIER                           */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+type NotificationForTier = record {
+    id : text;
+    title : text;
+    body : text;
+    date_created : text;
+    category : opt text;
+};
+
+type NotificationForTierInput = record {
+    title : text;
+    body : text;
+    category : opt text;
+    for_freemium : bool;
+};
+
+type NotificationForTierResponseOk = variant {
+    NotificationForTier : NotificationForTier;
+    Message : text;
+};
+
+type NotificationForTierResponse = variant {
+    Ok : NotificationForTierResponseOk;
+    Err : Error;
+};
+
+type NotificationForTierResponseVectorOk = variant {
+    NotificationForTier : vec NotificationForTier;
+    Message : text;
+};
+
+type NotificationForTierResponseVector = variant {
+    Ok : NotificationForTierResponseVectorOk;
+    Err : Error;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 /*                                   SERVICE                                  */
 /* -------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------- */
@@ -216,6 +350,15 @@ service : {
     add_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
     update_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
     delete_single_credit_plan : (plan : text, pwd : text) -> (CreditResponse);
+
+    get_all_notification_for_everybody : (id : text) -> (NotificationForEverybodyResponseVector);
+    add_new_notification_for_everybody : (payload : NotificationForEverybodyInput) -> (NotificationForEverybodyResponse);
+
+    get_all_notification_for_single_user : (id : text) -> (NotificationForSingleUserResponse);
+    add_new_notification_for_single_user : (id : text, payload : NotificationForSingleUserInput) -> (NotificationForSingleUserResponse);
+
+    get_all_notification_for_tier : (id : text) -> (NotificationForTierResponseVector);
+    add_new_notification_for_tier : (payload : NotificationForTierInput) -> (NotificationForTierResponse);
 
     remove_all_user : (pwd : text) -> (AdminResponse);
     remove_all_credit : (pwd : text) -> (AdminResponse);
