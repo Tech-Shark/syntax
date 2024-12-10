@@ -11,6 +11,7 @@ use crate::{
 use hex;
 use ic_cdk::api::management_canister::main::raw_rand;
 use time::{macros::format_description, Duration, OffsetDateTime, PrimitiveDateTime};
+pub const SOMETHING_WENT_WRONG: &str = "Something went wrong!";
 
 pub async fn generate_random_hex_string() -> Option<String> {
     match raw_rand().await {
