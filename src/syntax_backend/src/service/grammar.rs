@@ -1,7 +1,6 @@
-use std::str::FromStr;
-
-use crate::schema::grammar::{Error, GrammarAnalysisResponse,
-                             GrammarCheckResult, GrammarResponse, GrammarUserInput};
+use crate::schema::grammar::{
+    Error, GrammarAnalysisResponse, GrammarCheckResult, GrammarResponse, GrammarUserInput,
+};
 use crate::service::ai;
 use crate::storage;
 use crate::QUOTA_ERROR;
@@ -12,11 +11,9 @@ async fn analyze_grammar(principal: String, request: GrammarUserInput) -> Gramma
     let json_value = match json_value {
         Ok(json_value) => json_value,
         Err(e) => {
-            return GrammarResponse::Err(
-                Error {
-                    message: format!("error validating request: {e}"),
-                }
-            )
+            return GrammarResponse::Err(Error {
+                message: format!("error validating request: {e}"),
+            })
         }
     };
     let response = ai::call_ai_service(json_value, "grammar-analysis").await;
@@ -24,31 +21,26 @@ async fn analyze_grammar(principal: String, request: GrammarUserInput) -> Gramma
     let result: GrammarCheckResult = match result {
         Ok(result) => result,
         Err(e) => {
-            return GrammarResponse::Err(
-                Error {
-                    message: format!("error validating result, string response {response}: {e}"),
-                }
-            )
+            return GrammarResponse::Err(Error {
+                message: format!("error validating result, string response {response}: {e}"),
+            })
         }
     };
 
-    let idx = storage::grammar::add_grammar_analysis(principal, request.clone(), result.clone()).await;
+    let idx =
+        storage::grammar::add_grammar_analysis(principal, request.clone(), result.clone()).await;
     if idx.is_none() {
-        GrammarResponse::Err(
-            Error{
-                message: "error storing analysis".to_string(),
-            }
-        )
-    }else {
+        GrammarResponse::Err(Error {
+            message: "error storing analysis".to_string(),
+        })
+    } else {
         let val = idx.unwrap();
         if val.to_string() == QUOTA_ERROR.to_string() {
-            return GrammarResponse::Err(
-                Error{
-                    message: "Quota Error: number of trails exceeded.".to_string(),
-                }
-            );
+            return GrammarResponse::Err(Error {
+                message: "Quota Error: number of trails exceeded.".to_string(),
+            });
         }
-        GrammarResponse::Ok(GrammarAnalysisResponse{
+        GrammarResponse::Ok(GrammarAnalysisResponse {
             idx: val,
             request,
             result,
@@ -61,12 +53,10 @@ fn get_grammar_analysis(principal: String, idx: String) -> GrammarResponse {
     let result = storage::grammar::fetch_grammar_analysis(principal, idx);
     if let Some(res) = result {
         GrammarResponse::Ok(res)
-    }else {
-        GrammarResponse::Err(
-            Error{
-                message: "analysis not found".to_string(),
-            }
-        )
+    } else {
+        GrammarResponse::Err(Error {
+            message: "analysis not found".to_string(),
+        })
     }
 }
 
@@ -81,8 +71,11 @@ fn delete_grammar_analysis(principal: String, idx: String) -> String {
 }
 
 #[ic_cdk::update]
-fn update_grammar_analysis(principal: String, idx: String, user_input: GrammarUserInput,
-                           result: GrammarCheckResult) -> String {
+fn update_grammar_analysis(
+    principal: String,
+    idx: String,
+    user_input: GrammarUserInput,
+    result: GrammarCheckResult,
+) -> String {
     storage::grammar::put_grammar_analysis(principal, idx, user_input, result)
 }
-

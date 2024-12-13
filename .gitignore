@@ -1,5 +1,4 @@
 # Various IDEs and Editors
-.vscode/
 .idea/
 **/*~
 
@@ -24,4 +23,7 @@ dist/
 .svelte-kit/
 
 # environment variables
-.env
+
+#local
+my_local
+config.bat
