@@ -1,8 +1,12 @@
-type CVUserInput = record {
-    job_title : text;
-    job_description : text;
-    cv_text: text;
-};
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                  ANALYSIS                                  */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
 
 type AnalysisResult = record {
     skills : text;
@@ -10,16 +14,42 @@ type AnalysisResult = record {
     professional_summary : text;
 };
 
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                     CV                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
 type CVAnalysisResponse = record {
     idx : text;
     request : CVUserInput;
     result : AnalysisResult;
 };
 
-type CVResponse = variant {
-  Ok: CVAnalysisResponse;
-  Err: Error;
+type CVUserInput = record {
+    job_title : text;
+    job_description : text;
+    cv_text : text;
 };
+
+type CVResponse = variant {
+    Ok : CVAnalysisResponse;
+    Err : Error;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                   GRAMMAR                                  */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
 
 type GrammarUserInput = record {
     text : text;
@@ -39,24 +69,156 @@ type GrammarAnalysisResponse = record {
 };
 
 type GrammarResponse = variant {
-  Ok: GrammarAnalysisResponse;
-  Err: Error;
+    Ok : GrammarAnalysisResponse;
+    Err : Error;
 };
 
 type Error = record {
-  message: text;
+    message : text;
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                    USER                                    */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+type UserResponse = variant {
+    Ok : User;
+    Err : Error;
+};
+
+type UserInput = record {
+    bio : opt UserBio;
+    plan : text;
+};
+
+type User = record {
+    id : text;
+    cv_last_checked : opt text;
+    amount_of_credits : nat64;
+    other : UserInput;
+};
+
+type UserBio = record {
+    address : opt text;
+    contact_number : opt text;
+    date_of_birth : opt text;
+    education : opt text;
+    email : opt text;
+    full_name : opt text;
+    github : opt text;
+    linkedin : opt text;
+    marital_status : opt text;
+    nationality : opt text;
+    summary : opt text;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                    ADMIN                                   */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+type AdminRole = variant {
+    READ;
+    EDIT;
+};
+
+type AdminResponseOk = variant {
+    Admin : Admin;
+    Message : text;
+};
+
+type AdminResponse = variant {
+    Ok : AdminResponseOk;
+    Err : Error;
+};
+
+type AdminInput = record {
+    plan : opt AdminRole;
+    bio : opt text;
+};
+
+type Admin = record {
+    id : text;
+    other : AdminInput;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                   CREDIT                                   */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+type Credit = record {
+    name : opt text;
+    value : opt nat64;
+};
+
+type CreditResponseOk = variant {
+    Credit : Credit;
+    Message : text;
+};
+
+type CreditResponse = variant {
+    Ok : CreditResponseOk;
+    Err : Error;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                   SERVICE                                  */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
 
 service : {
     analyze_cv : (text, CVUserInput) -> (CVResponse);
-    get_cv_analysis: (text, text) -> (CVResponse);
-    get_all_cv_analysis_for_identity: (text) -> (vec CVAnalysisResponse);
-    delete_cv_analysis: (text, text) -> (text);
+    get_cv_analysis : (text, text) -> (CVResponse);
+    get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse);
+    delete_cv_analysis : (text, text) -> (text);
 
     analyze_grammar : (text, GrammarUserInput) -> (GrammarResponse);
-    get_grammar_analysis: (text, text) -> (GrammarResponse);
-    get_all_grammar_analysis_for_identity: (text) -> (vec GrammarAnalysisResponse);
-    delete_grammar_analysis: (text, text) -> (text);
+    get_grammar_analysis : (text, text) -> (GrammarResponse);
+    get_all_grammar_analysis_for_identity : (text) -> (vec GrammarAnalysisResponse);
+    delete_grammar_analysis : (text, text) -> (text);
 
-    total_users: () -> (int64);
-}
+    total_users : () -> (int64);
+
+    add_new_user : (profile : UserInput) -> (UserResponse);
+    update_user : (id : text, new_profile_changes : UserInput) -> (UserResponse);
+    get_single_user : (id : text) -> (UserResponse);
+    get_all_user_profile : () -> (vec User);
+    add_credits_to_user : (id : text) -> (UserResponse);
+
+    add_new_admin : (profile : AdminInput) -> (AdminResponse);
+    update_admin : (id : text, new_profile_changes : AdminInput) -> (AdminResponse);
+    get_single_admin : (id : text) -> (AdminResponse);
+    get_all_admin_profile : () -> (vec Admin);
+
+    get_all_credit_plan : () -> (vec Credit);
+    add_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
+    update_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
+    delete_single_credit_plan : (plan : text, pwd : text) -> (CreditResponse);
+
+    remove_all_user : (pwd : text) -> (AdminResponse);
+    remove_all_credit : (pwd : text) -> (AdminResponse);
+    remove_all_cv_analysis : (pwd : text) -> (AdminResponse);
+    remove_all_grammar : (pwd : text) -> (AdminResponse);
+};

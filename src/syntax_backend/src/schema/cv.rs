@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
-use serde::{Serialize, Deserialize};
 
 use candid::{CandidType, Decode, Encode};
 use ic_stable_structures::storable::{Bound, Storable};
@@ -61,11 +61,29 @@ pub struct CVAnalysis {
 
 impl Storable for CVAnalysis {
     fn to_bytes(&self) -> Cow<[u8]> {
-        Cow::Owned(Encode!(self).unwrap())
+        match Encode!(self) {
+            Ok(bytes) => Cow::Owned(bytes),
+            Err(err) => {
+                ic_cdk::api::print(format!(
+                    "Failed to encode CVAnalysis: {} \nSelf is: {:#?}",
+                    err, &self
+                ));
+                panic!("Encoding CVAnalysis failed");
+            }
+        }
     }
 
     fn from_bytes(bytes: Cow<[u8]>) -> Self {
-        Decode!(bytes.as_ref(), Self).unwrap()
+        match Decode!(bytes.as_ref(), Self) {
+            Ok(user) => user,
+            Err(err) => {
+                ic_cdk::api::print(format!(
+                    "Failed to decode CVAnalysis: {} \nBytes is: {:#?}",
+                    err, &bytes
+                ));
+                panic!("Decoding CVAnalysis failed");
+            }
+        }
     }
 
     const BOUND: Bound = Bound::Bounded {
@@ -78,6 +96,7 @@ impl Storable for CVAnalysis {
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct CVAnalysisMap {
     pub analyses: HashMap<String, CVAnalysis>,
+    pub last_analysed: String,
 }
 
 // Implement Storable for CVAnalysisList
@@ -112,4 +131,3 @@ pub enum CVResponse {
     Ok(CVAnalysisResponse),
     Err(Error),
 }
-
