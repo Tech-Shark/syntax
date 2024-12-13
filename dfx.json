@@ -5,7 +5,9 @@
       "build": "cargo build --target wasm32-unknown-unknown --release",
       "wasm": "target/wasm32-unknown-unknown/release/syntax_backend.wasm",
       "package": "syntax_backend",
-      "type": "rust"
+      "type": "rust",
+      "did": "src/syntax_frontend/assetstorage.did"
+
     },
     "internet_identity": {
       "type": "pull",

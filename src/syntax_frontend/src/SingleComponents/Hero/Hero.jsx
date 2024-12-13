@@ -6,7 +6,7 @@ import BuildButton from '../BuildButton/BuildButton'
 
 function Hero() {
   return (
-    <div className='flex items-center flex-col justify-center lg:mt-[8rem] text-[#1C1D24] text-center px-16'>
+    <div className='flex items-center flex-col justify-center lg:mt-[8rem] text-[#1C1D24] text-center px-16 '>
       <h3 className=' font-bold lg:text-[4.71rem] leading-[8.35rem] '>AI-Powered Resumes, Tailored to You</h3>
       <p className='font-normal text-[2.34rem] leading-[3.51rem] mb-4'>Generate a professional, tailored resume in minutes. Just share your skills and job details, and let our AI build a standout CV designed to impress.</p>
       <BuildButton />

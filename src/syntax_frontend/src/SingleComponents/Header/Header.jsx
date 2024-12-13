@@ -37,7 +37,7 @@ function Header() {
     ]
   return (
     <header className='flex justify-center pt-8 z-40'>
-    <nav className='flex items-center w-4/5 md:w-auto rounded-full bg-white px-4 lg:px-[1.25rem] py-[0.5rem] justify-between'>
+    <nav className='flex items-center w-4/5 md:w-auto rounded-full bg-white px-4 lg:px-[1.25rem] py-[0.5rem] justify-between transition-all duration-300 ease-in'>
         <Link to='/'>
         <img src={logo} alt="logo icon" className='w-8 lg:w-[3.75rem] h-8 lg:h-[3.75rem]  cursor-pointer md:mr-4 lg:mr-8' />
         </Link>
