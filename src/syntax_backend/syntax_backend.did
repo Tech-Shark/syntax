@@ -1,367 +1,235 @@
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                  ANALYSIS                                  */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
+type Admin = record { id : text; other : AdminInput };
+type AdminInput = record { bio : opt text; plan : opt AdminRole };
+type AdminResponse = variant { Ok : AdminResponseOk; Err : Error_1 };
+type AdminResponseOk = variant { Message : text; Admin : Admin };
+type AdminRole = variant { READ; WRITE };
 type AnalysisResult = record {
-    skills : text;
-    work_experience : text;
-    professional_summary : text;
+  professional_summary : text;
+  work_experience : text;
+  skills : text;
 };
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                     CV                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
+type BioData = record {
+  linkedin : opt text;
+  marital_status : opt text;
+  education : opt text;
+  nationality : opt text;
+  email : opt text;
+  summary : opt text;
+  contact_number : opt text;
+  address : opt text;
+  date_of_birth : opt text;
+  full_name : opt text;
+  github : opt text;
+};
 type CVAnalysisResponse = record {
-    idx : text;
-    request : CVUserInput;
-    result : AnalysisResult;
+  idx : text;
+  result : AnalysisResult;
+  request : CVUserInput;
 };
-
+type CVResponse = variant { Ok : CVAnalysisResponse; Err : Error_1 };
 type CVUserInput = record {
-    job_title : text;
-    job_description : text;
-    cv_text : text;
+  job_title : text;
+  cv_text : text;
+  job_description : text;
 };
-
-type CVResponse = variant {
-    Ok : CVAnalysisResponse;
-    Err : Error;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                   GRAMMAR                                  */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-type GrammarUserInput = record {
-    text : text;
-};
-
-type GrammarCheckResult = record {
-    grammatical_errors : text;
-    syntactic_errors : text;
-    general_suggestions : text;
-    rewrite : text;
-};
-
+type Credit = record { value : opt nat64; name : opt text };
+type CreditResponse = variant { Ok : CreditResponseOk; Err : Error_1 };
+type CreditResponseOk = variant { Message : text; Credit : Credit };
+type Error = record { message : text };
+type Error_1 = record { message : text };
 type GrammarAnalysisResponse = record {
-    idx : text;
-    request : GrammarUserInput;
-    result : GrammarCheckResult;
+  idx : text;
+  result : GrammarCheckResult;
+  request : GrammarUserInput;
 };
-
-type GrammarResponse = variant {
-    Ok : GrammarAnalysisResponse;
-    Err : Error;
+type GrammarCheckResult = record {
+  general_suggestions : text;
+  syntactic_errors : text;
+  rewrite : text;
+  grammatical_errors : text;
 };
-
-type Error = record {
-    message : text;
+type GrammarResponse = variant { Ok : GrammarAnalysisResponse; Err : Error_1 };
+type GrammarUserInput = record { "text" : text };
+type HttpHeader = record { value : text; name : text };
+type HttpResponse = record {
+  status : nat;
+  body : blob;
+  headers : vec HttpHeader;
 };
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                    USER                                    */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-type UserResponse = variant {
-    Ok : User;
-    Err : Error;
-};
-
-type UserInput = record {
-    bio : opt UserBio;
-    plan : text;
-};
-
-type User = record {
-    id : text;
-    cv_last_checked : opt text;
-    amount_of_credits : nat64;
-    other : UserInput;
-};
-
-type UserBio = record {
-    address : opt text;
-    contact_number : opt text;
-    date_of_birth : opt text;
-    education : opt text;
-    email : opt text;
-    full_name : opt text;
-    github : opt text;
-    linkedin : opt text;
-    marital_status : opt text;
-    nationality : opt text;
-    summary : opt text;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                    ADMIN                                   */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-type AdminRole = variant {
-    READ;
-    EDIT;
-};
-
-type AdminResponseOk = variant {
-    Admin : Admin;
-    Message : text;
-};
-
-type AdminResponse = variant {
-    Ok : AdminResponseOk;
-    Err : Error;
-};
-
-type AdminInput = record {
-    plan : opt AdminRole;
-    bio : opt text;
-};
-
-type Admin = record {
-    id : text;
-    other : AdminInput;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                   CREDIT                                   */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-type Credit = record {
-    name : opt text;
-    value : opt nat64;
-};
-
-type CreditResponseOk = variant {
-    Credit : Credit;
-    Message : text;
-};
-
-type CreditResponse = variant {
-    Ok : CreditResponseOk;
-    Err : Error;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                         NOTIFICATION FOR EVERYBODY                         */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-type NotificationForEverybody = record {
-    id : text;
-    title : text;
-    body : text;
-    date_created : text;
-    category : opt text;
-};
-
-type NotificationForEverybodyInput = record {
-    title : text;
-    body : text;
-    category : opt text;
-};
-
-type NotificationForEverybodyResponseOk = variant {
-    NotificationForEverybody : NotificationForEverybody;
-    Message : text;
-};
-
-type NotificationForEverybodyResponse = variant {
-    Ok : NotificationForEverybodyResponseOk;
-    Err : Error;
-};
-
-type NotificationForEverybodyResponseVectorOk = variant {
-    NotificationForEverybody : vec NotificationForEverybody;
-    Message : text;
-};
-
-type NotificationForEverybodyResponseVector = variant {
-    Ok : NotificationForEverybodyResponseVectorOk;
-    Err : Error;
-};
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                        NOTIFICATION FOR SINGLE USER                        */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
 type IndividualNotificationForSingleUser = record {
-    id : text;
-    title : text;
-    body : text;
-    date_created : text;
-    has_read : bool;
-    category : opt text;
+  id : text;
+  title : text;
+  date_created : text;
+  body : text;
+  category : opt text;
+  has_read : bool;
 };
-
+type NotificationForEverybody = record {
+  id : text;
+  title : text;
+  date_created : text;
+  body : text;
+  category : opt text;
+};
+type NotificationForEverybodyInput = record {
+  title : text;
+  body : text;
+  category : opt text;
+};
+type NotificationForEverybodyResponse = variant {
+  Ok : NotificationForEverybodyResponseOk;
+  Err : Error;
+};
+type NotificationForEverybodyResponseOk = variant {
+  NotificationForEverybody : NotificationForEverybody;
+  Message : text;
+};
+type NotificationForEverybodyResponseOk_1 = variant {
+  NotificationForEverybody : vec NotificationForTier;
+  Message : text;
+};
+type NotificationForEverybodyResponse_1 = variant {
+  Ok : NotificationForEverybodyResponseOk_1;
+  Err : Error_1;
+};
 type NotificationForSingleUser = record {
-    has_read : bool;
-    notifications : vec IndividualNotificationForSingleUserHashMap;
+  notifications : vec vec record { text; IndividualNotificationForSingleUser };
+  has_read : bool;
 };
-
-// Hashmap is "vec record {key_type; value_type;}"
-type IndividualNotificationForSingleUserHashMap = vec record {
-    text;
-    IndividualNotificationForSingleUser;
-};
-
-type NotificationForSingleUserInput = record {
-    title : text;
-    body : text;
-    category : opt text;
-};
-
-type NotificationForSingleUserResponseOk = variant {
-    Message : text;
-    NotificationForSingleUser : NotificationForSingleUser;
-};
-
 type NotificationForSingleUserResponse = variant {
-    Ok : NotificationForSingleUserResponseOk;
-    Err : Error;
+  Ok : NotificationForSingleUserResponseOk;
+  Err : Error_1;
 };
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                            NOTIFICATION FOR TIER                           */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
+type NotificationForSingleUserResponseOk = variant {
+  NotificationForSingleUser : NotificationForSingleUser;
+  Message : text;
+};
+type NotificationForSingleUserResponseOk_1 = variant {
+  NotificationForSingleUser : IndividualNotificationForSingleUser;
+  Message : text;
+};
+type NotificationForSingleUserResponse_1 = variant {
+  Ok : NotificationForSingleUserResponseOk_1;
+  Err : Error_1;
+};
 type NotificationForTier = record {
-    id : text;
-    title : text;
-    body : text;
-    date_created : text;
-    category : opt text;
+  id : text;
+  title : text;
+  date_created : text;
+  body : text;
+  category : opt text;
 };
-
 type NotificationForTierInput = record {
-    title : text;
-    body : text;
-    category : opt text;
-    for_freemium : bool;
+  title : text;
+  for_freemium : bool;
+  body : text;
+  category : opt text;
 };
-
-type NotificationForTierResponseOk = variant {
-    NotificationForTier : NotificationForTier;
-    Message : text;
-};
-
 type NotificationForTierResponse = variant {
-    Ok : NotificationForTierResponseOk;
-    Err : Error;
+  Ok : NotificationForTierResponseOk;
+  Err : Error;
 };
-
-type NotificationForTierResponseVectorOk = variant {
-    NotificationForTier : vec NotificationForTier;
-    Message : text;
+type NotificationForTierResponseOk = variant {
+  Message : text;
+  NotificationForTier : NotificationForTier;
 };
-
-type NotificationForTierResponseVector = variant {
-    Ok : NotificationForTierResponseVectorOk;
-    Err : Error;
+type NotificationForTierResponseOk_1 = variant {
+  Message : text;
+  NotificationForTier : vec NotificationForTier;
 };
-
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                   SERVICE                                  */
-/* -------------------------------------------------------------------------- */
-/* -------------------------------------------------------------------------- */
-/*                                      -                                     */
-/* -------------------------------------------------------------------------- */
-
-service : {
-    analyze_cv : (text, CVUserInput) -> (CVResponse);
-    get_cv_analysis : (text, text) -> (CVResponse);
-    get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse);
-    delete_cv_analysis : (text, text) -> (text);
-
-    analyze_grammar : (text, GrammarUserInput) -> (GrammarResponse);
-    get_grammar_analysis : (text, text) -> (GrammarResponse);
-    get_all_grammar_analysis_for_identity : (text) -> (vec GrammarAnalysisResponse);
-    delete_grammar_analysis : (text, text) -> (text);
-
-    total_users : () -> (int64);
-
-    add_new_user : (profile : UserInput) -> (UserResponse);
-    update_user : (id : text, new_profile_changes : UserInput) -> (UserResponse);
-    get_single_user : (id : text) -> (UserResponse);
-    get_all_user_profile : () -> (vec User);
-    add_credits_to_user : (id : text) -> (UserResponse);
-
-    add_new_admin : (profile : AdminInput) -> (AdminResponse);
-    update_admin : (id : text, new_profile_changes : AdminInput) -> (AdminResponse);
-    get_single_admin : (id : text) -> (AdminResponse);
-    get_all_admin_profile : () -> (vec Admin);
-
-    get_all_credit_plan : () -> (vec Credit);
-    add_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
-    update_single_credit_plan : (plan : text, credit : nat64, pwd : text) -> (CreditResponse);
-    delete_single_credit_plan : (plan : text, pwd : text) -> (CreditResponse);
-
-    get_all_notification_for_everybody : (id : text) -> (NotificationForEverybodyResponseVector);
-    add_new_notification_for_everybody : (payload : NotificationForEverybodyInput) -> (NotificationForEverybodyResponse);
-
-    get_all_notification_for_single_user : (id : text) -> (NotificationForSingleUserResponse);
-    add_new_notification_for_single_user : (id : text, payload : NotificationForSingleUserInput) -> (NotificationForSingleUserResponse);
-
-    get_all_notification_for_tier : (id : text) -> (NotificationForTierResponseVector);
-    add_new_notification_for_tier : (payload : NotificationForTierInput) -> (NotificationForTierResponse);
-
-    remove_all_user : (pwd : text) -> (AdminResponse);
-    remove_all_credit : (pwd : text) -> (AdminResponse);
-    remove_all_cv_analysis : (pwd : text) -> (AdminResponse);
-    remove_all_grammar : (pwd : text) -> (AdminResponse);
+type NotificationForTierResponse_1 = variant {
+  Ok : NotificationForTierResponseOk_1;
+  Err : Error_1;
+};
+type TransformArgs = record { context : blob; response : HttpResponse };
+type User = record {
+  id : text;
+  cv_last_checked : opt text;
+  other : UserInput;
+  amount_of_credits : nat64;
+};
+type UserInput = record { bio : opt BioData; plan : text };
+type UserResponse = variant { Ok : User; Err : Error_1 };
+service : () -> {
+  add_credits_to_user : (text) -> (UserResponse);
+  add_cv_analysis : (text, CVUserInput, AnalysisResult) -> (opt text);
+  add_grammar_analysis : (text, GrammarUserInput, GrammarCheckResult) -> (
+    opt text
+  );
+  add_new_admin : (AdminInput) -> (AdminResponse);
+  add_new_notification_for_everybody : (NotificationForEverybodyInput) -> (
+    NotificationForEverybodyResponse
+  );
+  add_new_notification_for_single_user : (
+    text,
+    NotificationForEverybodyInput,
+  ) -> (NotificationForSingleUserResponse);
+  add_new_notification_for_tier : (NotificationForTierInput) -> (
+    NotificationForTierResponse
+  );
+  add_new_user : (UserInput) -> (UserResponse);
+  add_single_credit_plan : (text, nat64, text) -> (CreditResponse);
+  analyze_cv : (text, CVUserInput) -> (CVResponse);
+  analyze_grammar : (text, GrammarUserInput) -> (GrammarResponse);
+  cv_total_users : () -> (int64) query;
+  delete_cv_analysis : (text, text) -> (text);
+  delete_grammar_analysis : (text, text) -> (text);
+  delete_single_credit_plan : (text, text) -> (CreditResponse);
+  fetch_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse) query;
+  fetch_all_grammar_analysis_for_identity : (text) -> (
+    vec GrammarAnalysisResponse
+  ) query;
+  fetch_cv_analysis : (text, text) -> (opt CVAnalysisResponse) query;
+  fetch_grammar_analysis : (text, text) -> (opt GrammarAnalysisResponse) query;
+  get_all_admin_profile : () -> (vec Admin) query;
+  get_all_credit_plan : () -> (vec Credit) query;
+  get_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse) query;
+  get_all_grammar_analysis_for_identity : (text) -> (
+    vec GrammarAnalysisResponse
+  ) query;
+  get_all_notification_for_everybody : (text) -> (
+    NotificationForEverybodyResponse_1
+  ) query;
+  get_all_notification_for_single_user : (text) -> (
+    NotificationForSingleUserResponse
+  ) query;
+  get_all_notification_for_tier : (text) -> (
+    NotificationForTierResponse_1
+  ) query;
+  get_all_user_profile : () -> (vec User) query;
+  get_cv_analysis : (text, text) -> (CVResponse) query;
+  get_grammar_analysis : (text, text) -> (GrammarResponse) query;
+  get_single_admin : (text) -> (AdminResponse) query;
+  get_single_user : (text) -> (UserResponse) query;
+  get_users_by_tier : (text) -> (vec User) query;
+  gr_total_users : () -> (int64) query;
+  mark_notification_as_read : (text, text) -> (
+    NotificationForSingleUserResponse_1
+  );
+  put_cv_analysis : (text, text, CVUserInput, AnalysisResult) -> (text);
+  put_grammar_analysis : (text, text, GrammarUserInput, GrammarCheckResult) -> (
+    text
+  );
+  remove_all_credit : (text) -> (AdminResponse);
+  remove_all_cv_analysis : (text) -> (AdminResponse);
+  remove_all_grammar : (text) -> (AdminResponse);
+  remove_all_user : (text) -> (AdminResponse);
+  remove_cv_analysis : (text, text) -> (text);
+  remove_grammar_analysis : (text, text) -> (text);
+  total_users : () -> (int64) query;
+  transform : (TransformArgs) -> (HttpResponse) query;
+  update_a_notification_for_single_user : (
+    text,
+    IndividualNotificationForSingleUser,
+  ) -> (NotificationForSingleUserResponse);
+  update_admin : (text, AdminInput) -> (AdminResponse);
+  update_cv_analysis : (text, text, CVUserInput, AnalysisResult) -> (text);
+  update_grammar_analysis : (
+    text,
+    text,
+    GrammarUserInput,
+    GrammarCheckResult,
+  ) -> (text);
+  update_single_credit_plan : (text, nat64, text) -> (CreditResponse);
+  update_user : (text, UserInput) -> (UserResponse);
 };
