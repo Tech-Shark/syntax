@@ -8,7 +8,7 @@
 
 <br>
 
-- Creating a candid file has never been easier. Now, you don't have to manually update it after creating a new endpoint. Just run
+- Creating a candid file has never been easier. Now, you don't have to manually update it after creating a new endpoint. Just install candid-extractor `cargo install candid-extractor` and run
 
 ```shell
  cargo build --release --target wasm32-unknown-unknown --package syntax_backend && candid-extractor target/wasm32-unknown-unknown/release/syntax_backend.wasm > src/syntax_backend/syntax_backend.did
