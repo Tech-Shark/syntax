@@ -30,8 +30,6 @@ async fn get_all_notification_for_everybody(
             .collect::<Vec<NotificationForEverybody>>()
     });
 
-    ic_cdk::api::print(format!("{:#?}", query.clone()));
-
     NotificationForEverybodyResponse::Ok(
         NotificationForEverybodyResponseOk::NotificationForEverybody(query),
     )
@@ -43,7 +41,7 @@ async fn add_new_notification_for_everybody(
     let id = generate_random_string().await;
 
     // Return error if no ID could be generated
-    if id.clone().is_none() {
+    if id.is_none() {
         return NotificationForEverybodyResponse::Err({
             Error {
                 message: ID_GENERATION_FAILED.to_string(),

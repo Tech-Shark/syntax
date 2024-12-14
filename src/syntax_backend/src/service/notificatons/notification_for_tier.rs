@@ -56,7 +56,7 @@ async fn add_new_notification_for_tier(
     };
 
     // Return error if no ID could be generated
-    if id.clone().is_none() {
+    if id.is_none() {
         return NotificationForTierResponse::Err({
             Error {
                 message: ID_GENERATION_FAILED.to_string(),

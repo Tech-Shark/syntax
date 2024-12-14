@@ -18,12 +18,9 @@ async fn get_all_notification_for_single_user(
     principal: String,
 ) -> NotificationForSingleUserResponse {
     match NOTIFICATION_FOR_SINGLE_USER_MAP.with(|map| map.borrow().get(&principal)) {
-        Some(data) => {
-            ic_cdk::api::print(format!("{:#?}", data.clone()));
-            NotificationForSingleUserResponse::Ok(
-                NotificationForSingleUserResponseOk::NotificationForSingleUser(data),
-            )
-        }
+        Some(data) => NotificationForSingleUserResponse::Ok(
+            NotificationForSingleUserResponseOk::NotificationForSingleUser(data),
+        ),
         None => NotificationForSingleUserResponse::Ok(
             NotificationForSingleUserResponseOk::NotificationForSingleUser(
                 NotificationForSingleUser {
@@ -44,7 +41,7 @@ async fn add_new_notification_for_single_user(
     let mut new_payload_hashmap = HashMap::<String, IndividualNotificationForSingleUser>::new();
 
     // Return error if no ID could be generated
-    if id.clone().is_none() {
+    if id.is_none() {
         return NotificationForSingleUserResponse::Err({
             Error {
                 message: ID_GENERATION_FAILED.to_string(),
@@ -93,6 +90,7 @@ async fn add_new_notification_for_single_user(
 }
 
 // This function is not supposed to be exposed to the candid. It should be used internally.
+#[cfg(feature = "internal")]
 #[ic_cdk::update]
 async fn update_a_notification_for_single_user(
     principal: String,
@@ -156,7 +154,6 @@ async fn mark_notification_as_read(
                 .next();
 
             let unread_notifications_size = notification_data
-                .clone()
                 .notifications
                 .iter()
                 .map(|data| data.values().next())
@@ -190,7 +187,7 @@ async fn mark_notification_as_read(
                         ic_cdk::api::print(
                             "An error has occured while updating notifications.\
                         The index for replacement does not exist \
-                        Check service/notification.rs",
+                        Check service/notifications/notification_for_single_user.rs",
                         );
                         NotificationForSingleUserResponse::Err(Error {
                             message: SOMETHING_WENT_WRONG.to_string(),
