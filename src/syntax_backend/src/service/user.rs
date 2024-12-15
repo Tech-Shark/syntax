@@ -160,3 +160,22 @@ async fn add_credits_to_user() -> UserResponse {
         }),
     }
 }
+
+#[ic_cdk::query]
+async fn get_users_by_tier(tier: String) -> Vec<User> {
+    let valid_tier = if plan_is_valid(&tier) {
+        tier
+    } else {
+        FREE_PLAN.to_string()
+    };
+
+    let res: Vec<User> = USER_MAP.with(|map| {
+        map.borrow()
+            .iter()
+            .map(|(_, value)| value)
+            .filter(|user| user.other.plan == valid_tier)
+            .collect::<Vec<User>>()
+    });
+
+    res
+}

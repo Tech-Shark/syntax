@@ -198,6 +198,7 @@ service : () -> {
   get_grammar_analysis : (text) -> (GrammarResponse) query;
   get_single_admin : (text) -> (AdminResponse) query;
   get_single_user : () -> (UserResponse) query;
+  get_users_by_tier : (text) -> (vec User) query;
   gr_total_users : () -> (int64) query;
   mark_notification_as_read : (text) -> (NotificationForSingleUserResponse_1);
   put_cv_analysis : (text, text, CVUserInput, AnalysisResult) -> (text);
