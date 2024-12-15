@@ -13,9 +13,8 @@ use crate::{
 };
 
 #[ic_cdk::query]
-async fn get_all_notification_for_tier(
-    principal: String,
-) -> NotificationForTierResponse<Vec<NotificationForTier>> {
+async fn get_all_notification_for_tier() -> NotificationForTierResponse<Vec<NotificationForTier>> {
+    let principal = ic_cdk::api::caller().to_text();
     let user_current_plan = USER_MAP.with(|map| map.borrow().get(&principal));
 
     if user_current_plan.is_none() {

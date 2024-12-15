@@ -13,8 +13,8 @@ use crate::{
 
 #[ic_cdk::query]
 async fn get_all_notification_for_everybody(
-    principal: String,
 ) -> NotificationForEverybodyResponse<Vec<NotificationForEverybody>> {
+    let principal = ic_cdk::api::caller().to_text();
     let user = USER_MAP.with(|map| map.borrow().get(&principal));
 
     if user.is_none() {

@@ -14,9 +14,9 @@ use crate::{
 };
 
 #[ic_cdk::query]
-async fn get_all_notification_for_single_user(
-    principal: String,
-) -> NotificationForSingleUserResponse {
+async fn get_all_notification_for_single_user() -> NotificationForSingleUserResponse {
+    let principal = ic_cdk::api::caller().to_text();
+
     match NOTIFICATION_FOR_SINGLE_USER_MAP.with(|map| map.borrow().get(&principal)) {
         Some(data) => NotificationForSingleUserResponse::Ok(
             NotificationForSingleUserResponseOk::NotificationForSingleUser(data),
@@ -34,9 +34,9 @@ async fn get_all_notification_for_single_user(
 
 #[ic_cdk::update]
 async fn add_new_notification_for_single_user(
-    principal: String,
     payload: NotificationForSingleUserInput,
 ) -> NotificationForSingleUserResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let id = generate_random_string().await;
     let mut new_payload_hashmap = HashMap::<String, IndividualNotificationForSingleUser>::new();
 
@@ -140,9 +140,10 @@ async fn update_a_notification_for_single_user(
 
 #[ic_cdk::update]
 async fn mark_notification_as_read(
-    principal: String,
     notification_id: String,
 ) -> NotificationForSingleUserResponse<IndividualNotificationForSingleUser> {
+    let principal = ic_cdk::api::caller().to_text();
+
     // Get all notifications of a single user
     match NOTIFICATION_FOR_SINGLE_USER_MAP.with(|map| map.borrow_mut().get(&principal)) {
         Some(mut notification_data) => {

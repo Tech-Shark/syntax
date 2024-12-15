@@ -26,7 +26,9 @@ async fn get_all_user_profile() -> Vec<User> {
 }
 
 #[ic_cdk::query]
-async fn get_single_user(principal: String) -> UserResponse {
+async fn get_single_user() -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
+
     match USER_MAP.with(|map| map.borrow().get(&principal)) {
         Some(data) => UserResponse::Ok(data),
         None => UserResponse::Err(Error {
@@ -93,7 +95,8 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
 }
 
 #[ic_cdk::update]
-async fn update_user(principal: String, profile: UserInput) -> UserResponse {
+async fn update_user(profile: UserInput) -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let input_tier = profile.clone().plan;
     let valid_tier = plan_is_valid(&input_tier);
 
@@ -127,7 +130,9 @@ async fn update_user(principal: String, profile: UserInput) -> UserResponse {
 }
 
 #[ic_cdk::update]
-async fn add_credits_to_user(principal: String) -> UserResponse {
+async fn add_credits_to_user() -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
+
     match USER_MAP.with(|map| map.borrow().get(&principal)) {
         Some(data) => {
             // Get Credits

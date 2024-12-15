@@ -8,7 +8,8 @@ use crate::QUOTA_ERROR;
 use crate::{storage, MONTHLY_TRIAL_ERROR};
 
 #[ic_cdk::update]
-async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
+async fn analyze_cv(request: CVUserInput) -> CVResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let mut user_current_plan = FREE_PLAN.to_string();
     let json_value = serde_json::to_value(request.clone());
 
@@ -123,7 +124,8 @@ async fn analyze_cv(principal: String, request: CVUserInput) -> CVResponse {
 }
 
 #[ic_cdk::query]
-fn get_cv_analysis(principal: String, idx: String) -> CVResponse {
+fn get_cv_analysis(idx: String) -> CVResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let result = storage::cv::fetch_cv_analysis(principal, idx);
     if let Some(res) = result {
         CVResponse::Ok(res)
@@ -135,21 +137,19 @@ fn get_cv_analysis(principal: String, idx: String) -> CVResponse {
 }
 
 #[ic_cdk::query]
-fn get_all_cv_analysis_for_identity(principal: String) -> Vec<CVAnalysisResponse> {
+fn get_all_cv_analysis_for_identity() -> Vec<CVAnalysisResponse> {
+    let principal = ic_cdk::api::caller().to_text();
     storage::cv::fetch_all_cv_analysis_for_identity(principal)
 }
 
 #[ic_cdk::update]
-fn delete_cv_analysis(principal: String, idx: String) -> String {
+fn delete_cv_analysis(idx: String) -> String {
+    let principal = ic_cdk::api::caller().to_text();
     storage::cv::remove_cv_analysis(principal, idx)
 }
 
 #[ic_cdk::update]
-fn update_cv_analysis(
-    principal: String,
-    idx: String,
-    user_input: CVUserInput,
-    result: AnalysisResult,
-) -> String {
+fn update_cv_analysis(idx: String, user_input: CVUserInput, result: AnalysisResult) -> String {
+    let principal = ic_cdk::api::caller().to_text();
     storage::cv::put_cv_analysis(principal, idx, user_input, result)
 }
