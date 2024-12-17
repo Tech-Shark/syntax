@@ -1,0 +1,5 @@
+{
+    "li": "font-medium text-[0.88rem] leading-[1.1rem]  cursor-pointer",
+    "active": "font-semibold text-[1.13rem] leading-[1.42rem]",
+    "label": "font-bold text-[1.09rem] leading-[1.31rem]" 
+}
