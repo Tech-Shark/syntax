@@ -1,0 +1,41 @@
+@view-transition {
+    navigation: auto;
+}
+
+ @keyframes blur-out {
+    from {
+        filter: blur(0px);
+       transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+       filter: blur(20px);
+       transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes blur-in {
+    from {
+       filter: blur(20px);
+        transform: scale(1.2);
+        opacity: 0;
+    }
+
+    to {
+        filter: blur(0px);
+       transform: scale(1);
+        opacity: 1;
+   }
+}
+
+::view-transition-old(root) {
+    animation: 0.4s ease-out both blur-out;
+}
+
+::view-transition-new(root) {
+   animation: 0.4s ease-in both blur-in;
+}
+
+
