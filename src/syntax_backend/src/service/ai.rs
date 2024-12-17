@@ -1,14 +1,13 @@
 //1. IMPORT IC MANAGEMENT CANISTER
 //This includes all methods and types needed
+use crate::service::util;
 use ic_cdk::api::management_canister::http_request::{
     http_request, CanisterHttpRequestArgument, HttpHeader, HttpMethod, HttpResponse, TransformArgs,
     TransformContext,
 };
-
-use ic_cdk_macros::{self, query, update};
-use serde::{Serialize, Deserialize};
+use ic_cdk_macros::{self, query};
+use serde::{Deserialize, Serialize};
 use serde_json::{self, Value};
-use crate::service::util;
 
 // This struct is legacy code and is not really used in the code.
 #[derive(Serialize, Deserialize)]
@@ -29,7 +28,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
         return "Failed to generate Idempotency key".to_string();
     }
     let idempotency_key = new_idx.unwrap();
-    
+
     // 2.2 prepare headers for the system http_request call
     //Note that `HttpHeader` is declared in line 4
     let request_headers = vec![
@@ -79,7 +78,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
     //1. Declare a JSON string to send
     //2. Convert that JSON string to array of UTF8 (u8)
     //3. Wrap that array in an optional
-    let json_string : String = data.to_string();
+    let json_string: String = data.to_string();
 
     //note: here, r#""# is used for raw strings in Rust, which allows you to include characters like " and \ without needing to escape them.
     //We could have used "serde_json" as well.
@@ -101,7 +100,10 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
         method: HttpMethod::POST,
         headers: request_headers,
         body: request_body,
-        transform: Some(TransformContext::from_name("transform".to_string(), serde_json::to_vec(&context).unwrap())),
+        transform: Some(TransformContext::from_name(
+            "transform".to_string(),
+            serde_json::to_vec(&context).unwrap(),
+        )),
     };
 
     //3. MAKE HTTPS REQUEST AND WAIT FOR RESPONSE
@@ -138,13 +140,11 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
             message
         }
     }
-
 }
 
 // Strips all data that is not needed from the original response.
 #[query]
 fn transform(raw: TransformArgs) -> HttpResponse {
-
     let headers = vec![
         HttpHeader {
             name: "Content-Security-Policy".to_string(),
@@ -171,7 +171,6 @@ fn transform(raw: TransformArgs) -> HttpResponse {
             value: "nosniff".to_string(),
         },
     ];
-
 
     let mut res = HttpResponse {
         status: raw.response.status.clone(),

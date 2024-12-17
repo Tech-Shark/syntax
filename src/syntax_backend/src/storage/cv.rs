@@ -1,31 +1,9 @@
+use super::thread_local::CV_STORAGE_MAP;
 use crate::schema::cv::{
     AnalysisResult, CVAnalysis, CVAnalysisMap, CVAnalysisResponse, CVUserInput,
 };
-use crate::service::util::{self, get_current_time, has_used_up_trials};
-use crate::QUOTA_ERROR;
-use crate::{CV_MEMORY_ID, MONTHLY_TRIAL_ERROR};
-use candid::{CandidType, Decode, Deserialize, Encode, Principal};
-use ic_cdk::caller;
-use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
-use ic_stable_structures::{storable::Bound, DefaultMemoryImpl, StableBTreeMap, Storable};
+use crate::service::util::{self, get_current_time};
 use std::collections::HashMap;
-use std::convert::identity;
-use std::ffi::c_void;
-use std::{borrow::Cow, cell::RefCell};
-use time::OffsetDateTime;
-
-type Memory = VirtualMemory<DefaultMemoryImpl>;
-
-thread_local! {
-    static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> =
-        RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
-
-    pub static CV_STORAGE_MAP: RefCell<StableBTreeMap<String, CVAnalysisMap, Memory>> = RefCell::new(
-        StableBTreeMap::init(
-            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(CV_MEMORY_ID))),
-        )
-    );
-}
 
 #[ic_cdk_macros::update]
 pub async fn add_cv_analysis(
