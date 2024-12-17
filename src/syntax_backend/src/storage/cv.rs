@@ -89,7 +89,7 @@ pub fn fetch_all_cv_analysis_for_identity(identity: String) -> Vec<CVAnalysisRes
             .map(|list| {
                 list.analyses
                     .iter()
-                    .map(|(key, cv_analysis)| CVAnalysisResponse {
+                    .map(|(_key, cv_analysis)| CVAnalysisResponse {
                         idx: cv_analysis.idx.to_string(),
                         result: cv_analysis.clone().result,
                         request: cv_analysis.clone().request,
@@ -100,10 +100,33 @@ pub fn fetch_all_cv_analysis_for_identity(identity: String) -> Vec<CVAnalysisRes
     })
 }
 
+#[ic_cdk_macros::query]
+pub fn fetch_single_cv_analysis_for_identity(
+    identity: String,
+    cv_id: String,
+) -> Vec<CVAnalysisResponse> {
+    CV_STORAGE_MAP.with(|map| {
+        let cv_analysis_map = map.borrow().get(&identity);
+        cv_analysis_map
+            .map(|list| {
+                list.analyses
+                    .iter()
+                    .map(|(_key, cv_analysis)| CVAnalysisResponse {
+                        idx: cv_analysis.idx.to_string(),
+                        result: cv_analysis.clone().result,
+                        request: cv_analysis.clone().request,
+                    })
+                    .filter(|value| value.idx == cv_id)
+                    .collect()
+            })
+            .unwrap_or_else(Vec::new) // Return an empty Vec if no CVAnalysisList is found
+    })
+}
+
 #[ic_cdk_macros::update]
 pub fn remove_cv_analysis(identity: String, idx: String) -> String {
     CV_STORAGE_MAP.with(|map| {
-        let mut map = map.borrow_mut();
+        let map = map.borrow_mut();
         if let Some(mut cv_analysis_map) = map.get(&identity) {
             if cv_analysis_map.analyses.contains_key(&idx) {
                 cv_analysis_map.analyses.remove(&idx);
@@ -125,7 +148,7 @@ pub fn put_cv_analysis(
     result: AnalysisResult,
 ) -> String {
     CV_STORAGE_MAP.with(|map| {
-        let mut map = map.borrow_mut();
+        let map = map.borrow_mut();
         if let Some(mut cv_analysis_map) = map.get(&identity) {
             if cv_analysis_map.analyses.contains_key(&idx) {
                 cv_analysis_map.analyses.insert(

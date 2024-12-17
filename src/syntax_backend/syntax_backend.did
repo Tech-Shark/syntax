@@ -180,6 +180,9 @@ service : () -> {
     ) query;
   fetch_cv_analysis : (text, text) -> (opt CVAnalysisResponse) query;
   fetch_grammar_analysis : (text, text) -> (opt GrammarAnalysisResponse) query;
+  fetch_single_cv_analysis_for_identity : (text, text) -> (
+      vec CVAnalysisResponse,
+    ) query;
   get_all_admin_profile : () -> (vec Admin) query;
   get_all_credit_plan : () -> (vec Credit) query;
   get_all_cv_analysis_for_identity : () -> (vec CVAnalysisResponse) query;
@@ -197,6 +200,9 @@ service : () -> {
   get_cv_analysis : (text) -> (CVResponse) query;
   get_grammar_analysis : (text) -> (GrammarResponse) query;
   get_single_admin : (text) -> (AdminResponse) query;
+  get_single_cv_analysis_for_identity : (text) -> (
+      vec CVAnalysisResponse,
+    ) query;
   get_single_user : () -> (UserResponse) query;
   get_users_by_tier : (text) -> (vec User) query;
   gr_total_users : () -> (int64) query;
