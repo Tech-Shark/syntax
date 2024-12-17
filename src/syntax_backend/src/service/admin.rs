@@ -25,8 +25,8 @@ async fn get_all_admin_profile() -> Vec<Admin> {
 }
 
 #[ic_cdk::query]
-async fn get_single_admin(principal: String) -> AdminResponse {
-    match ADMIN_MAP.with(|map| map.borrow().get(&principal)) {
+async fn get_single_admin(target_principal: String) -> AdminResponse {
+    match ADMIN_MAP.with(|map| map.borrow().get(&target_principal)) {
         Some(data) => AdminResponse::Ok(AdminResponseOk::Admin(data)),
         None => AdminResponse::Err(Error {
             message: NO_ADMIN_FOUND.to_string(),
@@ -35,17 +35,9 @@ async fn get_single_admin(principal: String) -> AdminResponse {
 }
 
 #[ic_cdk::update]
-async fn add_new_admin(_profile: AdminInput) -> AdminResponse {
-    let admin_id: Option<String> = generate_random_string().await;
-
-    if admin_id.is_none() {
-        return AdminResponse::Err(Error {
-            message: ID_GENERATION_FAILED.to_string(),
-        });
-    }
-
+async fn add_new_admin(new_admin_principal: String) -> AdminResponse {
     let admin_profile = Admin {
-        id: admin_id.clone().unwrap(),
+        id: new_admin_principal.clone(),
         other: AdminInput {
             bio: None,
             plan: Some(AdminRole::READ),
@@ -54,7 +46,7 @@ async fn add_new_admin(_profile: AdminInput) -> AdminResponse {
 
     ADMIN_MAP.with(|map| {
         map.borrow_mut()
-            .insert(admin_id.unwrap(), admin_profile.clone())
+            .insert(new_admin_principal, admin_profile.clone())
     });
 
     AdminResponse::Ok(AdminResponseOk::Admin(admin_profile))

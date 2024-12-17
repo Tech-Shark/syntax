@@ -26,7 +26,9 @@ async fn get_all_user_profile() -> Vec<User> {
 }
 
 #[ic_cdk::query]
-async fn get_single_user(principal: String) -> UserResponse {
+async fn get_single_user() -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
+
     match USER_MAP.with(|map| map.borrow().get(&principal)) {
         Some(data) => UserResponse::Ok(data),
         None => UserResponse::Err(Error {
@@ -37,6 +39,7 @@ async fn get_single_user(principal: String) -> UserResponse {
 
 #[ic_cdk::update]
 async fn add_new_user(profile: UserInput) -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let input_tier = profile.clone().plan;
     let valid_tier = plan_is_valid(&input_tier);
 
@@ -60,22 +63,21 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
         });
     }
 
+    if let Some(_user) = USER_MAP.with(|map| map.borrow().get(&principal)) {
+        return UserResponse::Err(Error {
+            message: "You already have a registered profile!".to_string(),
+        });
+    }
+
+    // Check if there's still slot for FREEMIUM
     if (total_users >= setting.max_freemium_users.value) && (input_tier == FREE_PLAN) {
         return UserResponse::Err(Error {
             message: "Maximum number of users on the free plan has been exhausted!".to_string(),
         });
     }
 
-    let user_id: Option<String> = generate_random_string().await;
-
-    if user_id.is_none() {
-        return UserResponse::Err(Error {
-            message: ID_GENERATION_FAILED.to_string(),
-        });
-    }
-
     let user_profile = User {
-        id: user_id.clone().unwrap(),
+        id: principal.clone(),
         cv_last_checked: None,
         amount_of_credits: 0,
         other: UserInput {
@@ -84,16 +86,14 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
         },
     };
 
-    USER_MAP.with(|map| {
-        map.borrow_mut()
-            .insert(user_id.unwrap(), user_profile.clone())
-    });
+    USER_MAP.with(|map| map.borrow_mut().insert(principal, user_profile.clone()));
 
     UserResponse::Ok(user_profile)
 }
 
 #[ic_cdk::update]
-async fn update_user(principal: String, profile: UserInput) -> UserResponse {
+async fn update_user(profile: UserInput) -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let input_tier = profile.clone().plan;
     let valid_tier = plan_is_valid(&input_tier);
 
@@ -127,7 +127,9 @@ async fn update_user(principal: String, profile: UserInput) -> UserResponse {
 }
 
 #[ic_cdk::update]
-async fn add_credits_to_user(principal: String) -> UserResponse {
+async fn add_credits_to_user() -> UserResponse {
+    let principal = ic_cdk::api::caller().to_text();
+
     match USER_MAP.with(|map| map.borrow().get(&principal)) {
         Some(data) => {
             // Get Credits
@@ -157,4 +159,23 @@ async fn add_credits_to_user(principal: String) -> UserResponse {
             message: NO_USER_FOUND.to_string(),
         }),
     }
+}
+
+#[ic_cdk::query]
+async fn get_users_by_tier(tier: String) -> Vec<User> {
+    let valid_tier = if plan_is_valid(&tier) {
+        tier
+    } else {
+        FREE_PLAN.to_string()
+    };
+
+    let res: Vec<User> = USER_MAP.with(|map| {
+        map.borrow()
+            .iter()
+            .map(|(_, value)| value)
+            .filter(|user| user.other.plan == valid_tier)
+            .collect::<Vec<User>>()
+    });
+
+    res
 }

@@ -6,7 +6,8 @@ use crate::storage;
 use crate::QUOTA_ERROR;
 
 #[ic_cdk::update]
-async fn analyze_grammar(principal: String, request: GrammarUserInput) -> GrammarResponse {
+async fn analyze_grammar(request: GrammarUserInput) -> GrammarResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let json_value = serde_json::to_value(request.clone());
     let json_value = match json_value {
         Ok(json_value) => json_value,
@@ -49,7 +50,8 @@ async fn analyze_grammar(principal: String, request: GrammarUserInput) -> Gramma
 }
 
 #[ic_cdk::query]
-fn get_grammar_analysis(principal: String, idx: String) -> GrammarResponse {
+fn get_grammar_analysis(idx: String) -> GrammarResponse {
+    let principal = ic_cdk::api::caller().to_text();
     let result = storage::grammar::fetch_grammar_analysis(principal, idx);
     if let Some(res) = result {
         GrammarResponse::Ok(res)
@@ -61,21 +63,23 @@ fn get_grammar_analysis(principal: String, idx: String) -> GrammarResponse {
 }
 
 #[ic_cdk::query]
-fn get_all_grammar_analysis_for_identity(principal: String) -> Vec<GrammarAnalysisResponse> {
+fn get_all_grammar_analysis_for_identity() -> Vec<GrammarAnalysisResponse> {
+    let principal = ic_cdk::api::caller().to_text();
     storage::grammar::fetch_all_grammar_analysis_for_identity(principal)
 }
 
 #[ic_cdk::update]
-fn delete_grammar_analysis(principal: String, idx: String) -> String {
+fn delete_grammar_analysis(idx: String) -> String {
+    let principal = ic_cdk::api::caller().to_text();
     storage::grammar::remove_grammar_analysis(principal, idx)
 }
 
 #[ic_cdk::update]
 fn update_grammar_analysis(
-    principal: String,
     idx: String,
     user_input: GrammarUserInput,
     result: GrammarCheckResult,
 ) -> String {
+    let principal = ic_cdk::api::caller().to_text();
     storage::grammar::put_grammar_analysis(principal, idx, user_input, result)
 }

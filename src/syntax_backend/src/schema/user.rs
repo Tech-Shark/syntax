@@ -6,7 +6,7 @@ use std::borrow::Cow;
 const MAX_VALUE_SIZE: u32 = 1000000;
 pub const NO_USER_FOUND: &str = "No user with this ID was found!";
 pub const ID_GENERATION_FAILED: &str = "There was an error while generating the ID for this user!";
-pub const FREE_PLAN: &str = "FREE";
+pub const FREE_PLAN: &str = "Free";
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct User {
