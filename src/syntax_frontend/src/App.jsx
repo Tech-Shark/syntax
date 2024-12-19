@@ -1,18 +1,23 @@
-// App.jsx
-import React from 'react';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import WelcomeScreen from './pages/WelcomeScreen/WelcomeScreen';
-import UploadCv from './pages/UploadCV/UploadCv';
-import PersonalInfo from './pages/PersonalInfo/PersonalInfo';
-import WorkExperience from './pages/WorkExperience/WorkExperience';
-import Skills from './pages/Skills/skills';
-import Education from './pages/Education/Education';
-import Achievements from './pages/Achievements/Achievements';
-import Portfolio from './pages/Portfolio/Portfolio';
-import SavedInfo from './pages/SavedInfo/SavedInfo';
-import DashboardUser from './pages/Dashboard/DashboardUser';
-import DashboardAdmin from './pages/Dashboard/DashboardAdmin';
+import React from "react";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import WelcomeScreen from "./pages/WelcomeScreen/WelcomeScreen";
+import UploadCv from "./pages/UploadCV/UploadCv";
+import PersonalInfo from "./pages/PersonalInfo/PersonalInfo";
+import WorkExperience from "./pages/WorkExperience/WorkExperience";
+import Skills from "./pages/Skills/Skills";
+import Education from "./pages/Education/Education";
+import Achievements from "./pages/Achievements/Achievements";
+import Portfolio from "./pages/Portfolio/Portfolio";
+import SavedInfo from "./pages/SavedInfo/SavedInfo";
+import DashboardUser from "./pages/Dashboard/DashboardUser/DashboardUser";
+import DashboardAdmin from "./pages/Dashboard/DashboardAdmin";
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
 
 const router = createBrowserRouter([
   {
@@ -33,41 +38,38 @@ const router = createBrowserRouter([
   },
   {
     path: "/work-experience",
-    element: <WorkExperience />
+    element: <WorkExperience />,
   },
   {
     path: "/skills",
-    element: <Skills />
+    element: <Skills />,
   },
   {
     path: "/education",
-    element: <Education />
+    element: <Education />,
   },
   {
     path: "/achievements",
-    element: <Achievements />
+    element: <Achievements />,
   },
   {
     path: "/portfolio",
-    element: <Portfolio />
+    element: <Portfolio />,
   },
   {
     path: "/saved_info",
-    element: <SavedInfo />
+    element: <SavedInfo />,
   },
   {
     path: "/user_dashboard",
-    element: <DashboardUser />
+    element: <DashboardUser />,
   },
   {
     path: "/admin_dashboard",
-    element: <DashboardAdmin />
+    element: <DashboardAdmin />,
   },
-  
+  {
+    path: "*",
+    element: <></>,
+  },
 ]);
-
-function App() {
-  return <RouterProvider router={router} />;
-}
-
-export default App;
