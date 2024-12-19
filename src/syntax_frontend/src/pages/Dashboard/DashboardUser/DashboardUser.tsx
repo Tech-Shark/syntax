@@ -18,11 +18,11 @@ import "slick-carousel/slick/slick.css";
 
 function DashboardUser() {
   const settings: Settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     autoplay: true,
-    speed: 4000,
-    // autoplaySpeed: 4000,
+    speed: 10000,
+    autoplaySpeed: 0,
     cssEase: "linear",
     slidesToShow: 4,
     pauseOnFocus: false,
@@ -33,14 +33,14 @@ function DashboardUser() {
         breakpoint: 1650,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          // slidesToScroll: 3,
         },
       },
       {
         breakpoint: 1300,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
+          // slidesToScroll: 2,
           initialSlide: 2,
         },
       },
@@ -48,7 +48,7 @@ function DashboardUser() {
         breakpoint: 930,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
+          // slidesToScroll: 1,
         },
       },
     ],
@@ -124,7 +124,7 @@ function DashboardUser() {
             </button>
           </div>
 
-          <div className="slider-container">
+          <div className="slider-container -ml-6">
             <Slider {...settings} centerMode>
               {Recommended.map((template) => (
                 <TemplateCard key={template.id} Data={template} />
@@ -142,7 +142,7 @@ const Templates = [
   {
     image: "",
     id: "first",
-    tags: ["hi", "hi", "hello"],
+    tags: ["hi", "test", "hello"],
     title: "Creative Resume",
     body: "Showcase your creativity with a bold yet \
     structured design. Perfect for creative professionals, \

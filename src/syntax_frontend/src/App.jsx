@@ -10,8 +10,7 @@ import Education from "./pages/Education/Education";
 import Achievements from "./pages/Achievements/Achievements";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import SavedInfo from "./pages/SavedInfo/SavedInfo";
-import DashboardUser from "./pages/Dashboard/DashboardUser/DashboardUser";
-import DashboardAdmin from "./pages/Dashboard/DashboardAdmin";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return <RouterProvider router={router} />;
@@ -61,12 +60,8 @@ const router = createBrowserRouter([
     element: <SavedInfo />,
   },
   {
-    path: "/user_dashboard",
-    element: <DashboardUser />,
-  },
-  {
-    path: "/admin_dashboard",
-    element: <DashboardAdmin />,
+    path: "/dashboard",
+    element: <Dashboard />,
   },
   {
     path: "*",

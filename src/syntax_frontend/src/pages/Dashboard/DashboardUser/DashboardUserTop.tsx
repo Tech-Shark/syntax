@@ -4,30 +4,41 @@ import template from "../../../assets/images/template.svg";
 import saved_cv from "../../../assets/images/saved_cv.svg";
 import notification from "../../../assets/images/notification.svg";
 import download_icon from "../../../assets/images/download_icon.svg";
+import { Link } from "react-router-dom";
 
 function DashboardUserTop() {
   return (
     <div>
       <div className="flex justify-between w-full ">
-        <h5 className="font-bold  sm:text-3xl  lg:text-[3rem]  md:leading-[4rem]">
+        <h5 className="font-bold sm:text-3xl lg:text-[3rem] md:leading-[4rem] text-[#1C1D24]">
           Welcome Seyi
         </h5>
         <div className="hidden md:flex gap-4 items-center ">
-          {Actions.map((action, index) => (
-            <button
-              key={action.title + index}
-              className={`centerUtil h-fit ${
-                action.square ? "" : "rounded-full"
-              }`}
-              title={action.title}
-            >
-              <img
-                src={action.icon}
-                alt={action.title}
-                className="w-[3.01rem] aspect-square "
-              />
-            </button>
-          ))}
+          {Actions.map((action, index) =>
+            action.link ? (
+              <Link to={action.link} key={action.title + index}>
+                <img
+                  src={action.icon}
+                  alt={action.title}
+                  className="w-[3.01rem] aspect-square "
+                />
+              </Link>
+            ) : (
+              <button
+                key={action.title + index}
+                className={`centerUtil h-fit ${
+                  action.square ? "" : "rounded-full"
+                }`}
+                title={action.title}
+              >
+                <img
+                  src={action.icon}
+                  alt={action.title}
+                  className="w-[3.01rem] aspect-square "
+                />
+              </button>
+            )
+          )}
         </div>
       </div>
 
@@ -67,5 +78,6 @@ const Actions = [
     title: "Exit",
     icon: syntax_logo2,
     square: true,
+    link: "/",
   },
 ];

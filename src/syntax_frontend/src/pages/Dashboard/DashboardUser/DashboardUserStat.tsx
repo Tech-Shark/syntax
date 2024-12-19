@@ -6,6 +6,7 @@ const DashboardUserStat = () => {
     <div className="mt-12 flex flex-wrap gap-6">
       {Stats.map((stat) => (
         <div
+          key={stat.title}
           className={`flex flex-col rounded-[8.02px] items-center justify-center h-[9.94rem]
             ${
               stat.blackBg ? "bg-[#1C1D24] text-white" : "bg-[#E1E0F3]"
