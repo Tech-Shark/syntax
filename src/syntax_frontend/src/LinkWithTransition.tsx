@@ -1,11 +1,11 @@
-import React from "react";
+import { MouseEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-function LinkWithTransition({ href, children, back = false }) {
+function LinkWithTransition({ href = "", children = <></>, back = false }) {
   const location = useLocation(); // Current location
   const navigate = useNavigate();
 
-  const handleNavigation = (e) => {
+  const handleNavigation = (e: MouseEvent) => {
     e.preventDefault();
 
     if (back) {

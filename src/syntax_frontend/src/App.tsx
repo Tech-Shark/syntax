@@ -1,5 +1,7 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+
 import Home from "./pages/Home/Home";
 import WelcomeScreen from "./pages/WelcomeScreen/WelcomeScreen";
 import UploadCv from "./pages/UploadCV/UploadCv";
@@ -13,7 +15,11 @@ import SavedInfo from "./pages/SavedInfo/SavedInfo";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
 
 export default App;
