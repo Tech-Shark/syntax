@@ -150,6 +150,7 @@ type User = record {
 };
 type UserInput = record { bio : opt BioData; plan : text };
 type UserResponse = variant { Ok : User; Err : Error_1 };
+type UserResponse_1 = variant { Ok : text; Err : Error_1 };
 service : () -> {
   add_credits_to_user : () -> (UserResponse);
   add_cv_analysis : (text, CVUserInput, AnalysisResult) -> (opt text);
@@ -204,6 +205,7 @@ service : () -> {
       vec CVAnalysisResponse,
     ) query;
   get_single_user : () -> (UserResponse) query;
+  get_user_role : () -> (UserResponse_1) query;
   get_users_by_tier : (text) -> (vec User) query;
   gr_total_users : () -> (int64) query;
   mark_notification_as_read : (text) -> (NotificationForSingleUserResponse_1);
