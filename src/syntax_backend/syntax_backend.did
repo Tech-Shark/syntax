@@ -199,6 +199,7 @@ service : () -> {
   get_all_notification_for_tier : () -> (NotificationForTierResponse_1) query;
   get_all_user_profile : () -> (vec User) query;
   get_cv_analysis : (text) -> (CVResponse) query;
+  get_free_tier : () -> (opt text) query;
   get_grammar_analysis : (text) -> (GrammarResponse) query;
   get_single_admin : (text) -> (AdminResponse) query;
   get_single_cv_analysis_for_identity : (text) -> (
