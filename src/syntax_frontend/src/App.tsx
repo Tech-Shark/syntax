@@ -1,18 +1,18 @@
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { store } from "./redux/store";
 
-import Home from "./pages/Home/Home";
-import WelcomeScreen from "./pages/WelcomeScreen/WelcomeScreen";
-import UploadCv from "./pages/UploadCV/UploadCv";
-import PersonalInfo from "./pages/PersonalInfo/PersonalInfo";
-import WorkExperience from "./pages/WorkExperience/WorkExperience";
-import Skills from "./pages/Skills/Skills";
-import Education from "./pages/Education/Education";
 import Achievements from "./pages/Achievements/Achievements";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Education from "./pages/Education/Education";
+import Home from "./pages/Home/Home";
+import PersonalInfo from "./pages/PersonalInfo/PersonalInfo";
 import Portfolio from "./pages/Portfolio/Portfolio";
 import SavedInfo from "./pages/SavedInfo/SavedInfo";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import Skills from "./pages/Skills/Skills";
+import UploadCv from "./pages/UploadCV/UploadCv";
+import WelcomeScreen from "./pages/WelcomeScreen/WelcomeScreen";
+import WorkExperience from "./pages/WorkExperience/WorkExperience";
 
 function App() {
   return (
