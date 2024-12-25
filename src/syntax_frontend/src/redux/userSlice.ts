@@ -3,11 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UserState, UserUpdateProfilePayload } from "./userTypes";
 
 const initialState: UserState = {
-  credit: 0,
-  id: undefined,
+  profile: undefined,
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -15,11 +14,21 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<UserUpdateProfilePayload>
     ) => {
-      console.log(action);
-      state = {
-        ...state,
-        id: action.payload.id,
-        credit: action.payload.credit,
+      const { profile } = action.payload;
+
+      state.profile = {
+        ...state.profile,
+        id: action.payload?.profile?.id || state.profile?.id,
+        cv_last_checked:
+          action.payload?.profile?.cv_last_checked ||
+          state.profile?.cv_last_checked,
+        amount_of_credits: profile?.amount_of_credits
+          ? (Number(profile.amount_of_credits) as unknown as bigint)
+          : (Number(
+              state.profile?.amount_of_credits || 0
+            ) as unknown as bigint),
+
+        other: action.payload?.profile?.other || state.profile?.other,
       };
     },
   },

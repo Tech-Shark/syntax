@@ -1,6 +1,7 @@
+import { User } from "../../../declarations/syntax_backend/syntax_backend.did";
+
 export interface UserState {
-  id?: string | null;
-  credit?: number;
+  profile?: Partial<User>;
 }
 
 export interface UserUpdateProfilePayload extends UserState {}
