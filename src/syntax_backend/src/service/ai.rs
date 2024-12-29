@@ -21,8 +21,8 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
     //2. SETUP ARGUMENTS FOR HTTP GET request
 
     // 2.1 Setup the URL
-    let host = "https://icp-proxy.fly.dev/";
-    let url = format!("https://icp-proxy.fly.dev/{endpoint}");
+    let host = "https://ai-service-manager.fly.dev/";
+    let url = format!("{host}{endpoint}");
     let new_idx: Option<String> = util::generate_random_string().await;
     if new_idx.is_none() {
         return "Failed to generate Idempotency key".to_string();
