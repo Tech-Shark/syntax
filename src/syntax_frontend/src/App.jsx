@@ -13,7 +13,7 @@ import Portfolio from './pages/Portfolio/Portfolio';
 import SavedInfo from './pages/SavedInfo/SavedInfo';
 import DashboardUser from './pages/Dashboard/DashboardUser';
 import DashboardAdmin from './pages/Dashboard/DashboardAdmin';
-import CvPage from './components/ResumeTemplates/Cv';
+import Template1 from './components/ResumeTemplates/Template1';
 import Template2 from './components/ResumeTemplates/Template2';
 
 const router = createBrowserRouter([
@@ -66,11 +66,11 @@ const router = createBrowserRouter([
     element: <DashboardAdmin />
   },
   {
-    path: "/cv",
-    element: <CvPage />
+    path: "/temp1",
+    element: <Template1 />
   },
   {
-    path: "/temp",
+    path: "/temp2",
     element: <Template2 />
   },
   
