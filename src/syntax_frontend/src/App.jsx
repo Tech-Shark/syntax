@@ -13,6 +13,8 @@ import Portfolio from './pages/Portfolio/Portfolio';
 import SavedInfo from './pages/SavedInfo/SavedInfo';
 import DashboardUser from './pages/Dashboard/DashboardUser';
 import DashboardAdmin from './pages/Dashboard/DashboardAdmin';
+import CvPage from './components/ResumeTemplates/Cv';
+import Template2 from './components/ResumeTemplates/Template2';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
   {
     path: "/admin_dashboard",
     element: <DashboardAdmin />
+  },
+  {
+    path: "/cv",
+    element: <CvPage />
+  },
+  {
+    path: "/temp",
+    element: <Template2 />
   },
   
 ]);
