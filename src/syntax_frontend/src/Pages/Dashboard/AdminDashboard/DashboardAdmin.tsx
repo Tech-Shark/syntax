@@ -36,6 +36,16 @@ import AdminTable from './adminTable';
     accountStatus: "inactive" as "inactive" | "active",
     templatesCreated: "5",
   },
+  {
+    userId: "INV003",
+    name: "Jane Doe",
+    email: "jane.smith@example.com",
+    plan: "Basic",
+    credits: "150",
+    lastActive: "2023-11-25",
+    accountStatus: "active" as "active" | "inactive",
+    templatesCreated: "5",
+  },
   ];
   
 
@@ -192,7 +202,7 @@ const [isModalVisible, setIsModalVisible] = useState(false);
                   User Details
                 </h5>
                 <img
-                  src="admin_cancel_icon_path"
+                  src={admin_cancel_icon}
                   alt="cancel icon"
                   className="cursor-pointer"
                   onClick={handleClose}
@@ -261,7 +271,7 @@ const [isModalVisible, setIsModalVisible] = useState(false);
                     Done
                   </h5>
                   <img
-                    src="build_icon_path"
+                    src={build_icon}
                     alt="build icon"
                     className="w-[3.11rem] h-[3.11rem] group-hover:rotate-45 group-hover:transition-all group-hover:duration-300 ease-in-out"
                   />

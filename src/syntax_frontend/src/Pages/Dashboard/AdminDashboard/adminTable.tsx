@@ -63,7 +63,7 @@ const AdminTable: React.FC<TableProps> = ({ data, onAddCredit, onView, onDisable
               ></span>
             </TableCell>
             <TableCell>{user.templatesCreated}</TableCell>
-            <TableCell className="flex items-center justify-between gap-4">
+            <TableCell className="flex items-center justify-start gap-4">
               <button
                 className="flex items-center gap-2 whitespace-nowrap bg-black text-white rounded-[53px] py-[0.5rem] px-4 font-semibold text-[0.75rem] leading-[1.73rem]"
                 onClick={() => onAddCredit(user.userId)}
