@@ -19,10 +19,10 @@ const WelcomeDescription: React.FC<WelcomeDescriptionProps> = ({
       </div>
 
       {/* Foreground Content */}
-      <h1 className="text-center text-[2.5rem] font-bold leading-normal">
+      <h1 className="text-center text-[2.5rem] md:text-5xl font-bold leading-normal">
         {heading}
       </h1>
-      <p className="text-center text-sm font-normal leading-normal">
+      <p className="text-center text-sm md:text-base font-normal leading-normal whitespace-pre-line">
         {subheading}
       </p>
       <p className="text-center text-sm font-normal leading-normal text-[#82859D] hidden lg:block">

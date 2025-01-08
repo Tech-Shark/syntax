@@ -1,5 +1,6 @@
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
+import SidebarLinks from "@/components/SidebarLinks";
 import WelcomeInput from "@/components/welcomeInput";
 import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
@@ -15,7 +16,9 @@ const Education: React.FC = () => {
             <WelcomeDescription
               heading="Add Your Education"
               subheading="Provide details of your education, from your most recent or relevant degree to previous academic achievements." />
-            <form className="flex flex-col gap-7 align-center justify-center p-3">
+            <div className="flex justify-start gap-[7rem] w-max">
+              <SidebarLinks />
+              <form className="flex flex-col gap-7 align-center justify-center p-3">
               <WelcomeInput label="Degree Type" id="degreeType" placeholder="Bachelor's" />
               <WelcomeInput label="Field of Study" id="fieldStudy" placeholder="Computer Science" />
               <WelcomeInput label="University/College Name" id="universityName"  placeholder="Stanford University"/>
@@ -34,6 +37,7 @@ const Education: React.FC = () => {
                 </div>
               </button>
             </form> 
+            </div>
             <div className="flex gap-4">
               <BackButton/>
               <NextButton to="/achievements" />

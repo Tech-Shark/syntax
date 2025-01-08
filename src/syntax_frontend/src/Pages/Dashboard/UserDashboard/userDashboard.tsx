@@ -1,75 +1,120 @@
-import WelcomeDescription from "@/components/welcomeDescription";
-import DashboardCarousel from "@/components/Dashboard/dashboardCarousel";
-import UploadCvPlus from "@/components/uploadcvPlus";
-import arrow3 from "@/assets/images/arrow3.svg";
-import filterIcon from "@/assets/images/filterIcon.svg"
-import star4 from "@/assets/images/star3.svg";
-import Magazine from "@/components/magazine";
+import Sidebar from '../Sidebar';
 
-const UserDashBoard: React.FC = () => {
+import syntax_logo2 from '@/assets/images/syntax_logo2.svg';
+import new_cv from '@/assets/images/new_cv.svg';
+import template from '@/assets/images/template.svg';
+import saved_cv from '@/assets/images/saved_cv.svg';
+import notification from '@/assets/images/notification.svg';
+import download_icon from '@/assets/images/download_icon.svg'
+import arrow_up from '@/assets/images/arrow_up.svg'
+import my_template from '@/assets/images/my_template.svg'
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
+
+
+
+const Dashboard: React.FC = () => {
+ 
   return (
-    <>
-      {/* navbutton */}
-      <nav></nav>
-      <div className="flex flex-col h-auto pt-11 pb-11 gap-[3.75rem]">
-        <WelcomeDescription heading="Welcome Seyi" subheading="Pick a template that suits your style, or explore tailored recommendations based on your career goals." />
+    <section className='flex font-outfit'>
+        <Sidebar />
+        <div className='px-4 md:px-6 py-8 w-full h-screen overflow-x-auto'>
 
-        <div className="pl-7"><DashboardCarousel /></div>
+          <div className='flex justify-between w-full '>
+            <h5 className='font-bold  sm:text-3xl  lg:text-[3rem]  md:leading-[4rem]'>Welcome Seyi</h5>
+            <ul className="hidden md:flex gap-4 items-center ">
+              <li>
+                <img src={new_cv} alt="new cv" className='w-[3.01rem] aspect-square cursor-pointer ' />
+              </li>
+              <li>
+                <img src={template} alt="template" className='w-[3.01rem] aspect-square cursor-pointer' />
+              </li>
+              <li>
+                <img src={saved_cv} alt="saved cv" className='w-[3.01rem] aspect-square cursor-pointer' />
+              </li>
+              <li>
+                <img src={notification} alt="notification" className='w-[3.01rem] aspect-square cursor-pointer' />
+              </li>
+              <li>
+                <img src={syntax_logo2} alt="syntax logo" className='w-[3.01rem] aspect-square cursor-pointer' />
+              </li>
+            </ul>
+            
+          </div>
 
-        <div className="flex justify-between items-center pl-7 pr-7">
-          <span className="flex items-center gap-2">
-            <h1 className="font-semibold text-[1.18rem] leading-normal">My Templates</h1>
-            <img src={filterIcon} alt="filter Icon" />
-          </span>
-
-          <div className="flex items-center justify-center gap-2 bg-black w-[3.8rem] h-[3.8rem] rounded-full">
-            <div className="flex items-center justify-center gap-2 bg-white w-[2.3rem] h-[2.3rem] rounded-full">
-              <img src={arrow3} alt="arrow 3" className="rotate-[-45deg]"/>
+          <div className='flex gap-4 mt-8 font-semibold text-[0.93rem] leading-[1.73rem] flex-wrap'>
+            <div className='flex gap-4 rounded-[4px] bg-black text-white py-[0.313rem] px-[0.63rem] cursor-pointer w-[8rem] items-center min-w-fit'>
+              <p>Download</p>
+              <img src={download_icon} alt="download icon" />
+            </div>
+            <div className='flex gap-4 rounded-[4px] border border-black text-black py-[0.313rem] px-[0.63rem] cursor-pointer w-[8rem] items-center justify-center '>
+              <p>Upload</p>
             </div>
           </div>
-        </div>
 
-        <UploadCvPlus supportedFileText={`Your CVs will appear here once you create them. \n  Get started and build a CV that stands out. `}
-        iconWidth="w-16"
-        iconHeight="h-16"/>
 
-        <div className="flex justify-between items-center pl-7 pr-7">
-          <span className="flex items-center gap-1">
-            <h1 className="font-semibold text-[1rem] leading-normal">Recommended Templates </h1>
-            <img src={filterIcon} alt="filter Icon" />
-          </span>
+          <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
 
-          <div className="flex items-center justify-center gap-2 bg-black w-[3.8rem] h-[3.8rem] rounded-full">
-            <div className="flex items-center justify-center gap-2 bg-white w-[2.3rem] h-[2.3rem] rounded-full">
-              <img src={arrow3} alt="arrow 3" className="rotate-[-45deg]"/>
-            </div>
-          </div>
-        </div>
-
-        <div className=" pr-7 pl-7 ">
-          <div className="bg-black h-[34rem] rounded-[0.4rem] py-4 px-4">
-            <div className="bg-[#E1E0F3] w-full h-[15rem]">
-              {/* <Magazine /> */}
-            </div>
-            <div className="flex justify-center flex-col items-center gap-5">
-              <div>
-                <div></div>
-                <div className="flex gap-4">
-                  <span className="w-auto py-[0.4rem] px-[0.62rem] bg-white text-black flex items-center justify-center rounded-[0.2rem]">Bold</span>
-                  <span className="w-auto py-[0.4rem] px-[0.62rem] bg-white text-black flex items-center justify-center rounded-[0.2rem]">Visual</span>
-                  <span className="w-auto py-[0.4rem] px-[0.62rem] bg-white text-black flex items-center justify-center rounded-[0.2rem]">Unique</span>
+            <div className="flex flex-col rounded-[8.02px] items-center justify-center bg-[#E1E0F3] h-[9.94rem]">
+                <div className='flex items-center gap-4 mb-2'>
+                  <p className='font-bold text-[2.89rem] leading-[3.64rem]'>05</p>
+                  <img src={arrow_up} alt="arrow up" />
                 </div>
-              </div>
-              <div className="flex flex-col items-center gap-2 bg-white">
-                <h1>Creative Resume</h1>
-                <img src={star4} alt="star 4" />
-              </div>
-              <div></div>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>Total CVs Created</p>
             </div>
+
+            <div className="flex flex-col rounded-[8.02px] items-center justify-center bg-black text-white h-[9.94rem]">
+                <div className='flex items-center gap-4 mb-2'>
+                  <p className='font-bold text-[2.89rem] leading-[3.64rem]'>05</p>
+                
+                </div>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>CVs Shared</p>
+            </div>
+            <div className="flex flex-col rounded-[8.02px] items-center justify-center bg-black text-white h-[9.94rem]">
+                <div className='flex items-center gap-4 mb-2'>
+                  <p className='font-bold text-[2.89rem] leading-[3.64rem]'>05</p>
+                
+                </div>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>Current ATS Score</p>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>(Average)</p>
+            </div>
+            <div className="flex flex-col rounded-[8.02px] items-center justify-center bg-black text-white h-[9.94rem]">
+                <div className='flex items-center gap-4 mb-2'>
+                  <p className='font-bold text-[2.89rem] leading-[3.64rem]'>05</p>
+                
+                </div>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>Tokens Available</p>
+            </div>
+            <div className="flex flex-col rounded-[8.02px] items-center justify-center bg-black text-white h-[9.94rem]">
+                <div className='flex items-center gap-4 mb-2'>
+                <img src={arrow_up} alt="arrow up" /> 
+                </div>
+                <p className='text-[1.34rem]  leading-[1.68rem] '>Last Updated CV</p>
+            </div>
+
           </div>
+
+          <Collapsible>
+            <CollapsibleTrigger className='flex items-center gap-2 mt-12 font-semibold text-[1.34rem] leading-[1.68rem]'>My Templates
+            <img src={my_template} alt="" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              Yes. Free to use for personal and commercial projects. No attribution
+              required.
+            </CollapsibleContent>
+          </Collapsible>
+
+
+
+   
         </div>
-      </div>
-    </>
-  );
-};
-export default UserDashBoard;
+    </section>
+  )
+}
+
+export default Dashboard

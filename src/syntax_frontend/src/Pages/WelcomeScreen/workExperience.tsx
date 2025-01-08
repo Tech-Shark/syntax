@@ -3,6 +3,7 @@ import WelcomeDescription from "@/components/welcomeDescription";
 import WelcomeInput from "@/components/welcomeInput";
 import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
+import SidebarLinks from "@/components/SidebarLinks";
 
 const WorkExperience: React.FC = () => {
 
@@ -14,8 +15,10 @@ const WorkExperience: React.FC = () => {
           <div className="flex flex-col justify-center items-center gap-[2.62rem]">
             <WelcomeDescription
               heading="Add Your Experience"
-              subheading="Include details about your past roles. Our AI will suggest improvements to make your achievements stand out." />
-            <form className="flex flex-col gap-7 align-center justify-center p-3">
+              subheading={`Include details about your past roles. Our AI will suggest \n improvements to make your achievements stand out.`} />
+            <div className="flex justify-start gap-[7rem]">
+              <SidebarLinks />
+              <form className="flex flex-col gap-7 align-center justify-center p-3">
               <WelcomeInput label="Job Title" id="jobTitle" placeholder="Software Engineer" />
               <WelcomeInput label="Company Name" id="companyName" placeholder="Syntax" />
               <WelcomeInput label="Duration (Start/End Dates)" id="duration"  placeholder="4th, Aug 2023 - Present"/>
@@ -28,11 +31,13 @@ const WorkExperience: React.FC = () => {
                   <img src={arrow2} alt="Add Experience" />
                 </div>
               </button>
-            </form> 
+              </form> 
+            </div>
             <div className="flex gap-4">
               <BackButton/>
               <NextButton to="/skills" />
             </div>
+            
           </div>
         </div>
       </section>

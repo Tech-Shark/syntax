@@ -1,103 +1,141 @@
-import React, { useState } from "react";
-import avatar1 from "../../assets/images/avatar1.svg";
-import avatar2 from "../../assets/images/avatar2.svg";
-import avatar3 from "../../assets/images/avatar3.svg";
-import nextArrow from "../../assets/images/nextArrow.svg";
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import build_icon from "../../assets/images/black_arrow.svg";
+import green_dot from "../../assets/images/greenDot.svg";
+
+const testimonialsData = [
+  {
+    id: 1,
+    text: "“Syntax transformed my CV in minutes! The AI suggestions helped me add key terms...”",
+    name: "Alex S.",
+    role: "Marketing Specialist",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 2,
+    text: "“The drag-and-drop builder is a game-changer. I was able to organize my CV exactly how I wanted...”",
+    name: "Sarah G.",
+    role: "Software Engineer",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 3,
+    text: "“I’ve used other CV builders before, but Syntax’s AI-driven ATS optimization really makes a difference...”",
+    name: "John R.",
+    role: "Project Manager",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 4,
+    text: "“I landed more interviews in a week than in the last three months combined!”",
+    name: "Kim B.",
+    role: "UX Designer",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 5,
+    text: "“Syntax is so user-friendly. I’ve recommended it to all my friends.”",
+    name: "Mike T.",
+    role: "Sales Associate",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 6,
+    text: "“I love how it highlights key achievements automatically!”",
+    name: "Lucy P.",
+    role: "Data Analyst",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 7,
+    text: "“One-click export to PDF is super handy for quick job applications.”",
+    name: "Sam W.",
+    role: "Graphic Designer",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 8,
+    text: "“Syntax’s templates saved me so much time!”",
+    name: "Jessica R.",
+    role: "HR Specialist",
+    avatar: "https://github.com/shadcn.png",
+  },
+  {
+    id: 9,
+    text: "“I used to dread updating my resume, but now it’s a breeze.”",
+    name: "Robert C.",
+    role: "Accountant",
+    avatar: "https://github.com/shadcn.png",
+  },
+];
+
+const testimonialClass = {
+  p: "font-normal text-[1.25rem] leading-normal md:text-[1.34rem] md:leading-[1.68rem]",
+};
 
 const Testimonials: React.FC = () => {
-  const [showMore, setShowMore] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
-  const testimonials = [
-    {
-      id: 1,
-      text: `“Syntax transformed my CV in minutes! The AI suggestions helped me add key terms I hadn’t considered, and I started getting interview calls almost immediately.”`,
-      avatar: avatar1,
-      name: "Alex S.",
-      position: "Marketing Specialist",
-    },
-    {
-      id: 2,
-      text: `“The drag-and-drop builder is a game-changer. I was able to organize my CV exactly how I wanted, and it looks so much more professional now.”`,
-      avatar: avatar2,
-      name: "Sarah G.",
-      position: "Software Engineer",
-    },
-    {
-      id: 3,
-      text: `“I’ve used other CV builders before, but Syntax’s AI-driven ATS optimization really makes a difference. My CV has never performed better!”`,
-      avatar: avatar3,
-      name: "Seye F.",
-      position: "Project Manager",
-    },
-    {
-      id: 4,
-      text: `“Syntax helped me tailor my CV for different industries quickly. The AI suggestions were spot on, saving me hours of work!”`,
-      avatar: avatar2,
-      name: "Taylor J.",
-      position: "Product Manager",
-    },
-    {
-      id: 5,
-      text: `“The simplicity of Syntax’s interface combined with the powerful AI tools makes it a no-brainer for anyone serious about their career.”`,
-      avatar: avatar1,
-      name: "Chris W.",
-      position: "Graphic Designer",
-    },
-    {
-      id: 6,
-      text: `“The ATS scoring feature was incredibly helpful. I was able to fine-tune my CV and pass the automated filters with ease!”`,
-      avatar: avatar3,
-      name: "Maya P.",
-      position: "Data Scientist",
-    },
-  ];
-
-  // Limit testimonials shown by default
-  const displayedTestimonials = showMore ? testimonials : testimonials.slice(0, 3);
+  // If showAll = false, only show first 3; otherwise show entire array
+  const visibleTestimonials = showAll
+    ? testimonialsData
+    : testimonialsData.slice(0, 3);
 
   return (
-    <>
-      {/* Testimonials Section */}
-      <div className="flex flex-col gap-14 pl-6 pr-6 lg:pl-[5rem] lg:pr-[5rem]">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-4xl font-bold leading-normal">Testimonials</h1>
-          <p className="font-medium text-[1.1rem]">Hear from our Users</p>
-        </div>
+    <section className="mt-[8rem]">
+      <span className="flex items-center justify-center gap-4">
+        <h5 className="text-left md:text-center font-medium text-[1.2rem] md:text-[1.5rem] leading-[1.89rem]">
+        98% of users say they felt more confident applying for jobs with our AI
+        resumes.
+        </h5>
+        <img src={green_dot} alt="green dot" />
+      </span>
+      <h5 className="font-bold text-4xl md:text-[3.1rem] leading-[4.42rem] mt-8">
+        Testimonials
+      </h5>
+      <p className="font-medium text-[1.2rem] md:text-[1.67rem] leading-[2.1rem]">
+        Hear from Our Users
+      </p>
 
-        <div className="flex flex-col gap-10">
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {displayedTestimonials.map((testimonial) => (
-              <div key={testimonial.id} className="flex flex-col gap-12">
-                <p className="leading-relaxed">{testimonial.text}</p>
-                <div className="flex gap-3 items-center">
-                  <img src={testimonial.avatar} alt={testimonial.name} className="w-10 h-10 rounded-full" />
-                  <span className="text-[1.1rem] font-medium leading-normal">
-                    <h1>{testimonial.name}</h1>
-                    <p>{testimonial.position}</p>
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-20 mt-14 md:mt-16">
+        {visibleTestimonials.map((test) => (
+          <div key={test.id} className="flex flex-col">
+            <p className={testimonialClass.p}>{test.text}</p>
 
-          {/* Show More/Less Button */}
-          <div className="flex items-center justify-center">
-            <button
-              onClick={() => setShowMore((prev) => !prev)}
-              className="bg-white max-w-max flex items-center justify-center gap-6 text-[1.1rem] leading-8 shadow-[-2.055px_-4.11px_26.407px_0px_rgba(0,0,0,0.10),2.055px_4.11px_29.49px_0px_rgba(0,0,0,0.10)] py-[0.5rem] px-[1.85rem] rounded-full hover:gap-10 transition-all"
-            >
-              {showMore ? "Show Less" : "Show More"}
-              <div className="bg-[#3D3F4E] w-[2.3rem] h-[2.3rem] rounded-full flex items-center justify-center rotate-45">
-                <img src={nextArrow} alt={showMore ? "Show Less" : "Show More"} />
+            <div className="flex items-center gap-4 mt-4">
+              <Avatar>
+                <AvatarImage src={test.avatar} />
+                <AvatarFallback>Syntax</AvatarFallback>
+              </Avatar>
+              <div className="font-medium">
+                <p>{test.name}</p>
+                <p>{test.role}</p>
               </div>
-            </button>
+            </div>
           </div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-center lg:px-16 mt-8">
+        <div
+          className="group flex items-center my-4 shadow-[-15px_-8px_24px_3px_rgba(0,0,0,0.1)] 
+                     rounded-full px-6 py-1 pr-3 gap-4 cursor-pointer 
+                     hover:gap-8 transition-all duration-300"
+          onClick={() => setShowAll(!showAll)}
+        >
+          <h5 className="font-semibold text-[1.1rem] md:text-[1.5rem] text-[#3D3F4E] leading-[2.81rem]">
+            {showAll ? "Show Less" : "Show More"}
+          </h5>
+          <img
+            src={build_icon}
+            alt="build icon"
+            className={`w-[2.4rem] h-[2.4rem] md:w-[3.11rem] md:h-[3.11rem] group-hover:-rotate-45 
+                        group-hover:transition-all group-hover:duration-300 
+                        ease-in-out`}
+          />
         </div>
       </div>
-      {/* End Testimonials Section */}
-    </>
+    </section>
   );
 };
 

@@ -1,204 +1,209 @@
-import React, { useState, useEffect } from "react";
-import star from "../../assets/images/star.svg";
-import frame19 from "../../assets/images/frame19.svg";
-import star3 from "../../assets/images/star3.svg";
-import star1 from "../../assets/images/star1.svg";
-import star5 from "../../assets/images/star5.svg";
-import { NextButton } from "../welcomeNavButtons";
-import Magazine from "../magazine";
+import React, { useState, useEffect, useRef } from "react";
+import hero_banner_1 from "../../assets/images/hero_banner_1.svg";
+import hero_banner_2 from "../../assets/images/hero_banner_2.svg";
+import hero_banner from "../../assets/images/hero_banner.svg";
 
-const KeyFeatures: React.FC = () => {
- const content = [
+import star_icon from "../../assets/images/star_icon.svg";
+import rhombus_icon from "../../assets/images/rhombus_icon.svg";
+import indicator_icon from "../../assets/images/indicator_icon.svg";
+import pentagon_icon from "../../assets/images/pentagon_icon.svg";
+
+import BuildButton from "../BuildButton";
+
+/**
+ * We have 3 actual features:
+ * 1) Star
+ * 2) Rhombus
+ * 3) Pentagon
+ *
+ * The "indicator_icon" is NOT part of the data; it's just a visual icon.
+ */
+const featuresData = [
   {
-    id: 0,
+    id: "star",
+    icon: star_icon,
     title: "AI-Powered CV Generation",
-    description: [
-      "Syntax’s AI evaluates and scores your CV for ATS compatibility, suggesting",
-      "improvements that help you get through automated filters.Tailored to your ",
-      "industry, Syntax’s AI highlights essential keywords and formatting tips to",
-      "make your CV more competitive",
-    ],
-    shape: star,
+    description:
+      "Syntax’s AI evaluates and scores your CV for ATS compatibility, suggesting improvements that help you get through automated filters. Tailored to your industry, Syntax’s AI highlights essential keywords and formatting tips to make your CV more competitive.",
   },
   {
-    id: 1,
-    title: "Keyword Optimization",
-    description: [
-      "Syntax’s AI ensures your CV is rich with industry-specific keywords, boosting its visibility",
-      "in automated screening systems.",
-      "This makes your CV stand out to recruiters.",
-    ],
-    shape: frame19,
+    id: "rhombus",
+    icon: rhombus_icon,
+    title: "ATS-Ready Templates",
+    description:
+      "Our designs ensure your resume passes Applicant Tracking Systems to increase your visibility.",
+    extraContext: "Stand out and get noticed by automated filters.",
   },
   {
-    id: 2,
-    title: "Interactive CV Suggestions",
-    description: [
-      "Get real-time AI suggestions as you build,",
-      "from keyword tips to formatting advice,",
-      "so you can create a standout CV.",
-    ],
-    shape: star3,
-  },
-  {
-    id: 3,
-    title: "Token Reward System",
-    description: [
-      "Earn tokens for using Syntax with added perks for premium users.",
-      "Actions like CV uploads and ATS analysis reward you with tokens.",
-      "Redeem tokens for advanced features and make your experience more valuable.",
-    ],
-    shape: star1,
+    id: "pentagon",
+    icon: pentagon_icon,
+    title: "Tailored Keyword Suggestions",
+    description:
+      "Receive industry-specific keywords to boost your resume’s relevance and match job requirements.",
+    extraContext: "Craft a resume that resonates with your target roles.",
   },
 ];
 
+const KeyFeatures: React.FC = () => {
+  // Which feature is currently active (0..2)
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isSliding, setIsSliding] = useState(false);
-  const [slideDirection, setSlideDirection] = useState("right");
+  // Are we in the middle of a slide-out animation?
+  const [animating, setAnimating] = useState(false);
 
-  // Autoplay interval
+  // Reference to the auto-play interval
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Slide to the next feature (cyclic)
+  const handleNextFeature = () => {
+    if (animating) return; // don’t interrupt animation
+    setAnimating(true);
+
+    setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % featuresData.length);
+      setAnimating(false);
+    }, 300); // match the CSS transition
+  };
+
+  // Auto-play: cycle every 3s
   useEffect(() => {
-    const autoplay = setInterval(() => {
-      handleNext(); // Automatically move to the next content
-    }, 4000); // Auto change every 4 seconds
+    intervalRef.current = setInterval(() => {
+      handleNextFeature();
+    }, 3000);
 
-    return () => clearInterval(autoplay); // Clear interval on unmount
-  }, [currentIndex]);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
-  const handleNext = () => {
-    setSlideDirection("right"); // Set sliding direction
-    setIsSliding(true);
+  // When user clicks one of the 3 real icons, switch immediately
+  const handleIconClick = (index: number) => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (index === activeIndex || animating) return;
 
+    setAnimating(true);
     setTimeout(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % content.length); // Move to the next content
-      setIsSliding(false);
-    }, 1000); // Match slide-out animation duration
+      setActiveIndex(index);
+      setAnimating(false);
+    }, 300);
   };
 
-  const handlePrevious = () => {
-    setSlideDirection("left"); // Set sliding direction
-    setIsSliding(true);
-
-    setTimeout(() => {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + content.length) % content.length); // Move to the previous content
-      setIsSliding(false);
-    }, 1000); // Match slide-out animation duration
-  };
-
-  const handleImageClick = (id: number) => {
-    if (id === currentIndex) return; // If the clicked image is already displayed, do nothing
-
-    setSlideDirection(id > currentIndex ? "right" : "left"); // Determine direction of slide
-    setIsSliding(true);
-
-    setTimeout(() => {
-      setCurrentIndex(id); // Update content after slide-out
-      setIsSliding(false); // Reset sliding state after animation
-    }, 1000); // Match the duration of the animation
-  };
+  // Current feature to display
+  const currentFeature = featuresData[activeIndex];
 
   return (
-    <div className="relative flex flex-col gap-12 pl-6 pr-6 lg:pl-[5rem] lg:pr-[5rem]">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-bold leading-normal">Key Features</h1>
-        <p className="font-medium text-[1.1rem]">Why Choose Our AI Resume Builder?</p>
-      </div>
-      <div className="relative bg-[#EEF] flex flex-col rounded-[1.4rem] justify-center overflow-hidden group h-[42rem] md:h-[25rem]">
-        {/* Magazine Component as Background */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-40 md:opacity-30">
-          <div className="transition-transform duration-500 group-hover:rotate-6">
-            <Magazine width="w-[35rem]" height="h-[25rem]" />
-          </div>
-        </div>
+    <section className="pt-12 md:pt-6 lg:mt-44">
+      <h5 className="font-bold text-2xl md:text-[3.1rem] leading-normal md:leading-[4.42rem]">
+        Key Features
+      </h5>
+      <p className="font-medium text-lg md:text-[1.5rem] mb-8">
+        Why Choose Our AI Resume Builder?
+      </p>
 
-        {/* Foreground Content */}
-        <div className="relative flex flex-col p-4 gap-[2.8rem] lg:gap-8 z-10 ">
-          {/* Dynamic Shape */}
-          <div className="flex items-center justify-center relative">
-            <img
-              src={content[currentIndex].shape}
-              alt="Dynamic Shape"
-              className={`absolute left-0 w-12 h-12 transition-transform duration-1000 ease-in-out ${
-                isSliding
-                  ? slideDirection === "right"
-                    ? "-translate-x-[100%]"
-                    : "translate-x-[100%]"
-                  : "translate-x-0"
-              }`}
-            />
-          </div>
-
-          {/* Dynamic Title */}
-          <div className="relative overflow-hidden h-[3.4rem]">
-            <h1
-              className={`absolute text-[2.1rem] font-bold leading-[3.4rem] transition-transform duration-1000 ease-in-out ${
-                isSliding
-                  ? slideDirection === "right"
-                    ? "-translate-x-[100%]"
-                    : "translate-x-[100%]"
-                  : "translate-x-0"
-              }`}
-            >
-              {content[currentIndex].title}
-            </h1>
-          </div>
-
-          {/* Dynamic Description */}
-          <div className="relative overflow-hidden h-[11rem] md:h-[6rem]">
-            <p
-              className={`absolute font-normal leading-normal text-base transition-transform duration-1000 ease-in-out ${
-                isSliding
-                  ? slideDirection === "bottom"
-                    ? "-translate-y-[100%]"
-                    : "translate-y-[100%]"
-                  : "translate-y-0"
-              }`}
-            >
-              {content[currentIndex].description.map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  {index !== content[currentIndex].description.length - 1 && <br />}
-                </React.Fragment>
-              ))}
-            </p>
-          </div>
-        </div>
-
-        {/* Foreground Magazine Component at Bottom-Left */}
-        <div className="absolute bottom-0 left-6 z-20">
-          <Magazine
-            width={currentIndex % 2 === 0 ? "w-[6rem]" : "w-[8rem]"}
-            height={currentIndex % 2 === 0 ? "h-[4rem]" : "h-[5rem]"}
-          />
-        </div>
-      </div>
-
-      {/* Bottom Images */}
-      <div className="flex flex-col gap-12 lg:flex-row lg:gap-6 items-center justify-center md:justify-between">
-        <div className="flex items-center justify-center gap-6 mt-6 overflow-hidden">
-        {content.map((item, index) => (
+      {/* Banners / Hero Images */}
+      <div className="h-[32.73rem] flex items-end justify-center relative">
+        <div className="group relative h-full w-4/5 mt-8 overflow-hidden cursor-pointer">
+          {/* Banner 1 */}
           <img
-            key={item.id}
-            src={item.shape}
-            alt={`Image ${item.id}`}
-            className={`w-12 h-12 transition-transform duration-1000 ease-in-out ${
-              isSliding && index === currentIndex
-                ? slideDirection === "right"
-                  ? "-translate-x-[20%]"
-                  : "translate-x-[20%]"
-                : "translate-x-0"
-            }`}
-            onClick={() => handleImageClick(item.id)}
+            src={hero_banner_1}
+            alt="hero banner1"
+            className="h-full w-full absolute group-hover:-translate-y-4 transition-all duration-300 ease-in-out"
           />
-        ))}
+          {/* Banner 2 */}
+          <img
+            src={hero_banner_2}
+            alt="hero banner2"
+            className="h-full w-full absolute translate-x-[-8rem] -translate-y-5 group-hover:-translate-y-5 group-hover:-rotate-12 transition-all duration-300 ease-in-out"
+          />
+          {/* Banner 3 */}
+          <img
+            src={hero_banner}
+            alt="hero banner3"
+            className="h-full w-full absolute translate-x-[8rem] group-hover:rotate-12 transition-all duration-300 ease-in-out"
+          />
         </div>
 
-        <div className="flex items-center justify-center">
-          <NextButton to="/welcome" text="Build CV" />
+        {/* Text overlay + Slide/Fade */}
+        <div className="absolute inset-0 bg-[#EEEEFF]/70 pointer-events-none rounded-xl">
+          <div className="h-full flex flex-col items-left justify-center gap-6 pl-6 md:pl-12 md:w-2/3 pr-4 md:pr-8">
+            <div
+              className={`transition-transform transition-opacity duration-300 ${
+                animating
+                  ? "opacity-0 -translate-x-8"
+                  : "opacity-100 translate-x-0"
+              }`}
+            >
+              {/* Top icon & heading */}
+              <img
+                src={currentFeature.icon}
+                alt="feature icon"
+                className="w-[3.42rem] h-[3.42rem] mb-4"
+              />
+              <h5 className="font-bold text-xl md:text-[2.05rem] text-[#000006] mb-2">
+                {currentFeature.title}
+              </h5>
+              <p className="font-normal text-base md:text-[1.5rem] leading-normal md:leading-[1.89rem]">
+                {currentFeature.description}
+              </p>
+              <p className="mt-4 text-sm md:text-base font-light text-gray-700">
+                {currentFeature.extraContext}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Bottom icons + BuildButton */}
+      <div className="flex items-center justify-between mt-8 flex-col md:flex-row">
+        <div className="flex gap-4 mb-6 lg:mb-0">
+          {/* 4 icons total visually: star, indicator, rhombus, pentagon. 
+              But only 3 are actual features (index=0..2).
+          */}
+
+          {/* 1) star => index = 0 */}
+          <img
+            src={featuresData[0].icon}
+            alt="star icon"
+            onClick={() => handleIconClick(0)}
+            className={`w-10 h-10 lg:w-[3.34rem] lg:h-[3.34rem] cursor-pointer transition-transform duration-300 ${
+              activeIndex === 0 ? "scale-110" : "scale-100"
+            }`}
+          />
+
+          {/* 2) indicator => no text, purely visual */}
+          <img
+            src={indicator_icon}
+            alt="indicator icon"
+            className="w-[9.02rem] h-[2.5rem] lg:w-[14.4rem] md:h-[3rem]"
+          />
+
+          {/* 3) rhombus => index = 1 */}
+          <img
+            src={featuresData[1].icon}
+            alt="rhombus icon"
+            onClick={() => handleIconClick(1)}
+            className={`w-10 h-10 lg:w-[3.34rem] lg:h-[3.34rem] cursor-pointer transition-transform duration-300 ${
+              activeIndex === 1 ? "scale-110" : "scale-100"
+            }`}
+          />
+
+          {/* 4) pentagon => index = 2 */}
+          <img
+            src={featuresData[2].icon}
+            alt="pentagon icon"
+            onClick={() => handleIconClick(2)}
+            className={`w-10 h-10 lg:w-[3.34rem] lg:h-[3.34rem] cursor-pointer transition-transform duration-300 ${
+              activeIndex === 2 ? "scale-110" : "scale-100"
+            }`}
+          />
+        </div>
+
+        {/* Build CV button */}
+        <div className="flex items-center justify-center px-16">
+          <BuildButton />
+        </div>
+      </div>
+    </section>
   );
 };
 

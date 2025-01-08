@@ -1,54 +1,28 @@
-import { NextButton } from "../welcomeNavButtons";
-import Magazine from "../magazine";
+import React from 'react'
+import hero_banner_1 from '../../assets/images/hero_banner_1.svg'
+import hero_banner_2 from '../../assets/images/hero_banner_2.svg'
+import hero_banner from '../../assets/images/hero_banner.svg'
+import star_icon from '../../assets/images/star_icon.svg'
+import pentagon_icon from '../../assets/images/pentagon_icon.svg';
+import hexagon_icon from '../../assets/images/hexagon_icon.svg';
 
 const Footer: React.FC = () => {
-
   return (
-    <>
-      <div className="flex flex-col gap-[6.8rem] pl-6 pr-6 lg:justify-between lg:pl-[5rem] lg:pr-[5rem]">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-          <div className="bg-[#ABAEBE] h-[28rem] items-center justify-center lg:h-[15rem] lg:w-[15rem]">
-          <div className="bg-[#D9D9D9] h-[28rem] rounded-tr-[200px] lg:h-[15rem] lg:w-[14.5rem]"></div>
-          </div>
-
-          <div className="flex flex-col gap-[3.3rem]">
-          <p>Let AI do the work. Build a CV <br /> that gets you noticed.</p>
-          <p>Take the next step in your career <br /> with a CV tailored to showcase <br /> your strengths."</p>
-          </div>
-
-          <div className="flex items-center justify-center gap-[4.8rem]">
-          <ul className="flex gap-[1.9rem] flex-col">
-            <li><a href="">Pricing</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">Create Cv</a></li>
-          </ul>
-          <ul className="flex gap-[1.9rem] flex-col">
-            <li><a href="">LinkedIn</a></li>
-            <li><a href="">Twitter (X)</a></li>
-            <li><a href="">Instagram</a></li>
-          </ul>
-          </div>
-          
+    <footer className='mt-12 bg-gradient-to-b from-slate-100 to-[#B3B2FB]/10'>
+        <div className="grid grid-cols-1 relative">
+        <img src={star_icon} alt="star icon" className='hidden md:block absolute top-[8rem] left-12'  />
+        <img src={pentagon_icon} alt="pentagon icon" className='hidden md:block absolute bottom-[6rem] left-16'  />
+        <img src={hexagon_icon} alt="hexagon icon" className='hidden md:block absolute top-[24rem] right-16'  />
+        <img src={hexagon_icon} alt="hexagon icon" className='hidden md:block absolute bottom-[6rem] right-16'  />
+            <h5 className='font-bold text-[4rem] lg:text-[11rem] leading-normal lg:leading-[13rem] text-center lg:-mt-10'>Your Next Job Starts with the Perfect CV</h5>
+            <div className='group relative h-[20rem] lg:h-[28.35rem] group-hover:h-auto group-hover:w-auto w-full overflow-hidden cursor-pointer pt-10 -mt-16'>
+          <img src={hero_banner_1} alt="hero banner" className='h-full w-full absolute  group-hover:-translate-y-6 lg:group-hover:-translate-y-4 transition-all duration-300 ease-in-out  ' />
+          <img src={hero_banner_2} alt="hero banner" className='h-full w-full absolute translate-x-[-4rem] lg:translate-x-[-8rem] -translate-y-5 group-hover:-translate-y-7 lg:group-hover:-translate-y-5 group-hover:-rotate-12 transition-all duration-300 ease-in-out ' />
+          <img src={hero_banner} alt="hero banner" className='h-full w-full absolute  translate-x-[3rem] lg:translate-x-[8rem] group-hover:rotate-[18deg]  lg:group-hover:rotate-12 transition-all duration-300 ease-in-out' />
+            </div>     
         </div>
+    </footer>
+  )
+}
 
-        <div className="flex items-center justify-center">
-          <NextButton to="/welcome" text="Build CV" />
-        </div>
-      </div>
-
-      <div className="flex flex-col bg-[#f7f7ff] h-auto ">
-        {/* Header */}
-        <h1 className="text-6xl leading-normal text-center font-bold mb-10 lg:text-[6.6rem] lg:mb-0">
-          Your Next <br className="lg:hidden"/> Job <br className="hidden lg:block"/> Starts <br className="lg:hidden"/> with the <br /> Perfect CV
-        </h1>
-
-        {/* Centered Magazine */}
-        <div className="flex justify-center bg-[#f7f7ff] opacity-80">
-          <Magazine width="w-[90%] lg:w-[100%]" />
-        </div>
-      </div>
-    </>
-  );
-};
-export default Footer;
+export default Footer

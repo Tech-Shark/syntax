@@ -19,10 +19,10 @@ export const NextButton: React.FC<NextButtonProps> = ({ to,  text = "Next"  }) =
   };
 
   return (
-   <button onClick={handleNext} className="group flex w-auto justify-center items-center gap-5 bg-black py-[0.41rem] px-[1.03rem] rounded-3xl hover:gap-8 transition-transform duration-300 hover:translate-x-2" >
-      <p className="text-center text-[0.92rem] font-semibold leading-7 text-white"> {text} </p>
-      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-        <img src={arrow3} alt="Next Page" className="rotate-[-45deg] group-hover:rotate-0 transition-transform duration-300"/>
+   <button onClick={handleNext} className="group flex w-auto justify-center items-center gap-5 bg-black py-[0.41rem] px-[1.03rem] sm:py-[0.55rem] sm:px-[1.13rem] rounded-3xl hover:gap-8 transition-transform duration-300 hover:translate-x-2" >
+      <p className="text-center text-[0.92rem] md:text-[1.2rem] font-semibold leading-7 text-white"> {text} </p>
+      <div className="w-8 h-8  bg-white rounded-full flex items-center justify-center">
+        <img src={arrow3} alt="Next Page" className="group-hover:rotate-0 transition-transform duration-300"/>
     </div>
   </button>
 
@@ -40,11 +40,11 @@ export const BackButton: React.FC = () => {
   };
 
   return (
-    <button onClick={handleBack} className="flex w-[7.375rem] justify-center items-center gap-5 bg-black py-[0.41rem] px-[1.03rem] rounded-3xl">
-      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-        <img src={arrow4} alt="previous page" />
+    <button onClick={handleBack} className="group flex w-auto justify-center items-center gap-5 bg-black py-[0.41rem] px-[1.03rem] sm:py-[0.55rem] sm:px-[1.13rem] rounded-3xl hover:gap-8 transition-transform duration-300 hover:translate-x-2" >
+      <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:gap-8">
+        <img src={arrow4} alt="previous page" className="group-hover:rotate-0 transition-transform duration-300"/>
       </div>
-      <p className="text-center text-[0.92rem] font-semibold leading-7 text-white">Back</p>
+      <p className="text-center text-[0.92rem] md:text-[1.2rem] font-semibold leading-7 text-white">Back</p>
     </button>
   );
 };

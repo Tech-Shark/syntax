@@ -32,8 +32,8 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
         // Render a <textarea>
         <textarea
           id={id}
-          className={`${labelStyle} resize-none w-[19rem] h-64`} 
-          value={value}
+          className={`${labelStyle} resize-none w-[19rem] h-72`} 
+          // value={value}
           placeholder={placeholder}
           onChange={onChange}
         />
@@ -42,10 +42,11 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
         <input
           id={id}
           type={type}
-          className={labelStyle}
-          value={value}
+          className={`${labelStyle} `}
+          // value={value}
           placeholder={placeholder}
           onChange={onChange}
+          
         />
       )}
     </div>

@@ -46,10 +46,7 @@ const UploadCvPlus: React.FC<UploadCvPlusProps> = ({
     <div className="flex flex-col gap-5 items-center justify-center">
       <label
         htmlFor="cvInput"
-        className="h-[9.375rem] w-[9.375rem] flex items-center justify-center py-3 px-[1.26rem] gap-[0.36056rem] 
-                   border-[5.769px] border-[#5D6078] rounded-full hover:border-black 
-                   text-[#5D6078] hover:text-black hover:transition-all hover:duration-300 
-                   ease-in-out cursor-pointer"
+        className="h-[9.375rem] w-[9.375rem] flex items-center justify-center py-3 px-[1.26rem] gap-[0.36056rem] border-[5.769px] border-[#5D6078] rounded-full hover:border-black text-[#5D6078] hover:text-black hover:transition-all hover:duration-300 ease-in-out cursor-pointer"
       >
         {isLoading ? (
           <p className="font-medium">Uploading CV...</p>

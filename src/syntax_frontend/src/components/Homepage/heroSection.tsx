@@ -1,35 +1,26 @@
-import HomeNav from "../homeNav";
-import { NextButton } from "../welcomeNavButtons";
-import sideArrow from "../../assets/images/sideArrow.svg"
-import Magazine from "../magazine";
+import hero_banner_1 from '../../assets/images/hero_banner_1.svg'
+import hero_banner_2 from '../../assets/images/hero_banner_2.svg'
+import hero_banner from '../../assets/images/hero_banner.svg'
+import BuildButton from "../BuildButton";
 
-const HeroSection: React.FC = () => {
-
+const Hero: React.FC = () => {
   return (
-    <>
-      <div className="bg-[#e1e0f3] h-auto w-screen"> 
-        <HomeNav />
-        <div className="flex flex-col items-center justify-center gap-14 lg:gap-28 mt-9">
-          <div className="flex flex-col items-center justify-center h-[40rem] md:h-auto
-        pt-36 gap-4">
-          <div className="flex flex-col items-center justify-center h-full w-screen gap-[3.2rem] text-left p-5 z-10">
-            <h1 className="text-5xl font-bold md:text-4xl">AI-Powered Resumes, <br className="md:hidden" /> Tailored to You</h1>
-            <p className="text-[1.23rem] font-normal leading-normal md:text-center">Generate a professional, tailored resume in minutes. Just share your skills and job < br className="hidden md:block"/> details, and let our AI build a standout CV designed to impress.</p>
-            <div className="flex items-center justify-center">
-              <NextButton to="/welcome" text="Build CV" />
-            </div>
-          </div>
-          <div className="bottom-36 -left-9 absolute">
-            <img src={sideArrow} alt="side arrow" className="h-52 w-52 md:w-[45rem] md:h-[45rem]"/>
-          </div>
-          </div>
-
-          <div className="flex items-center justify-center ">
-            <Magazine width="w-[20rem] lg:w-[40rem]" height="h-56" />
-          </div>
+    <div className='flex items-center flex-col justify-center mt-16 md:mt-[8rem] text-[#1C1D24] text-center px-5 md:px-16'>
+      <div className='flex flex-col gap-[2.9rem]'>
+        <h3 className='font-bold leading-normal text-[2.8rem] md:text-6xl lg:text-center lg:text-[4.71rem] lg:leading-[8.35rem] md:leading-[5rem] text-left'>AI-Powered Resumes, Tailored to You</h3>
+        <p className='font-normal text-left lg:text-center md:text-3xl lg:text-[2.34rem] md:leading-10 lg:leading-[3.51rem] lg:mb-4'>Generate a professional, tailored resume in minutes. Just share your skills and job details, and let our AI build a standout CV designed to impress.</p>
+        <div className='flex justify-center'>
+          <BuildButton />
         </div>
       </div>
-    </>
-  );
-};
-export default HeroSection;
+
+      <div className='group relative h-[15.35rem] md:h-[15rem] lg:h-[24.2rem] group-hover:h-auto group-hover:w-auto min-w-full md:w-4/5 mt-8 overflow-hidden  cursor-pointer pt-10'>
+          <img src={hero_banner_1} alt="hero banner" className='h-full w-4/5 md:w-full absolute group-hover:-translate-y-6 lg:group-hover:-translate-y-4 transition-all duration-300 ease-in-out  left-7 md:left-0' />
+          <img src={hero_banner_2} alt="hero banner" className='h-full w-4/5 md:w-full absolute md:translate-x-[-4rem] lg:translate-x-[-8rem] -translate-y-5 group-hover:-translate-y-7 lg:group-hover:-translate-y-5 group-hover:-rotate-12 transition-all duration-300 ease-in-out  -left-0 md:left-0' />
+          <img src={hero_banner} alt="hero banner" className='h-full w-4/5 md:w-full absolute  md:translate-x-[3rem] lg:translate-x-[8rem] group-hover:rotate-[18deg]  lg:group-hover:rotate-12 transition-all duration-300 ease-in-out left-14 md:left-0' />
+    </div>
+    </div>
+  )
+}
+
+export default Hero

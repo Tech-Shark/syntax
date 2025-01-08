@@ -1,154 +1,163 @@
 import React, { useRef } from "react";
-import star from "../../assets/images/star.svg";
-import star1 from "../../assets/images/star1.svg";
-import star4 from "../../assets/images/star4.svg";
-import arrow3 from "../../assets/images/arrow3.svg";
-import { NextButton } from "../welcomeNavButtons";
+import { Link } from "react-router-dom";
+import pricing_icon from "../../assets/images/pricing_icon.svg";
+import star_icon from "../../assets/images/star_icon.svg";
+import pentagon2_icon from "../../assets/images/pentagon2_icon.svg";
+import hexagon_icon from "../../assets/images/hexagon_icon.svg";
+import build_icon from "../../assets/images/build_icon.svg";
 
 const Pricing: React.FC = () => {
-  const premiumPlanRef = useRef<HTMLDivElement>(null);
+  const premiumRef = useRef<HTMLDivElement>(null);
 
-  const scrollToPremiumPlan = () => {
-    if (premiumPlanRef.current) {
-      premiumPlanRef.current.scrollIntoView({
-        behavior: "smooth", // Adds smooth scrolling animation
-        block: "center", // Centers the premium pricing in the view
-      });
+  const handlePricingIconClick = () => {
+    if (window.innerWidth >= 1024 && premiumRef.current) {
+      premiumRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  // Define pricing plans in an array
-  const plans = [
-    {
-      id: 1,
-      background: "bg-white",
-      title: "$2/ Resume",
-      color: "text-black",
-      features: [
-        "Pay as you go",
-        "Basic CV templates with ATS compatibility",
-        "Limited AI-powered CV scoring and optimization tips",
-        "Basic token earnings per action (e.g., CV uploads, ATS analysis)",
-        "Access to standard interactive CV suggestions",
-        "Limited country-specific templates",
-      ],
-      icon: star,
-      iconColor: "group-hover:animate-spin",
-      imageBackground: "bg-black",
-    },
-    {
-      id: 2,
-      background: "bg-black",
-      title: "$5/Month",
-      color: "text-white",
-      features: [
-        "All Free Plan features, plus:",
-        "Access to advanced CV templates and layout options",
-        "Unlimited AI recommendations and ATS scoring",
-        "Higher token earnings for each interaction",
-        "Full access to drag-and-drop CV builder (desktop-only)",
-        "In-depth country-specific customization",
-        "Priority support and in-app notifications",
-      ],
-      icon: star4,
-      iconColor: "group-hover:animate-spin",
-      imageBackground: "bg-[#E1E0F3]",
-    },
-    {
-      id: 3,
-      background: "bg-[#E1E0F3]",
-      title: "$20/Month",
-      color: "text-black",
-      features: [
-        "All Premium Plan features, plus:",
-        "Exclusive templates tailored to specific industries (e.g., tech, finance, etc.)",
-        "Personalized CV feedback from AI for targeted roles",
-        "Enhanced token rewards for maximum earning",
-        "Access to a career resources library and tutorials",
-        "Priority feature updates and new template releases",
-      ],
-      icon: star1,
-      iconColor: "group-hover:animate-spin",
-      imageBackground: "bg-black",
-    },
-  ];
-
   return (
-    <div className="flex flex-col gap-14 pl-6 pr-6 lg:pl-[5rem] lg:pr-[5rem]">
-      {/* Header Section */}
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-bold leading-normal">Pricing</h1>
-        <p className="font-medium text-[1.1rem]">Flexible Pricing for Every Need!</p>
+    <section className="pt-20 md:pt-44 ">
+      <h5 className="font-bold text-4xl md:text-[3.1rem] leading-normal md:leading-[4.42rem] lg:mb-2">
+        Pricing
+      </h5>
+      <p className="font-medium text-[1.3rem] md:text-[1.67rem] leading-normal lg:leading-[2.1rem]">
+        Flexible Pricing for Every Need!
+      </p>
+
+      {/* Pricing Icon (click triggers scroll on desktop) */}
+      <div className="hidden lg:flex justify-center">
+        <img
+          src={pricing_icon}
+          alt="pricing icon"
+          onClick={handlePricingIconClick}
+          className="cursor-pointer"
+        />
       </div>
 
-      {/* Scroll Arrow Section */}
-      <div className="flex-col items-center justify-center gap-10 hidden md:flex">
-        <div
-          className="flex items-center justify-center gap-10 rounded-full w-12 h-12 shadow-[-2.672px_-5.344px_34.334px_0px_rgba(0,0,0,0.10),2.672px_5.344px_38.341px_0px_rgba(0,0,0,0.10)] cursor-pointer"
-          onClick={scrollToPremiumPlan}
-        >
-          <img src={arrow3} alt="arrow 3" className="rotate-90" />
+      {/* Free Plan / Premium Plan Text (only on md and up) */}
+      <div className="hidden lg:flex justify-between gap-16 mt-4">
+        <div className="w-5/12 pr-10">
+          <h5 className="font-bold text-[1.67rem] leading-[2.1rem]">Free Plan:</h5>
+          <p className="font-normal text-[1.5rem] leading-[1.89rem] text-justify">
+            Access essential tools, basic CV templates, and AI-powered ATS scoring to
+            improve your CV&apos;s visibility. Earn tokens with each use, gaining insights
+            into your CV’s performance
+          </p>
         </div>
-
-        <div className="flex justify-between w-full">
-          <span className="text-[1.3rem] font-normal leading-normal flex flex-col gap-3">
-            <h1 className="font-semibold">Free Plan:</h1>
-            <p className="text-lg">
-              Access essential tools, basic CV templates, and <br />
-              AI-powered ATS scoring to improve your CV's <br />
-              visibility. Earn tokens with each use, gaining <br />
-              insights into your CV’s performance.
-            </p>
-          </span>
-          <span className="text-[1.3rem] font-normal leading-normal flex flex-col gap-3">
-            <h1 className="font-semibold">Premium Plan:</h1>
-            <p className="text-lg">
-              Unlock all features, including advanced templates, <br />
-              in-depth AI suggestions, and higher token rewards. <br />
-              Customize your CV with the drag-and-drop builder <br />
-              and access exclusive features designed to maximize <br />
-              your job search success.
-            </p>
-          </span>
+        <div className="w-1/3">
+          <h5 className="font-bold text-[1.67rem] leading-[2.1rem]">
+            Premium Plan:
+          </h5>
+          <p className="font-normal text-[1.5rem] leading-[1.89rem] text-justify">
+            Unlock all features, including advanced templates, in-depth AI suggestions,
+            and higher token rewards. Customize your CV with the drag-and-drop builder
+            and access exclusive features designed to maximize your job search success.
+          </p>
         </div>
       </div>
 
-      {/* Pricing Plans */}
-      <div className="flex flex-col gap-[4.2rem] lg:flex-row">
-        {plans.map((plan) => (
-          <div
-            key={plan.id}
-            ref={plan.id === 3 ? premiumPlanRef : null} // Attach ref to the Premium Plan div
-            className={`group hover:border-black rounded-r-[0.4rem] rounded-b-[0.4rem] hover:ease-in-out transition-all`}
-          >
-            <div
-              className={`flex flex-col ${plan.background} gap-8 pt-6 pb-7 px-[0.88rem] shadow-[0px_0px_0px_2.194px_rgba(0,0,0,0.00)_inset,4.387px_4.387px_16.452px_0px_rgba(61,63,78,0.10)] group-hover:border-black group-hover:border-4 hover:border-r-8 hover:border-b-8`}
-            >
-              <div className={`${plan.imageBackground} h-28 rounded-[0.3rem] `}></div>
-              <div className={`${plan.color} flex flex-col gap-6`}>
-                {/* Title and Icon */}
-                <div className="flex justify-between">
-                  <h1 className="text-[1.9rem] font-semibold leading-10">{plan.title}</h1>
-                  <img src={plan.icon} alt="icon" className={`w-10 h-10 ${plan.iconColor}`} />
-                </div>
-
-                {/* Features */}
-                <ul className="list-disc pl-4 flex flex-col gap-2">
-                  {plan.features.map((feature, index) => (
-                    <li key={index}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
+      {/* Pricing Cards */}
+      <div className="mt-8 lg:mt-16 flex flex-col lg:flex-row items-center lg:justify-between gap-[4.26rem] lg:gap-0">
+        {/* Card 1 */}
+        <div className="p-4 w-full md:w-[80%] h-auto lg:h-auto shadow-xl lg:w-[30%] rounded-lg flex flex-col gap-6 mt-8 group cursor-pointer hover:shadow-[10px_10px_5px_1px_rgba(0,0,0,0.75)] hover:border-2 hover:border-black">
+          <div className="w-full min-h-[9.6rem] bg-black rounded-lg" />
+          <div>
+            <div className="flex justify-between pr-2">
+              <h5 className="font-semibold text-[1.8rem] md:text-[2.51rem] leading-[3.3rem] h-[3.31rem]">
+                $2/ Resume
+              </h5>
+              <img
+                src={star_icon}
+                alt="star icon"
+                className="group-hover:rotate-180 transition-all ease-in-out duration-300"
+              />
             </div>
+            <ul className="list-disc p-8 font-normal text-base md:text-[1.34rem] leading-[1.68rem]  md:leading-10">
+              <li>Pay as you go</li>
+              <li>Basic CV templates with ATS compatibility</li>
+              <li>Limited AI-powered CV scoring and optimization tips</li>
+              <li>Basic token earnings per action (e.g., CV uploads, ATS analysis)</li>
+              <li>Access to standard interactive CV suggestions</li>
+              <li>Limited country-specific templates</li>
+            </ul>
           </div>
-        ))}
+        </div>
+
+        {/* Card 2 (PREMIUM)  */}
+        <div
+          ref={premiumRef}
+          className="px-4 pt-4 h-auto lg:h-auto shadow-xl w-full md:w-[80%] lg:w-[30%] rounded-lg flex flex-col gap-6 bg-black text-white group cursor-pointer hover:shadow-[10px_10px_5px_1px_rgba(0,0,0,0.75)] hover:border-2 hover:border-black"
+        >
+          <div className="w-full min-h-[9.6rem] bg-[#E1E0F3] rounded-lg" />
+          <div>
+            <div className="flex justify-between pr-2">
+              <h5 className="font-semibold text-[1.8rem] lg:text-[2.51rem] leading-[3.3rem] h-[3.31rem]">
+                $5/Month
+              </h5>
+              <img
+                src={pentagon2_icon}
+                alt="pentagon icon"
+                className="group-hover:rotate-180 transition-all ease-in-out duration-300"
+              />
+            </div>
+            <ul className="list-disc p-8 font-normal text-base md:text-[1.34rem] leading-[1.68rem] md:leading-10">
+              <li>All Free Plan features, plus:</li>
+              <li>Access to advanced CV templates and layout options</li>
+              <li>Unlimited AI recommendations and ATS scoring</li>
+              <li>Higher token earnings for each interaction</li>
+              <li>Full access to drag-and-drop CV builder (desktop-only)</li>
+              <li>In-depth country-specific customization</li>
+              <li>Priority support and in-app notifications</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="p-4 h-auto lg:h-auto shadow-xl w-full md:w-[80%] lg:w-[30%] rounded-lg bg-[#E1E0F3] text-black flex flex-col gap-8 mt-16 group cursor-pointer hover:shadow-[10px_10px_5px_1px_rgba(0,0,0,0.75)] hover:border-2 hover:border-black">
+          <div className="w-full min-h-[9.6rem] bg-black rounded-lg" />
+          <div>
+            <div className="flex justify-between pr-2">
+              <h5 className="font-semibold text-[1.8rem] lg:text-[2.51rem] leading-[3.3rem] h-[3.31rem]">
+                $20/Month
+              </h5>
+              <img
+                src={hexagon_icon}
+                alt="hexagon icon"
+                className="group-hover:rotate-180 transition-all ease-in-out duration-300"
+              />
+            </div>
+            <ul className="list-disc p-8 font-normal text-base md:text-[1.34rem] leading-[1.68rem] md:leading-10">
+              <li>All Premium Plan features, plus:</li>
+              <li>
+                Exclusive templates tailored to specific industries (e.g., tech,
+                finance, etc.)
+              </li>
+              <li>Personalized CV feedback from AI for targeted roles</li>
+              <li>Enhanced token rewards for maximum earning</li>
+              <li>Access to a career resources library and tutorials</li>
+              <li>Priority feature updates and new template releases</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
-      {/* Footer Section */}
-      <div className="flex items-center justify-center">
-        <NextButton to="/welcome" text="Build CV" />
-      </div>
-    </div>
+      {/* "Build CV" Button */}
+      <Link
+        to="/welcome"
+        className="flex items-center mt-10 lg:mt-0 justify-center py-[0.51rem] px-[1.28rem] lg:py-0 lg:px-16"
+      >
+        <div className="group flex items-center my-4 bg-black rounded-full px-6 pr-3 gap-4 cursor-pointer hover:gap-8 transition-all duration-300">
+          <h5 className="text-white font-semibold text-[1.2rem] lg:text-[1.5rem] leading-[2.81rem] ">
+            Build CV
+          </h5>
+          <img
+            src={build_icon}
+            alt="build icon"
+            className="w-[3.11rem] h-[3.11rem] group-hover:rotate-45 group-hover:transition-all group-hover:duration-300 ease-in-out"
+          />
+        </div>
+      </Link>
+    </section>
   );
 };
 

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
 import { FaPlus } from "react-icons/fa6";
 import * as pdfjs from "pdfjs-dist";
 import mammoth from "mammoth";
 import "@/utils/pdfWorker";
-
+import welcomeHeroBanner from "@/assets/images/welcomeHerobanner.svg";
+import backward_arrow from "@/assets/images/backwardsArrow.svg"
+ 
 const UploadCv: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,9 +83,9 @@ const UploadCv: React.FC = () => {
 
   return (
     <section>
-      <WelcomeHeader leftLabel="Back" />
-      <div className="flex justify-center items-center flex-col h-auto w-full pt-32 pr-[0.8125rem] pb-10 pl-3.5 gap-20">
-        <div className="flex flex-col justify-center items-center gap-5">
+      <WelcomeHeader leftLabel="Back" >
+        <div className="flex justify-center items-center flex-col h-auto w-full pt-32 pr-[0.8125rem] pl-3.5 gap-20">
+        <div className="flex flex-col justify-center items-center gap-20">
           <WelcomeDescription
             heading="Upload CV"
             subheading="Drop your file here or browse to upload. We'll analyze it and provide suggestions to improve."
@@ -90,12 +93,12 @@ const UploadCv: React.FC = () => {
           <div className="flex flex-col gap-5 items-center justify-center">
             <label
               htmlFor="cvInput"
-              className="h-[9.375rem] w-[9.375rem] flex items-center justify-center py-3 px-[1.26rem] gap-[0.36056rem] border-[5.769px] border-[#5D6078] rounded-full hover:border-black text-[#5D6078] hover:text-black hover:transition-all hover:duration-300 ease-in-out cursor-pointer"
+              className="h-[9.375rem] w-[9.375rem] sm:h-[15rem] sm:w-[15rem] flex items-center justify-center py-3 px-[1.26rem] gap-[0.36056rem] border-[5.769px] border-[#5D6078] rounded-full hover:border-black text-[#5D6078] hover:text-black hover:transition-all hover:duration-300 ease-in-out cursor-pointer"
             >
               {isLoading ? (
                 <p className="font-medium">Uploading CV...</p>
               ) : (
-                <FaPlus className="w-[6.85094rem] h-[6.85094rem]" />
+                <FaPlus className="w-[6.85094rem] h-[6.85094rem] sm:h-[9.2rem] sm:w-[9.2rem]" />
               )}
             </label>
             <input
@@ -113,9 +116,17 @@ const UploadCv: React.FC = () => {
                 {selectedFile.name}
               </p>
             )}
-          </div>
+            </div>
+            <Link to="/personal-information" className="bg-black py-[0.41rem] px-[1.03rem] rounded-full gap-4 hover:gap-8 transition-transform duration-300 hover:translate-x-2 text-white flex items-center justify-center text-[0.9rem] sm:text-[1.3rem]" > 
+              Upload CV
+              <div className="bg-white h-[1.9rem] w-[1.9rem] rounded-full flex items-center justify-center"><img src={backward_arrow} alt="upload cv" className="rotate-[-128deg]"/></div>
+             </Link>
+              
+            <div>
+              <img src={welcomeHeroBanner} alt="welcome hero banner"/>
+            </div>
         </div>
-        <div className="p-4">
+        {/* <div className="p-4">
           {cvLines.length > 0 ? (
             <>
               <h3 className="text-lg font-semibold mb-2">Extracted CV Content:</h3>
@@ -128,10 +139,11 @@ const UploadCv: React.FC = () => {
               </ul>
             </>
           ) : (
-            <p className="text-gray-500">No content to display yet. Upload a file to view its content.</p>
+            <p className="text-gray-500"></p>
           )}
-        </div>
+        </div> */}
       </div>
+      </WelcomeHeader>
     </section>
   );
 };
