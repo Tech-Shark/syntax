@@ -26,7 +26,7 @@ const SavedInfo: React.FC = () => {
               <p className="text-white text-center font-semibold leading-7 text-[0.928rem]">Start Applying</p>
               <img src={arrow1} alt="Upload CV" className="w-[1.92rem] h-[1.92rem]"/>
             </Link>
-            <Link to="/dashboard" className="flex items-center justify-center gap-2 self-stretch rounded-[1.8rem] py-[0.65rem] px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)]">
+            <Link to="/user-dashboard" className="flex items-center justify-center gap-2 self-stretch rounded-[1.8rem] py-[0.65rem] px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)]">
               <p className="text-[#3D3F4E] text-center text-lg font-semibold leading-8">Go to Dashboard</p>
               <div className="flex items-center justify-center bg-[#3D3F4E] w-[2.33rem] h-[2.33rem] rounded-full"><img src={arrow2} alt="Build new cv" /></div>
             </Link>

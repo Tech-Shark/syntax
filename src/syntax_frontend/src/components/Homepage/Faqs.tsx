@@ -2,8 +2,8 @@ import React from "react";
 import faq1 from "../../assets/images/faq1.svg";
 import faq2 from "../../assets/images/faq2.png";
 import faq3 from "../../assets/images/faq3.png";
-import faq_loader from "../../assets/images/faq_loader.png";
-import rhombus_icon from "../../assets/images/rhombus_icon.svg";
+// import faq_loader from "../../assets/images/faq_loader.png";
+// import rhombus_icon from "../../assets/images/rhombus_icon.svg";
 
 import {
   Accordion,
@@ -14,7 +14,7 @@ import {
 
 const Faq: React.FC = () => {
   return (
-    <section className='my-8'>
+    <section className='my-8 hidden lg:block'>
          <h5 className='font-bold text-4xl md:text-[3.1rem] leading-[4.42rem] lg:mb-2'>FAQs</h5>
         <p className='font-medium text-[1.67rem] leading-[2.1rem]'>Frequently Asked Questions</p>
 

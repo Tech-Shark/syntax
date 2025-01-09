@@ -40,7 +40,7 @@ const Header: React.FC = () => {
     <ul className='hidden md:flex items-center justify-center gap-4 lg:gap-12 '>
         {navLinks.map((link) => (
             <Link to={link.path} key={link.id}>
-                <li   className='cursor-pointer font-semibold text-[1.125rem] hover:text-[1.5rem] transition-all duration-300 ease-in hover:px-2' >{link.name}</li>
+                <li   className='cursor-pointer font-semibold text-[1.125rem] hover:text-[1.5rem] transition-all duration-300 ease-in hover:-px-2' >{link.name}</li>
             </Link>
         ))}
 

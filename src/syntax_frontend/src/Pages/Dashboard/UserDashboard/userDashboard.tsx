@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar';
-
 import syntax_logo2 from '@/assets/images/syntax_logo2.svg';
 import new_cv from '@/assets/images/new_cv.svg';
 import template from '@/assets/images/template.svg';
@@ -99,8 +99,9 @@ const Dashboard: React.FC = () => {
 
           </div>
 
-          <Collapsible>
-            <CollapsibleTrigger className='flex items-center gap-2 mt-12 font-semibold text-[1.34rem] leading-[1.68rem]'>My Templates
+          <div className='flex justify-between items-center  mt-12 '>
+            <Collapsible>
+            <CollapsibleTrigger className='flex items-center gap-2  font-semibold text-[1.34rem] leading-[1.68rem]'>My Templates
             <img src={my_template} alt="" />
             </CollapsibleTrigger>
             <CollapsibleContent>
@@ -109,9 +110,35 @@ const Dashboard: React.FC = () => {
             </CollapsibleContent>
           </Collapsible>
 
+          {/* get started button */}
+          <Link to="/welcome" className='group flex items-center font-semibold text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
+            <p className='font-semibold text-[1.2rem] leading-[1.68rem] '>
+               Get started
+            </p>
+            <img src={arrow_up} alt="arrow up" className='w-[1.9rem] group-hover:rotate-[40deg] transition-all delay-300'/>
+          </Link>
+          </div>  
+        <div>
+          <Collapsible>
+            <CollapsibleTrigger className='flex items-center gap-2  font-semibold text-[1.34rem] leading-[1.68rem]'>Recommended Templates 
+            <img src={my_template} alt="" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              Yes. Free to use for personal and commercial projects. No attribution
+              required.
+            </CollapsibleContent>
+        </Collapsible>
+        </div>
 
-
-   
+        {/* template part */}
+        <div>
+          <div>
+            <div></div>
+            <div>
+              
+            </div>
+          </div>
+        </div>
         </div>
     </section>
   )

@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
-      <div className='group relative h-[15.35rem] md:h-[15rem] lg:h-[24.2rem] group-hover:h-auto group-hover:w-auto min-w-full md:w-4/5 mt-8 overflow-hidden  cursor-pointer pt-10'>
+      <div className='group relative h-[15.35rem] sm:h-[15rem] lg:h-[24.2rem] group-hover:h-auto group-hover:w-auto min-w-full md:w-4/5 mt-8 overflow-hidden  cursor-pointer pt-10'>
           <img src={hero_banner_1} alt="hero banner" className='h-full w-4/5 md:w-full absolute group-hover:-translate-y-6 lg:group-hover:-translate-y-4 transition-all duration-300 ease-in-out  left-7 md:left-0' />
           <img src={hero_banner_2} alt="hero banner" className='h-full w-4/5 md:w-full absolute md:translate-x-[-4rem] lg:translate-x-[-8rem] -translate-y-5 group-hover:-translate-y-7 lg:group-hover:-translate-y-5 group-hover:-rotate-12 transition-all duration-300 ease-in-out  -left-0 md:left-0' />
           <img src={hero_banner} alt="hero banner" className='h-full w-4/5 md:w-full absolute  md:translate-x-[3rem] lg:translate-x-[8rem] group-hover:rotate-[18deg]  lg:group-hover:rotate-12 transition-all duration-300 ease-in-out left-14 md:left-0' />

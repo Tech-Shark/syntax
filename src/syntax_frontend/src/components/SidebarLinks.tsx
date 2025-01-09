@@ -13,7 +13,7 @@ const SidebarLinks: React.FC = () => {
   const location = useLocation();
 
   return (
-    <ul className="hidden md:flex flex-col gap-[0.62rem] absolute left-32">
+    <ul className="hidden lg:flex flex-col gap-[0.62rem] absolute left-28">
       {links.map((link) => {
         const isActive = location.pathname === link.to;
 

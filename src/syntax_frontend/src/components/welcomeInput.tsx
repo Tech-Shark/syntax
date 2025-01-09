@@ -33,7 +33,7 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
         <textarea
           id={id}
           className={`${labelStyle} resize-none w-[19rem] h-72`} 
-          // value={value}
+          value={value}
           placeholder={placeholder}
           onChange={onChange}
         />
@@ -43,7 +43,7 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
           id={id}
           type={type}
           className={`${labelStyle} `}
-          // value={value}
+          value={value}
           placeholder={placeholder}
           onChange={onChange}
           

@@ -22,9 +22,9 @@ const WelcomeScreen: React.FC = () => {
             </div>
           </div> 
           
-          <div className="flex flex-col gap-5 items-center">
+          <div className="flex flex-col gap-5 items-center justify-center">
             <Link to="/upload-cv" className="flex items-center justify-center gap-2 py-[0.41rem] px-[1.03rem] bg-[#000006] rounded-3xl">
-              <p className="text-white text-center font-semibold leading-7 text-[0.928rem]">Upload CV</p>
+              <p className="text-white text-center font-semibold leading-7 text-[0.928rem] lg:text-[1.2rem]">Upload CV</p>
                 <img src={arrow1} alt="Upload CV" className="w-[1.92rem] h-[1.92rem]"/>
             </Link>
             <Link to="/personal-information" className="flex items-center justify-center gap-2 self-stretch rounded-[1.8rem] py-[0.65rem] px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)] hover:gap-8 transition-all duration-300">

@@ -1,15 +1,24 @@
 interface LoadingProps {
   isLoading?: boolean;
+  className?: string;
+  altText?: string;
 }
 
-const Loading: React.FC<LoadingProps> = ({ isLoading = false }) => {
+const Loader: React.FC<LoadingProps> = ({
+  isLoading = false,
+  className = "animate-pulse",
+  altText = "Loading...",
+}) => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-700 bg-opacity-75">
-      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
-    </div>
+    <img
+      src="/favicon.ico"
+      alt={altText}
+      className={className}
+    />
   );
 };
 
-export default Loading;
+export default Loader;
+

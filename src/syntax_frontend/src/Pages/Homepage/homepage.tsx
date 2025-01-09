@@ -14,7 +14,7 @@ const Homepage: React.FC = () => {
 
   return (
     <section className="relative">
-      <div className='min-h-[53.5rem] md:min-h-[58rem] lg:min-h-[68rem] bg-[#E1E0F3]' >
+      <div className='min-h-[53.5rem]  sm:min-h-[46.3rem] md:min-h-[58rem] lg:min-h-[68rem] bg-[#E1E0F3]' >
         <img src={hero_bg} alt="hero background" className='w-[12.2rem] lg:w-3/5 lg:h-[28.31rem] h-[11.6rem] absolute top-[15rem] lg:top-0 left-[-2rem] lg:left-[-14rem] z-0' />
         <div className='absolute inset-x-0 '>
           <Header />
