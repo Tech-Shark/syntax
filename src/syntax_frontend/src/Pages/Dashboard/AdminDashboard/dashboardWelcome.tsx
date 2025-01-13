@@ -1,5 +1,5 @@
-import template from '@/assets/images/template.svg';
-import saved_cv from '@/assets/images/saved_cv.svg';
+import template from '@/assets/images/template_icon.svg';
+import saved_cv from '@/assets/images/bookmark.svg';
 import notification from '@/assets/images/notification.svg';
 import syntax_logo2 from '@/assets/images/syntax_logo2.svg';
 import new_cv from '@/assets/images/new_cv.svg';

@@ -14,6 +14,8 @@ import Achievement from "./Pages/WelcomeScreen/achievement";
 import Portfolio from "./Pages/WelcomeScreen/portfolio";
 import SavedInfo from "./Pages/WelcomeScreen/savedInfo";
 import JobDescription from "./Pages/WelcomeScreen/jobDescription";
+import CvTemplate from "./Pages/WelcomeScreen/cvTemplates";
+import SavedTemplates from "./Pages/WelcomeScreen/saved-templates";
 
 // Auth pages
 import AuthWelcome from "./Pages/Auth/authWelcome";
@@ -24,6 +26,8 @@ import SigninInternetIdentity from "./Pages/Auth/signinInternetIdentity";
 // Dashboard pages
 import UserDashboard from "./Pages/Dashboard/UserDashboard/userDashboard";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard/DashboardAdmin";
+import PricingManagement from "./Pages/Dashboard/AdminDashboard/pricingManagement";
+import Pricing from "@/Pages/Dashboard/UserDashboard/Pricing/pricing";
 
 
 function App() {
@@ -42,6 +46,8 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/saved-info" element={<SavedInfo />} />
           <Route path="/job_description" element={<JobDescription />} />
+          <Route path="/cv-templates" element={<CvTemplate />} />
+          <Route path="/saved-templates" element={<SavedTemplates />} />
 
           {/* auth pages */}
           <Route path="/auth-welcome" element={<AuthWelcome />} />
@@ -52,6 +58,8 @@ function App() {
           {/* Dashboard */}
           <Route path="/user-dashboard" element={<UserDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/pricing-management" element={<PricingManagement />} />
+          <Route path="/pricing" element={<Pricing />} />
         </Routes>
       </BrowserRouter>
     </Provider>

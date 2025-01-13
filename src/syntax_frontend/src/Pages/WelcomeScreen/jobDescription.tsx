@@ -23,8 +23,7 @@ const JobDescription: React.FC = () => {
               <WelcomeInput label="Salary Range (Optional)" id="salaryRange"  placeholder="$70,000 - $100,000"/>
             </form> 
             <div className="flex gap-4">
-              <BackButton/>
-              <NextButton to="/cv-templates" />
+              <NextButton to="/cv-templates" text="Create CV"/>
             </div>
           </div>
         </div>

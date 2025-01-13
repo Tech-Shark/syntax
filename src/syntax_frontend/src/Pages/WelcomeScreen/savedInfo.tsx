@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
-import WelcomeHeroBanner from "../../assets/images/welcomeHerobanner.svg";
-import arrow1 from "../../assets/images/arrow1.svg";
-import arrow2 from "../../assets/images/arrow2.svg";
+import WelcomeHeroBanner from "@/assets/images/herobanner2.svg";
+import arrow1 from "@/assets/images/arrow1.svg";
+import arrow2 from "@/assets/images/arrow2.svg";
 
 
 const SavedInfo: React.FC = () => {
   return (
     <>
       <section>
-        <WelcomeHeader />
-        <div className="flex justify-center items-center flex-col h-auto w-full pt-32 pr-[0.8125rem] pb-10 pl-3.5 gap-[6.25rem]">
+        <WelcomeHeader leftLabel="Edit my Info" leftLink="/edit-cv" rightLabel="View Templates" rightLink="/templates">
+          <div className="flex justify-center items-center flex-col h-auto w-full pt-32 pr-[0.8125rem] pb-10 pl-3.5 gap-[6.25rem]">
           <div className="flex flex-col justify-center items-center gap-5">
             {/* description text */}
             <WelcomeDescription  heading="Your Information Has Been Saved!"
@@ -32,6 +32,7 @@ const SavedInfo: React.FC = () => {
             </Link>
           </div>
         </div>
+        </WelcomeHeader>
       </section>
     </>
   );

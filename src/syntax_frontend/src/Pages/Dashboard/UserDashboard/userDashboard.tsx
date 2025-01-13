@@ -8,6 +8,8 @@ import notification from '@/assets/images/notification.svg';
 import download_icon from '@/assets/images/download_icon.svg'
 import arrow_up from '@/assets/images/arrow_up.svg'
 import my_template from '@/assets/images/my_template.svg'
+import { FaPlus } from "react-icons/fa6";
+import CvTemplateCarousel from '@/components/Homepage/cvTemplateCarousel';
 
 import {
   Collapsible,
@@ -23,7 +25,7 @@ const Dashboard: React.FC = () => {
   return (
     <section className='flex font-outfit'>
         <Sidebar />
-        <div className='px-4 md:px-6 py-8 w-full h-screen overflow-x-auto'>
+        <div className='px-4 md:px-6 pt-8 w-full h-screen overflow-x-auto'>
 
           <div className='flex justify-between w-full '>
             <h5 className='font-bold  sm:text-3xl  lg:text-[3rem]  md:leading-[4rem]'>Welcome Seyi</h5>
@@ -118,28 +120,37 @@ const Dashboard: React.FC = () => {
             <img src={arrow_up} alt="arrow up" className='w-[1.9rem] group-hover:rotate-[40deg] transition-all delay-300'/>
           </Link>
           </div>  
-        <div>
-          <Collapsible>
-            <CollapsibleTrigger className='flex items-center gap-2  font-semibold text-[1.34rem] leading-[1.68rem]'>Recommended Templates 
-            <img src={my_template} alt="" />
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              Yes. Free to use for personal and commercial projects. No attribution
-              required.
-            </CollapsibleContent>
-        </Collapsible>
-        </div>
+       
+        {/* upload cv part */}
+        <Link to="/welcome" className='flex items-center justify-center flex-col gap-[1.35rem] mt-[3.3rem] mb-0'>
+          <div className='flex items-center justify-center px-[1.69rem] py-[1.11rem] h-[12.6rem] w-[12.6rem] rounded-full border-8 border-[#5D6078] group hover:border-black'>
+          <FaPlus className='w-[9.2rem] h-[9.2rem] text-[#5D6078] group-hover:text-black'/>
+          </div>
+          <h5 className='text-center text-lg font-normal leading-normal text-[#1C1D24]'>Your CVs will appear here once you create them. <br /> Get started and build a CV that stands out.</h5>
+        </Link>
 
         {/* template part */}
-        <div>
-          <div>
-            <div></div>
-            <div>
-              
-            </div>
+         <div className="flex justify-between  my-8 flex-col">
+
+          <div className='flex justify-between items-center my-[5rem] gap-20'>
+            <Collapsible>
+            <CollapsibleTrigger className='flex items-center gap-2  font-semibold text-[1.34rem] leading-[1.68rem]'>My Templates
+            <img src={my_template} alt="filter items" />
+            </CollapsibleTrigger>
+          </Collapsible>
+
+
+          <Link to="/cv-templates" className='group flex items-center font-semibold text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
+            <p className='font-semibold text-[1.2rem] leading-[1.68rem] '>
+              Visit Templates
+            </p>
+            <img src={arrow_up} alt="arrow up" className='w-[1.9rem] group-hover:rotate-[40deg] transition-all delay-300'/>
+          </Link>
           </div>
-        </div>
-        </div>
+
+          <CvTemplateCarousel />
+        </div> 
+      </div>
     </section>
   )
 }

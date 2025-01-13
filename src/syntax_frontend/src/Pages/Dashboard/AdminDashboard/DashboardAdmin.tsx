@@ -5,6 +5,7 @@ import DashBoardAction from './dashboardActions';
 import DashboardFilter from './dashboardFilter';
 import AdminTable from './adminTable';
 import UserModal from './viewUserModal';
+import AddCreditModal from './addCreditModal';
 
   
   const mockData = [
@@ -42,7 +43,8 @@ import UserModal from './viewUserModal';
   
 
 const AdminDashboard: React.FC = () => {
-const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAAddCreditModalVisible, setIsAddCreditModalVisible] = useState(false);
+  const [isViewUserModalVisible, setIsViewUserModalVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
 
@@ -50,12 +52,16 @@ const [isModalVisible, setIsModalVisible] = useState(false);
     const user = mockData.find((user) => user.userId === userId);
     if (user) {
       setSelectedUser(user);
-      setIsModalVisible(true);
+      setIsViewUserModalVisible(true);
     }
   };
 
   const handleAddCredit = (userId: string) => {
-    console.log(`Add credit for user: ${userId}`);
+   const user = mockData.find((user) => user.userId === userId);
+    if (user) {
+      setSelectedUser(user);
+      setIsAddCreditModalVisible(true);
+    }
   };
 
   const handleDisable = (userId: string) => {
@@ -65,9 +71,10 @@ const [isModalVisible, setIsModalVisible] = useState(false);
   const handleClose = () => {
     setIsClosing(true);
     setTimeout(() => {
-      setIsModalVisible(false);
+      setIsAddCreditModalVisible(false);
+      setIsViewUserModalVisible(false);
       setIsClosing(false);
-      setSelectedUser(null); // Clear selected user when modal closes
+      setSelectedUser(null);
     }, 500);
   };
 
@@ -95,9 +102,18 @@ const [isModalVisible, setIsModalVisible] = useState(false);
           onDisable={handleDisable}
         />
 
-        {/* Modal */}
+        {/*view user modal */}
       <UserModal
-          isModalVisible={isModalVisible}
+          isModalVisible={isViewUserModalVisible}
+          isClosing={isClosing}
+          selectedUser={selectedUser}
+          onClose={handleClose}
+          onCopy={handleCopy}
+        />
+
+        {/* Add credit modal */}
+        <AddCreditModal
+          isModalVisible={isAAddCreditModalVisible}
           isClosing={isClosing}
           selectedUser={selectedUser}
           onClose={handleClose}

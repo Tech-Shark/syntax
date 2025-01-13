@@ -1,4 +1,3 @@
-
 import { FaMinus } from "react-icons/fa";
 import admin_cancel_icon from '@/assets/images/admin_cancel_icon.svg';
 import copy_icon from '@/assets/images/copy_icon.svg'
@@ -96,7 +95,7 @@ const UserModal: React.FC<UserModalProps> = ({
             </label>
             <div className="bg-[#E1E0F3] h-[2.91rem] rounded-[7.75px] px-[2.88rem] py-[1.9rem] md:h-28 flex items-center justify-center">
               <div className="flex gap-6 items-center justify-center">
-                <p className="text-black text-[1.25rem]">
+                <p className="text-black text-[1.15rem]">
                   {selectedUser?.credits}
                 </p>
                 <div className="h-7 flex items-center justify-center bg-white rounded-full p-[0.43rem]">

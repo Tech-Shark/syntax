@@ -11,22 +11,24 @@ import { FaPlus } from "react-icons/fa6";
 import welcomeHeroBanner from "@/assets/images/welcomeHerobanner.svg";
 import backward_arrow from "@/assets/images/backwardsArrow.svg";
 
+
 const UploadCv: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
   const dispatch = useDispatch();
 
    async function extractText(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
       setIsFileSelected(true); // Enable the upload button
+      setFileName(file.name); // Set the file name
       setIsLoading(true); // Start loading
       try {
         const text = await pdfToText(file);
         console.log(text);
         // Parse the extracted text
         const parsedData = parseCvText(text);
-        console.log(parsedData)
       // Dispatch parsed data to Redux
       dispatch(setPersonalInformation(parsedData));
       } catch (error) {
@@ -36,6 +38,7 @@ const UploadCv: React.FC = () => {
       }
     } else {
       setIsFileSelected(false); // Disable the upload button
+      setFileName(null);
       console.error("No file selected");
     }
   }
@@ -73,7 +76,13 @@ const UploadCv: React.FC = () => {
                 onChange={extractText}
               />
               <p className="text-[#82859D] text-center text-sm font-normal leading-normal">
-                Supported file types: .PDF, .DOCX, .TXT.
+                 {fileName ? (
+                  <>
+                    Uploaded File: <strong>{fileName}</strong>
+                  </>
+                ) : (
+                  "Supported file types: .PDF, .DOCX, .TXT."
+                )}
               </p>
             </div>
             <Link
