@@ -87,7 +87,7 @@ function Template15({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-700 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg">
         {/* Header Section */}
         <div className="bg-gray-100 p-6">
