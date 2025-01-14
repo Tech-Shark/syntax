@@ -69,7 +69,7 @@ function Template5({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg">
         <div className="flex justify-center h-[100px] w-[100%] bg-[#F0CFC3] items-center"></div>
         {/* Header Section */}
