@@ -1,22 +1,23 @@
 import React from "react";
 import { IoMailOutline } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
+import { CiLocationOn } from "react-icons/ci";
 
 function Template13({ cvData }) {
   // Mock data for demonstration
   const mockData = {
     name: "JIM MYDDLETON",
+    title: "Office Manager",
     contact: {
-      address: "53 Church Way, Bradford, BD19JR",
-      phone: "079 1234 5678",
+      phone: "079 12345678",
       email: "jim.myddleton@exampl",
-      emailExtra: "e@example.com"
+      emailExtra: "e-example.co.uk",
+      address: "53 Church Way, Bradford BD19 JR"
     },
     workHistory: [
       {
         title: "Office Manager",
-        company: "Halpert & Co Paper Company",
+        company: "Halpen & Co Paper Company",
         location: "Leeds, West Yorkshire",
         period: "03/2019 - Current",
         achievements: [
@@ -31,8 +32,8 @@ function Template13({ cvData }) {
         location: "Bradford, West Yorkshire",
         period: "01/2013 - 03/2019",
         achievements: [
-          "Applied brand awareness and appropriate tone of voice across all communications to strengthen company image.",
-          "Maximised communication opportunities through intensive forward-planning and events research.",
+          "Applied brand awareness and appropriate tone of voice across all communication to strengthen company image.",
+          "Maximized communication opportunities through proactive forward-planning and events research.",
           "Devised and executed aligned communication strategy across six platforms."
         ]
       },
@@ -50,11 +51,11 @@ function Template13({ cvData }) {
     ],
     skills: [
       "Mother tongue - English",
-      "Interpersonal - Strong leadership for staff teams of 10+",
+      "Interpersonal - Strong leadership for staff teams of 30+",
       "Organisation - Multi-tasking ability and deadline driven",
       "Language skills - Spanish C1",
       "Job-related skills - Business administration and documentation control",
-      "Digital skills - Sage and Microsoft Office"
+      "Digital Skills - Sage and Microsoft Office"
     ],
     education: [
       {
@@ -67,22 +68,22 @@ function Template13({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
-        {/* Header Section */}
-        <div className="border-b border-[#1e4976] pb-4 mb-6">
-          <h1 className="text-[#1e4976] text-3xl font-serif mb-0">
-            {mockData.name}
-          </h1>
-        </div>
-
+    <div className="min-h-screen bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto bg-white shadow-lg">
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr]">
           {/* Left Column */}
-          <div>
+          <div className="p-8 mt-11 text-[#323B4C]">
+            {/* Name Section */}
+            <div className="border-b border-[#323B4C] pb-4 mb-6">
+              <h1 className="text-[#323B4C] text-3xl font-serif mb-0">
+                {mockData.name}
+              </h1>
+            </div>
+
             {/* Work History Section */}
             <section className="mb-8">
-              <h2 className="text-[#1e4976] font-serif text-lg mb-4 uppercase border-b border-[#1e4976] pb-1">
+              <h2 className="text-[#323B4C] font-serif text-lg mb-4 uppercase border-b border-[#323B4C] pb-1">
                 Work History
               </h2>
               {mockData.workHistory.map((job, index) => (
@@ -90,19 +91,19 @@ function Template13({ cvData }) {
                   <div className="mb-2">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-medium text-gray-800">{job.title}</h3>
-                        <p className="text-gray-600 text-sm">
+                        <h3 className="font-medium text-[#323B4C]">{job.title}</h3>
+                        <p className="text-[#323B4C] text-sm">
                           {job.company}, {job.location}
                         </p>
                       </div>
-                      <span className="text-gray-500 text-sm whitespace-nowrap">
+                      <span className="text-[#323B4C] text-sm whitespace-nowrap">
                         {job.period}
                       </span>
                     </div>
                   </div>
                   <ul className="list-disc pl-4 space-y-1">
                     {job.achievements.map((achievement, idx) => (
-                      <li key={idx} className="text-sm text-gray-600">
+                      <li key={idx} className="text-sm text-[#323B4C]">
                         {achievement}
                       </li>
                     ))}
@@ -113,20 +114,20 @@ function Template13({ cvData }) {
           </div>
 
           {/* Right Column */}
-          <div>
+          <div className="bg-[#2C5977] pt-20 text-white p-8">
             {/* Contact Section */}
             <section className="mb-8">
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <CiLocationOn className="text-[#1e4976]" />
+                <div className="flex items-center gap-2">
+                  <CiLocationOn className="text-lg" />
                   <span className="text-sm">{mockData.contact.address}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <BsTelephone className="text-[#1e4976]" />
+                <div className="flex items-center gap-2">
+                  <BsTelephone className="text-lg" />
                   <span className="text-sm">{mockData.contact.phone}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <IoMailOutline className="text-[#1e4976]" />
+                <div className="flex items-center gap-2">
+                  <IoMailOutline className="text-lg" />
                   <span className="text-sm">
                     {mockData.contact.email}
                     <br />
@@ -138,12 +139,12 @@ function Template13({ cvData }) {
 
             {/* Skills Section */}
             <section className="mb-8">
-              <h2 className="text-[#1e4976] font-serif text-lg mb-4 uppercase border-b border-[#1e4976] pb-1">
+              <h2 className="font-serif text-lg mb-4 uppercase border-b border-white pb-1">
                 Skills
               </h2>
               <ul className="space-y-2">
                 {mockData.skills.map((skill, index) => (
-                  <li key={index} className="text-sm text-gray-600">
+                  <li key={index} className="text-sm">
                     • {skill}
                   </li>
                 ))}
@@ -152,14 +153,14 @@ function Template13({ cvData }) {
 
             {/* Education Section */}
             <section>
-              <h2 className="text-[#1e4976] font-serif text-lg mb-4 uppercase border-b border-[#1e4976] pb-1">
+              <h2 className="font-serif text-lg mb-4 uppercase border-b border-white pb-1">
                 Education
               </h2>
               {mockData.education.map((edu, index) => (
                 <div key={index}>
-                  <h3 className="font-medium text-gray-800">{edu.degree}</h3>
-                  <p className="text-gray-600 text-sm">{edu.year}</p>
-                  <p className="text-gray-600 text-sm">
+                  <h3 className="font-medium">{edu.degree}</h3>
+                  <p className="text-sm">{edu.year}</p>
+                  <p className="text-sm">
                     {edu.institution} - {edu.location}
                   </p>
                 </div>
