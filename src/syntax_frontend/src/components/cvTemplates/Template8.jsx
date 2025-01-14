@@ -84,7 +84,7 @@ function Template8({ cvData }) {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg text-[#575757] pb-28">
         {/* Header Section */}
         <div className="p-8 text-center">

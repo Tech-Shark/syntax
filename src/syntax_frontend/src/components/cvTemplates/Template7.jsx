@@ -92,7 +92,7 @@ function Template7({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg">
         {/* Header */}
         <div className="bg-[#323B4C] text-white flex flex-col items-end py-8 px-12">

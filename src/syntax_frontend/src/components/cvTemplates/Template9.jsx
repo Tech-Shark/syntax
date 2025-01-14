@@ -73,35 +73,35 @@ function Template9({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg">
+    <div className="min-h-screen bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto text-[#464A4F] bg-white shadow-lg">
         {/* Header Section */}
         <div className="text-center py-12">
-          <h1 className="text-3xl font-medium tracking-wider text-gray-800 mb-2">
+          <h1 className="text-5xl uppercase font-medium tracking-wider mb-2">
             {mockData.firstName} {mockData.lastName}
           </h1>
-          <p className="text-gray-600 uppercase tracking-wide">
+          <p className="uppercase text-xl tracking-wide">
             {mockData.title}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[300px_1fr]">
+        <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] p-8">
           {/* Left Column */}
-          <div className="bg-[#FDF2F2] p-8 space-y-8">
+          <div className="bg-[#F4EAE9] p-8 space-y-8 gap-4 flex flex-col">
             {/* Contact Section */}
             <section>
-              <h2 className="text-gray-800 font-medium mb-4 uppercase">Contact</h2>
+              <h2 className="font-medium text-xl mb-4 uppercase">Contact</h2>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-gray-600">
-                  <GiRotaryPhone className="text-lg" />
+                <div className="flex items-center gap-2">
+                  <GiRotaryPhone className="text-lg text-[#916264] font-bold" />
                   <span className="text-sm">{mockData.contact.phone}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <IoMailSharp className="text-lg" />
+                <div className="flex items-center gap-2">
+                  <IoMailSharp className="text-lg text-[#916264] font-bold" />
                   <span className="text-sm">{mockData.contact.email}</span>
                 </div>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <CiLocationOn className="text-lg" />
+                <div className="flex items-center gap-2">
+                  <CiLocationOn className="text-lg text-[#916264] font-bold" />
                   <span className="text-sm">{mockData.contact.address}</span>
                 </div>
               </div>
@@ -109,22 +109,22 @@ function Template9({ cvData }) {
 
             {/* Education Section */}
             <section>
-              <h2 className="text-gray-800 font-medium mb-4 uppercase">Education</h2>
+              <h2 className="font-medium text-xl mb-4 uppercase">Education</h2>
               {mockData.education.map((edu, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="text-gray-800 font-medium text-sm">{edu.level}</h3>
-                  <p className="text-gray-600 text-sm">{edu.school}</p>
-                  <p className="text-gray-500 text-sm">{edu.period}</p>
+                <div key={index} className="mb-4 flex flex-col gap-2">
+                  <h3 className="text-sm font-bold">{edu.level}</h3>
+                  <p className="text-sm uppercase">{edu.school}</p>
+                  <p className="text-sm font-bold">{edu.period}</p>
                 </div>
               ))}
             </section>
 
             {/* Skills Section */}
             <section>
-              <h2 className="text-gray-800 font-medium mb-4 uppercase">Skills</h2>
+              <h2 className="font-medium text-xl mb-4 uppercase">Skills</h2>
               <ul className="space-y-1">
                 {mockData.skills.map((skill, index) => (
-                  <li key={index} className="text-sm text-gray-600">
+                  <li key={index} className="text-sm">
                     {skill}
                   </li>
                 ))}
@@ -136,26 +136,26 @@ function Template9({ cvData }) {
           <div className="p-8 space-y-8">
             {/* Summary Section */}
             <section>
-              <h2 className="text-gray-800 font-medium mb-4 uppercase">Summary</h2>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <h2 className="font-medium mb-4 text-xl uppercase">Summary</h2>
+              <p className="text-sm leading-relaxed">
                 {mockData.summary}
               </p>
             </section>
 
             {/* Experience Section */}
             <section>
-              <h2 className="text-gray-800 font-medium mb-6 uppercase">Experience</h2>
+              <h2 className="font-medium mb-6 text-xl uppercase">Experience</h2>
               <div className="space-y-6">
                 {mockData.experience.map((exp, index) => (
                   <div key={index} className="mb-6">
                     <div className="mb-2">
-                      <h3 className="text-gray-800 font-medium">{exp.title}</h3>
-                      <p className="text-gray-600 text-sm">{exp.company}</p>
-                      <p className="text-gray-500 text-sm mb-2">{exp.period}</p>
+                      <h3 className="font-bold uppercase">{exp.title}</h3>
+                      <p className="text-sm">{exp.company}</p>
+                      <p className="text-sm mb-2 font-bold">{exp.period}</p>
                     </div>
                     <ul className="list-disc pl-4 space-y-1">
                       {exp.responsibilities.map((resp, idx) => (
-                        <li key={idx} className="text-sm text-gray-600">{resp}</li>
+                        <li key={idx} className="text-sm">{resp}</li>
                       ))}
                     </ul>
                   </div>
