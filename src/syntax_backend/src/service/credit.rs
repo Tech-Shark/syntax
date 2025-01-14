@@ -3,11 +3,27 @@ use crate::{
         admin::INVALID_AUTH,
         credit::{Credit, CreditResponse, CreditResponseOk, Error, NO_CREDIT_PLAN_FOUND},
         setting::SETTING_KEY,
+        user::FREE_PLAN,
     },
     storage::thread_local::{CREDIT_MAP, SETTING_MAP},
 };
 
 use super::util::load_default_setting;
+
+#[ic_cdk::query]
+async fn get_free_tier() -> Option<String> {
+    let res = CREDIT_MAP.with(|map| {
+        map.borrow()
+            .iter()
+            .map(|(_, value)| value)
+            .filter(|value| value.name == Some(FREE_PLAN.to_string()))
+            .collect::<Vec<Credit>>()
+    });
+
+    let target = (&res[0]).clone().to_owned().name;
+
+    target
+}
 
 #[ic_cdk::query]
 async fn get_all_credit_plan() -> Vec<Credit> {
