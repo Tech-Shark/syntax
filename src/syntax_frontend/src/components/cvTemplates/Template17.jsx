@@ -53,12 +53,12 @@ function Template17({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
+    <div className="min-h-screen bg-gray-700 p-8">
+      <div className="max-w-4xl mx-auto text-black bg-white shadow-lg p-8">
         {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">{mockData.name}</h1>
-          <div className="text-sm text-gray-600 space-y-1">
+        <div className="text-center mt-10 mb-8">
+          <h1 className="text-4xl font-bold mb-2">{mockData.name}</h1>
+          <div className="text-sm space-y-1">
             <div className="flex justify-center gap-4">
               <span>{mockData.contact.phone}</span>
               <span>•</span>
@@ -70,62 +70,63 @@ function Template17({ cvData }) {
           </div>
         </div>
 
-        <hr className="border-gray-300 my-6" />
+        <hr className="border-black font-bold bg-black h-1 my-6" />
 
         {/* Title and Summary */}
         <div className="mb-8">
-          <h2 className="text-gray-800 font-bold mb-4 uppercase">
+          <h2 className="text-center text-xl font-bold mb-4 uppercase">
             {mockData.title}
           </h2>
-          <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-sm leading-relaxed">
             {mockData.summary}
           </p>
         </div>
 
+        <hr className="border-black font-bold bg-black my-6" />
+
         {/* Strengths and Expertise */}
         <section className="mb-8">
-          <h2 className="text-gray-800 font-bold mb-4 uppercase">
+          <h2 className="text-center text-xl font-bold mb-4 uppercase">
             Strengths and Expertise
           </h2>
           <div className="grid grid-cols-3 gap-4">
             {mockData.strengths.map((strength, index) => (
-              <p key={index} className="text-sm text-gray-600">
+              <p key={index} className="text-sm text-center">
                 {strength}
               </p>
             ))}
           </div>
         </section>
 
+        <hr className="border-black font-bold bg-black my-6" />
+
         {/* Professional Experience */}
         <section>
-          <h2 className="text-gray-800 font-bold mb-6 uppercase">
+          <h2 className="text-center text-xl font-bold mb-6 uppercase">
             Professional Experience
           </h2>
           {mockData.experience.map((exp, index) => (
             <div key={index} className="mb-8">
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h3 className="text-gray-800 font-bold">{exp.company}</h3>
-                  <p className="text-gray-700">{exp.title}</p>
+                  <h3 className="font-bold">{exp.company}</h3>
+                  <p className="font-bold">{exp.title}</p>
                 </div>
-                <span className="text-gray-600">{exp.period}</span>
+                <span className="font-bold">{exp.period}</span>
               </div>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm mb-4">
                 {exp.description}
               </p>
               <div>
-                <p className="text-gray-700 mb-2">Accomplishments:</p>
+                <p className="mb-2">Accomplishments:</p>
                 <ul className="list-disc pl-5 space-y-2">
                   {exp.accomplishments.map((accomplishment, idx) => (
-                    <li key={idx} className="text-sm text-gray-600">
+                    <li key={idx} className="text-sm mt-4">
                       {accomplishment}
                     </li>
                   ))}
                 </ul>
               </div>
-              {index !== mockData.experience.length - 1 && (
-                <hr className="border-gray-200 my-6" />
-              )}
             </div>
           ))}
         </section>
