@@ -1,7 +1,4 @@
 import React from "react";
-import { IoMailSharp } from "react-icons/io5";
-import { FiPhone } from "react-icons/fi";
-import { IoGlobeOutline } from "react-icons/io5";
 
 function Template10({ cvData }) {
   // Mock data for demonstration
@@ -16,9 +13,8 @@ function Template10({ cvData }) {
     },
     professionalExperience: [
       {
-        title: "Research and Development Engineer",
+        title: "Research and Development Engineer | 2030-2035",
         company: "The Innovation Lab",
-        period: "2030-2035",
         achievements: [
           "Spearheaded the development of advanced materials, resulting in a 15% increase in product efficiency",
           "Conducted comprehensive experiments and data analysis, leading to three published journal papers",
@@ -26,11 +22,10 @@ function Template10({ cvData }) {
         ]
       },
       {
-        title: "Mechanical Engineer",
+        title: "Mechanical Engineer | 2027-2030",
         company: "Science and Tech Co.",
-        period: "2027-2030",
         achievements: [
-          "Created and optimized mechanical systems for manufacturing processes, improving production speed by 20%",
+          "Assisted in optimizing mechanical systems for manufacturing processes, improving production speed by 20%",
           "Drafted and implemented quality control procedures, reducing defects and inconsistencies by 30%",
           "Supported the creation of detailed project reports and documentation for senior stakeholders"
         ]
@@ -38,20 +33,18 @@ function Template10({ cvData }) {
     ],
     education: [
       {
-        school: "North State University",
         degree: "Master of Science in Mechanical Engineering",
-        period: "2025-2027",
-        highlights: [
+        school: "North State University | 2025-2027",
+        details: [
           "GPA: 3.8",
-          "Best Thesis Awardee",
+          "Best Thesis Award",
           "Recognition for Extended Research Paper"
         ]
       },
       {
-        school: "South City College",
         degree: "Bachelor of Science in Mechanical Engineering",
-        period: "2021-2025",
-        highlights: [
+        school: "South City College | 2021-2025",
+        details: [
           "GPA: 3.8",
           "Editor-in-Chief, SCC Newsletter",
           "President, The Innovation Society"
@@ -60,124 +53,95 @@ function Template10({ cvData }) {
     ],
     certificates: [
       {
-        name: "Project Management",
-        organization: "The Project Management Institute",
-        year: "2027"
+        name: "Project Management | 2027",
+        organization: "The Project Management Institute"
       },
       {
-        name: "System Optimization",
-        organization: "Scrum Learning Society",
-        year: "2028"
+        name: "System Optimization | 2028",
+        organization: "Scrum Learning Society"
       },
       {
-        name: "Risk Management and Mitigation",
-        organization: "Internal Auditors Team",
-        year: "2028"
+        name: "Risk Management and Mitigation | 2028",
+        organization: "Internal Auditors Team"
       },
       {
-        name: "Vendor Relations",
-        organization: "South City College",
-        year: "2030"
+        name: "Vendor Relations | 2030",
+        organization: "South City College"
       }
     ]
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
-        {/* Header Section */}
-        <div className="flex justify-between items-start mb-6">
-          <h1 className="text-2xl font-medium text-gray-900">
-            {mockData.name}
-          </h1>
-          <p className="text-gray-600">{mockData.title}</p>
+    <div className="min-h-screen bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto bg-white pb-10 shadow-lg p-8">
+        {/* Header */}
+        <div className="flex justify-between mt-10 mb-8">
+          <h1 className="text-4xl font-bold">{mockData.name}</h1>
+          <p className="text-2xl">{mockData.title}</p>
         </div>
 
-        {/* Contact Information */}
-        <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-gray-600 mb-6">
-          <div className="flex items-center gap-2">
-            <FiPhone className="text-gray-400" />
-            <span>Phone: {mockData.contact.phone}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <IoMailSharp className="text-gray-400" />
-            <span>Email: {mockData.contact.email}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>Address: {mockData.contact.address}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <IoGlobeOutline className="text-gray-400" />
-            <span>Portfolio: {mockData.contact.portfolio}</span>
+        {/* Contact Section */}
+        <div className="mb-8 mt-20 flex gap-4 justify-between">
+          <h2 className="uppercase text-sm font-bold mb-2">Contact</h2>
+          <div className="grid grid-cols-2 gap-1 w-[80%] text-sm pb-6 border-b border-black">
+            <div>Phone: {mockData.contact.phone}</div>
+            <div>Address: {mockData.contact.address}</div>
+            <div>Email: {mockData.contact.email}</div>
+            <div>Portfolio: {mockData.contact.portfolio}</div>
           </div>
         </div>
 
-        <hr className="border-gray-300 my-6" />
+        {/* <hr className="border-t border-black my-4" /> */}
 
         {/* Professional Experience */}
-        <section className="mb-6">
-          <h2 className="text-sm font-bold text-gray-900 uppercase mb-4">
-            Professional Experience
-          </h2>
+        <div className="mb-8 flex">
+          <h2 className="uppercase text-sm font-bold mb-4">Professional Experience</h2>
+          <div className="flex flex-col gap-4 border-b border-black">
           {mockData.professionalExperience.map((exp, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between mb-1">
-                <div>
-                  <h3 className="text-gray-800 font-medium">{exp.title}</h3>
-                  <p className="text-gray-600 text-sm">{exp.company}</p>
-                </div>
-                <span className="text-gray-600 text-sm">{exp.period}</span>
-              </div>
-              <ul className="list-disc pl-4 mt-2 space-y-1">
+            <div key={index} className="mb-6">
+              <div className="font-bold mb-1">{exp.title}</div>
+              <div className="mb-2">{exp.company}</div>
+              <ul className="list-disc pl-5 space-y-1">
                 {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{achievement}</li>
+                  <li key={idx} className="text-sm">{achievement}</li>
                 ))}
               </ul>
             </div>
           ))}
-        </section>
-
-        <hr className="border-gray-300 my-6" />
+          </div>
+        </div>
 
         {/* Education */}
-        <section className="mb-6">
-          <h2 className="text-sm font-bold text-gray-900 uppercase mb-4">
-            Education
-          </h2>
+        <div className="mb-8 flex justify-between">
+          <h2 className="uppercase text-sm font-bold mb-4">Education</h2>
+          <div className="flex flex-col w-[80%] gap-4 border-b border-black">
           {mockData.education.map((edu, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between mb-1">
-                <div>
-                  <h3 className="text-gray-800">{edu.school}</h3>
-                  <p className="text-gray-600 text-sm">{edu.degree}</p>
-                </div>
-                <span className="text-gray-600 text-sm">{edu.period}</span>
-              </div>
-              <ul className="list-disc pl-4 mt-2">
-                {edu.highlights.map((highlight, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{highlight}</li>
+            <div key={index} className="mb-6">
+              <div className="font-bold mb-1">{edu.degree}</div>
+              <div className="mb-2">{edu.school}</div>
+              <ul className="list-disc pl-5 space-y-1">
+                {edu.details.map((detail, idx) => (
+                  <li key={idx} className="text-sm">{detail}</li>
                 ))}
               </ul>
             </div>
           ))}
-        </section>
+          </div>
+        </div>
 
-        <hr className="border-gray-300 my-6" />
 
         {/* Certificates */}
-        <section>
-          <h2 className="text-sm font-bold text-gray-900 uppercase mb-4">
-            Certificates
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
+        <div className="flex justify-between">
+          <h2 className="uppercase text-sm font-bold mb-4">Certificates</h2>
+          <div className="grid grid-cols-2 gap-4 w-[80%]">
             {mockData.certificates.map((cert, index) => (
-              <div key={index} className="text-sm">
-                <p className="text-gray-800 font-medium">{cert.name} | {cert.year}</p>
-                <p className="text-gray-600">{cert.organization}</p>
+              <div key={index}>
+                <div className="font-bold text-sm">{cert.name}</div>
+                <div className="text-sm">{cert.organization}</div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
       </div>
     </div>
   );
