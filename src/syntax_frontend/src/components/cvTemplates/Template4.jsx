@@ -174,12 +174,19 @@ function Template4({ cvData }) {
                 {mockData.workExperience.map((exp, index) => (
                   <div key={index} className="relative">
                     <div className="absolute left-[-29px] top-2 w-[10px] h-[10px] border border-black bg-white rounded-full"></div>
-                    <h3 className="font-medium text-gray-700">{exp.company}</h3>
-                    <p className="text-sm text-gray-600">{exp.title}</p>
-                    <p className="text-sm text-gray-500 mb-2">{exp.period}</p>
+                    <div className="flex justify-between mb-4">
+                      <div>
+                        <h3 className="font-medium text-gray-700">{exp.company}</h3>
+                        <p className="text-sm text-gray-600">{exp.title}</p>
+                      </div>
+                      <p className="text-sm text-gray-500">{exp.period}</p>
+                    </div>
                     <ul className="space-y-2">
                       {exp.responsibilities.map((resp, idx) => (
-                        <li key={idx} className="text-sm text-gray-600">{resp}</li>
+                        <li key={idx} className="text-sm text-gray-600 flex items-start">
+                          <span className="mr-2 inline-block">•</span>
+                          <span className="flex-1">{resp}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
