@@ -3,6 +3,10 @@ import { GiRotaryPhone } from "react-icons/gi";
 import { IoMailSharp } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { IoGlobeOutline } from "react-icons/io5";
+import { BsPersonCircle } from "react-icons/bs";
+import { FaBriefcase } from "react-icons/fa";
+import { FaGraduationCap } from "react-icons/fa";
+
 
 function Template4({ cvData }) {
   // Mock data for demonstration
@@ -28,7 +32,7 @@ function Template4({ cvData }) {
       "Customer Orientation",
       "Adaptability to Change"
     ],
-    languages: ["English (Fluent)"],
+    languages: ["English (Fluent)", "Arabic (Fluent)"],
     workExperience: [
       {
         company: "Borcelle Studio",
@@ -62,6 +66,11 @@ function Template4({ cvData }) {
         degree: "Master of Business Management",
         school: "School of Business | Wireless University",
         period: "2020 - 2021"
+      },
+      {
+        degree: "Master of Business Management",
+        school: "School of Business | Wireless University",
+        period: "2020 - 2021"
       }
     ],
     references: [
@@ -75,20 +84,21 @@ function Template4({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto bg-white text-[#323B4C] shadow-lg p-8">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2D3748] mb-1">{mockData.firstName} {mockData.lastName}</h1>
-          <p className="text-gray-600">{mockData.title}</p>
+          <h1 className="text-4xl font-bold text-[#2D3748] mb-1">{mockData.firstName} {mockData.lastName}</h1>
+          <p className="text-gray-600 text-lg">{mockData.title}</p>
         </header>
+        <hr className="border-b-2 border-black w-[100%] mb-6"/>
 
         <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
           {/* Left Column */}
           <div className="space-y-6">
             {/* Contact Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Contact</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b-2 border-black pb-1">Contact</h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-600">
                   <GiRotaryPhone className="text-lg" />
@@ -111,7 +121,7 @@ function Template4({ cvData }) {
 
             {/* Skills Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Skills</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b-2 border-black pb-1">Skills</h2>
               <ul className="space-y-1">
                 {mockData.skills.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">• {skill}</li>
@@ -121,7 +131,7 @@ function Template4({ cvData }) {
 
             {/* Languages Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Languages</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b-2 border-black pb-1">Languages</h2>
               <ul className="space-y-1">
                 {mockData.languages.map((language, index) => (
                   <li key={index} className="text-sm text-gray-600">• {language}</li>
@@ -131,7 +141,7 @@ function Template4({ cvData }) {
 
             {/* References Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Reference</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b-2 border-black pb-1">Reference</h2>
               {mockData.references.map((ref, index) => (
                 <div key={index} className="text-sm">
                   <p className="font-medium text-gray-700">{ref.name}</p>
@@ -146,22 +156,24 @@ function Template4({ cvData }) {
           {/* Right Column with Timeline */}
           <div className="space-y-6 relative">
             {/* Vertical Timeline Line */}
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-300"></div>
+            <div className="absolute left-0 top-11 bottom-0 w-px bg-black"></div>
 
             {/* Profile Section */}
             <section className="relative pl-6">
-              <div className="absolute left-[-5px] top-1 w-[10px] h-[10px] bg-gray-500 rounded-full"></div>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase">Profile</h2>
+            <BsPersonCircle className="absolute left-[-13px] h-[20%] w-[5%] top-1 text-black fill rounded-full"/>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b-2 border-black pb-1">Profile</h2>
               <p className="text-sm text-gray-600 leading-relaxed">{mockData.profile}</p>
+              <div className="absolute left-[-5px] top-20 w-[10px] h-[10px] border border-black bg-white rounded-full"></div>
             </section>
 
             {/* Work Experience Section */}
             <section className="relative pl-6">
-              <div className="absolute left-[-5px] top-1 w-[10px] h-[10px] bg-gray-500 rounded-full"></div>
-              <h2 className="text-[#2D3748] font-semibold mb-4 uppercase">Work Experience</h2>
+              <FaBriefcase className="absolute left-[-13px] h-[5%] w-[5%] text-black fill rounded-full"/>
+              <h2 className="text-[#2D3748] font-semibold mb-4 uppercase border-b-2 border-black pb-1">Work Experience</h2>
               <div className="space-y-6">
                 {mockData.workExperience.map((exp, index) => (
                   <div key={index} className="relative">
+                    <div className="absolute left-[-29px] top-2 w-[10px] h-[10px] border border-black bg-white rounded-full"></div>
                     <h3 className="font-medium text-gray-700">{exp.company}</h3>
                     <p className="text-sm text-gray-600">{exp.title}</p>
                     <p className="text-sm text-gray-500 mb-2">{exp.period}</p>
@@ -177,10 +189,11 @@ function Template4({ cvData }) {
 
             {/* Education Section */}
             <section className="relative pl-6">
-              <div className="absolute left-[-5px] top-1 w-[10px] h-[10px] bg-gray-500 rounded-full"></div>
-              <h2 className="text-[#2D3748] font-semibold mb-4 uppercase">Education</h2>
+            <FaGraduationCap className="absolute left-[-13px] h-[15%] w-[5%] text-black fill rounded-full"/>
+              <h2 className="text-[#2D3748] font-semibold mb-4 uppercase border-b-2 border-black pb-1">Education</h2>
               {mockData.education.map((edu, index) => (
-                <div key={index}>
+                <div key={index} className="relative">
+                  <div className="absolute left-[-28px] top-2 w-[10px] h-[10px] border border-black bg-white rounded-full"></div>
                   <h3 className="font-medium text-gray-700">{edu.degree}</h3>
                   <p className="text-sm text-gray-600">{edu.school}</p>
                   <p className="text-sm text-gray-500">{edu.period}</p>

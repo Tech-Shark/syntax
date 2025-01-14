@@ -91,7 +91,7 @@ function Template3({ cvData }) {
               <h1 className="text-5xl text-[#464A4E]">
                 {mockData.firstName} {mockData.lastName}
               </h1>
-              <p className="text-gray-600 mt-1">{mockData.title}</p>
+              <p className="text-gray-600 mt-3 text-lg">{mockData.title}</p>
             </div>
           </div>
         </div>
