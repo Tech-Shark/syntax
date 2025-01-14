@@ -100,80 +100,80 @@ const router = createBrowserRouter([
     element: <Template3 />
   },
   {
-    path: "/temp1",
+    path: "/temp4",
     element: <Template4 />
   },
   {
-    path: "/temp1",
+    path: "/temp5",
     element: <Template5 />
   },
   {
-    path: "/temp1",
+    path: "/temp6",
     element: <Template6 />
   },
   {
-    path: "/temp1",
+    path: "/temp7",
     element: <Template7 />
   },
 
   {
-    path: "/temp1",
+    path: "/temp8",
     element: <Template8 />
   },
   {
-    path: "/temp1",
+    path: "/temp9",
     element: <Template9 />
   },
   {
-    path: "/temp1",
+    path: "/temp10",
     element: <Template10 />
   },
   {
-    path: "/temp1",
+    path: "/temp11",
     element: <Template11 />
   },
   {
-    path: "/temp1",
+    path: "/temp12",
     element: <Template12 />
   },
   {
-    path: "/temp1",
+    path: "/temp13",
     element: <Template13 />
   },
   {
-    path: "/temp1",
+    path: "/temp14",
     element: <Template14 />
   },
   {
-    path: "/temp1",
+    path: "/temp15",
     element: <Template15 />
   },
   {
-    path: "/temp1",
+    path: "/temp16",
     element: <Template16 />
   },
   {
-    path: "/temp1",
+    path: "/temp17",
     element: <Template17 />
   },
   {
-    path: "/temp1",
+    path: "/temp18",
     element: <Template18 />
   },
   {
-    path: "/temp1",
+    path: "/temp19",
     element: <Template19 />
   },
   {
-    path: "/temp1",
+    path: "/temp20",
     element: <Template20 />
   },
   {
-    path: "/temp1",
+    path: "/temp21",
     element: <Template21 />
   },
   {
-    path: "/temp1",
+    path: "/temp22",
     element: <Template22 />
   },
   
