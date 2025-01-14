@@ -89,16 +89,17 @@ function Template14({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg">
+    <div className="min-h-screen bg-gray-700 p-8">
+      <div className="max-w-4xl mx-auto pt-16 bg-white shadow-lg">
         {/* Header Section */}
-        <div className="bg-gray-100 p-8">
+        <div className="bg-[#D9D9D9] p-8">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-              <p className="text-gray-600 text-sm uppercase tracking-wider">{mockData.title}</p>
+              <h1 className="text-4xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
+              <p className="text-gray-600 text-2xl uppercase tracking-wider">{mockData.title}</p>
             </div>
-            <div className="flex flex-col gap-1 text-sm text-gray-600">
+            <div className="flex flex-col w-[50%] gap-4 text-sm text-gray-600">
+              <div className="flex justify-between gap-1">
               <div className="flex items-center gap-2">
                 <BsTelephone className="text-gray-400" />
                 <span>{mockData.contact.phone}</span>
@@ -107,6 +108,8 @@ function Template14({ cvData }) {
                 <IoMailOutline className="text-gray-400" />
                 <span>{mockData.contact.email}</span>
               </div>
+              </div>
+              <div className="flex justify-between gap-1">
               <div className="flex items-center gap-2">
                 <CiLocationOn className="text-gray-400" />
                 <span>{mockData.contact.address}</span>
@@ -115,6 +118,7 @@ function Template14({ cvData }) {
                 <IoGlobeOutline className="text-gray-400" />
                 <span>{mockData.contact.website}</span>
               </div>
+              </div>
             </div>
           </div>
         </div>
@@ -122,9 +126,9 @@ function Template14({ cvData }) {
         <div className="p-8">
           {/* Summary Section */}
           <section className="mb-8">
-            <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Summary</h2>
-            <div className="pl-4 border-l-2 border-gray-200">
-              <p className="text-sm text-gray-600 leading-relaxed">
+            <h2 className="font-bold text-[#A6A6A6] mb-3 uppercase text-sm tracking-wider">Summary</h2>
+            <div className="pl-4 border-l-4 border-[#D9D9D9]">
+              <p className="text-sm text-[#737373] leading-relaxed">
                 {mockData.summary}
               </p>
             </div>
@@ -132,32 +136,32 @@ function Template14({ cvData }) {
 
           {/* Skills Section */}
           <section className="mb-8">
-            <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Skills</h2>
-            <div className="pl-4 border-l-2 border-gray-200">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <h2 className="text-[#A6A6A6] font-bold mb-3 uppercase text-sm tracking-wider">Skills</h2>
+            <div className="pl-4">
+              <ul className="grid list-disc grid-cols-2 md:grid-cols-4 gap-4">
                 {mockData.skills.technical.map((skill, index) => (
-                  <p key={index} className="text-sm text-gray-600">{skill}</p>
+                  <li key={index} className="text-sm text-[#737373]">{skill}</li>
                 ))}
-              </div>
+              </ul>
             </div>
           </section>
 
           {/* Work Experience Section */}
           <section className="mb-8">
-            <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Work Experience</h2>
-            <div className="pl-4 border-l-2 border-gray-200 space-y-6">
+            <h2 className="text-[#A6A6A6] font-bold mb-3 uppercase text-sm tracking-wider">Work Experience</h2>
+            <div className="space-y-6">
               {mockData.workExperience.map((exp, index) => (
-                <div key={index}>
+                <div className="border-l-4 border-[#D9D9D9] pl-4" key={index}>
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h3 className="text-gray-800 font-medium">{exp.company}</h3>
-                      <p className="text-gray-600 text-sm">{exp.title}</p>
+                      <h3 className="text-[#000000] font-medium">{exp.company}</h3>
+                      <p className="text-[#737373] text-sm">{exp.title}</p>
                     </div>
-                    <span className="text-gray-500 text-sm">{exp.period}</span>
+                    <span className="text-[#737373] text-sm">{exp.period}</span>
                   </div>
                   <ul className="list-disc pl-4 space-y-1">
                     {exp.achievements.map((achievement, idx) => (
-                      <li key={idx} className="text-sm text-gray-600">{achievement}</li>
+                      <li key={idx} className="text-sm text-[#737373] italic">{achievement}</li>
                     ))}
                   </ul>
                 </div>
@@ -167,13 +171,16 @@ function Template14({ cvData }) {
 
           {/* Education Section */}
           <section className="mb-8">
-            <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Education</h2>
-            <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
+            <h2 className="text-[#A6A6A6] font-bold mb-3 uppercase text-sm tracking-wider">Education</h2>
+            <div className="grid grid-cols-2 gap-4">
               {mockData.education.map((edu, index) => (
-                <div key={index}>
-                  <h3 className="text-gray-800 font-medium text-sm">{edu.degree}</h3>
-                  <p className="text-gray-600 text-sm">{edu.school}</p>
-                  <p className="text-gray-500 text-sm">{edu.period}</p>
+                <div key={index} className="border-l-4 border-[#D9D9D9] pl-4">
+                  <h3 className="text-[#000000] font-medium text-sm">{edu.degree}</h3>
+                  <div className="flex items-center mb-2 gap-2">
+                    <div className="text-[#737373] text-sm">{edu.school}</div>
+                    <div className="text-[#737373] flex justify-center text-center items-center">--</div>
+                    <div className="text-[#737373] text-sm">{edu.period}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -181,13 +188,16 @@ function Template14({ cvData }) {
 
           {/* Certifications Section */}
           <section>
-            <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Certifications</h2>
-            <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
+            <h2 className="text-[#A6A6A6] font-bold mb-3 uppercase text-sm tracking-wider">Certifications</h2>
+            <div className="grid grid-cols-2 gap-4">
               {mockData.certifications.map((cert, index) => (
-                <div key={index}>
-                  <h3 className="text-gray-800 font-medium text-sm">{cert.name}</h3>
-                  <p className="text-gray-600 text-sm">{cert.organization}</p>
-                  <p className="text-gray-500 text-sm">{cert.year}</p>
+                <div key={index} className="border-l-4 pl-4 border-[#D9D9D9]">
+                  <h3 className="text-[#000000] font-medium text-sm">{cert.name}</h3>
+                  <div className="flex items-center mb-2 gap-2">
+                  <p className="text-[#737373] text-sm">{cert.organization}</p>
+                  <div className="text-[#737373] flex justify-center text-center items-center">--</div>
+                  <p className="text-[#737373] text-sm">{cert.year}</p>
+                  </div>
                 </div>
               ))}
             </div>
