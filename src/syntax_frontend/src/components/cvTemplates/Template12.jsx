@@ -85,33 +85,33 @@ function Template12({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
+      <div className="max-w-4xl mx-auto bg-white text-[#1E1E1E] shadow-lg p-8">
         {/* Header Section */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-          <h2 className="text-lg text-gray-600 mb-3">{mockData.title}</h2>
+          <h1 className="text-3xl font-bold mb-1">{mockData.name}</h1>
+          <h2 className="text-lg mb-3">{mockData.title}</h2>
           
           {/* Contact Info */}
-          <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+          <div className="flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-1">
-              <CiLocationOn className="text-gray-400" />
+              <CiLocationOn className="" />
               <span>{mockData.contact.address}</span>
             </div>
             <div className="flex items-center gap-1">
-              <IoMailOutline className="text-gray-400" />
+              <IoMailOutline className="" />
               <span>{mockData.contact.email}</span>
             </div>
             <div className="flex items-center gap-1">
-              <BsTelephone className="text-gray-400" />
+              <BsTelephone className="" />
               <span>{mockData.contact.phone}</span>
             </div>
             <div className="flex items-center gap-1">
-              <FaLinkedin className="text-gray-400" />
+              <FaLinkedin className="" />
               <span>{mockData.contact.linkedin}</span>
             </div>
             <div className="flex items-center gap-1">
-              <FaGithub className="text-gray-400" />
+              <FaGithub className="" />
               <span>{mockData.contact.github}</span>
             </div>
           </div>
@@ -119,7 +119,7 @@ function Template12({ cvData }) {
 
         {/* Summary Section */}
         <section className="mb-6">
-          <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
+          <h2 className="text-sm font-bold bg-[#D9D9D9] rounded-xl italic  px-3 py-1 mb-3 uppercase">
             Summary
           </h2>
           <p className="text-sm text-gray-600 leading-relaxed">
@@ -129,23 +129,23 @@ function Template12({ cvData }) {
 
         {/* Technical Skills Section */}
         <section className="mb-6">
-          <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
+          <h2 className="text-sm font-bold bg-[#D9D9D9] rounded-xl italic  px-3 py-1 mb-3 uppercase">
             Technical Skills
           </h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
               {mockData.technicalSkills.column1.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                <p key={index} className="text-sm  mb-1">{skill}</p>
               ))}
             </div>
             <div>
               {mockData.technicalSkills.column2.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                <p key={index} className="text-sm  mb-1">{skill}</p>
               ))}
             </div>
             <div>
               {mockData.technicalSkills.column3.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                <p key={index} className="text-sm mb-1">{skill}</p>
               ))}
             </div>
           </div>
@@ -153,18 +153,18 @@ function Template12({ cvData }) {
 
         {/* Professional Experience Section */}
         <section className="mb-6">
-          <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
+          <h2 className="text-sm font-bold bg-[#D9D9D9] rounded-xl italic px-3 py-1 mb-3 uppercase">
             Professional Experience
           </h2>
           {mockData.professionalExperience.map((exp, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
-                <h3 className="text-gray-800 font-medium">{exp.title}</h3>
-                <span className="text-gray-600 text-sm">{exp.period}</span>
+                <h3 className="font-medium">{exp.title}</h3>
+                <span className="text-sm">{exp.period}</span>
               </div>
               <ul className="list-disc pl-4">
                 {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm text-gray-600 mb-1">{achievement}</li>
+                  <li key={idx} className="text-sm mb-1">{achievement}</li>
                 ))}
               </ul>
             </div>
@@ -173,21 +173,21 @@ function Template12({ cvData }) {
 
         {/* Education Section */}
         <section className="mb-6">
-          <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
+          <h2 className="text-sm font-bold bg-[#D9D9D9] rounded-xl italic px-3 py-1 mb-3 uppercase">
             Education
           </h2>
           {mockData.education.map((edu, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
                 <div>
-                  <h3 className="text-gray-800 font-medium">{edu.degree}</h3>
-                  <p className="text-gray-600 text-sm">{edu.school}</p>
+                  <h3 className="font-medium">{edu.degree}</h3>
+                  <p className="text-sm">{edu.school}</p>
                 </div>
-                <span className="text-gray-600 text-sm">{edu.period}</span>
+                <span className="text-sm">{edu.period}</span>
               </div>
               <ul className="list-disc pl-4">
                 {edu.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm text-gray-600 mb-1">{detail}</li>
+                  <li key={idx} className="text-sm mb-1">{detail}</li>
                 ))}
               </ul>
             </div>
@@ -196,10 +196,10 @@ function Template12({ cvData }) {
 
         {/* Additional Information Section */}
         <section>
-          <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
+          <h2 className="text-sm font-bold bg-[#D9D9D9] rounded-xl italic px-3 py-1 mb-3 uppercase">
             Additional Information
           </h2>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm ">
             <p><strong>Languages:</strong> {mockData.additionalInfo.languages.join(", ")}</p>
             <p><strong>Certifications:</strong> {mockData.additionalInfo.certifications.join(", ")}</p>
             <p><strong>Awards/Activities:</strong> {mockData.additionalInfo.awards.join(", ")}</p>

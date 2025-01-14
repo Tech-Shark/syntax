@@ -14,7 +14,7 @@ function Template11({ cvData }) {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
       website: "www.reallygreatsite.com",
-      address: "123 Anywhere St., Any City"
+      address: "123 Anywhere St., Any City 123"
     },
     education: [
       {
@@ -83,23 +83,24 @@ function Template11({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-600 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg">
         {/* Header with curved navy background */}
-        <div className="relative">
-          <div className="bg-[#2D3748] h-32 rounded-bl-[100px]"></div>
-          <div className="absolute top-8 left-8 right-8">
-            <h1 className="text-3xl font-bold text-white mb-1">
+        <div className="flex justify-between mb-4">
+          <div className="bg-[#2D3748] w-[33.5%] h-44 rounded-br-[50px]"></div>
+          <div className="flex flex-col w-[64%] justify-center">
+            <h1 className="text-5xl font-bold text-[#2D3748] mb-1">
               {mockData.firstName} {mockData.lastName}
             </h1>
-            <p className="text-gray-300 uppercase tracking-wide text-sm">
+            <p className="text-[#2D3748] uppercase tracking-wide text-xl">
               {mockData.title}
             </p>
           </div>
         </div>
 
         {/* Contact Bar */}
-        <div className="bg-[#374151] text-white py-3 px-8 flex flex-wrap gap-6 text-sm">
+        <div className="flex justify-center">
+        <div className="bg-[#374151] text-white rounded-3xl py-3 px-8 flex flex-wrap gap-6 text-sm">
           <div className="flex items-center gap-2">
             <GiRotaryPhone />
             <span>{mockData.contact.phone}</span>
@@ -117,13 +118,14 @@ function Template11({ cvData }) {
             <span>{mockData.contact.address}</span>
           </div>
         </div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[300px_1fr]">
+        <div className="grid mt-4 grid-cols-1 md:grid-cols-[300px_1fr]">
           {/* Left Column */}
-          <div className="bg-[#2D3748] text-white p-8 space-y-8">
+          <div className="bg-[#2D3748] text-white rounded-tr-[50px] p-8 space-y-8">
             {/* Education Section */}
             <section>
-              <h2 className="font-bold mb-4 uppercase">Education</h2>
+              <h2 className="font-bold mb-4 uppercase border-b pb-2">Education</h2>
               {mockData.education.map((edu, index) => (
                 <div key={index} className="mb-4">
                   <h3 className="font-medium text-sm">{edu.degree}</h3>
@@ -136,7 +138,7 @@ function Template11({ cvData }) {
 
             {/* Certifications Section */}
             <section>
-              <h2 className="font-bold mb-4 uppercase">Certifications</h2>
+              <h2 className="font-bold mb-4 uppercase border-b pb-2">Certifications</h2>
               <ul className="space-y-1">
                 {mockData.certifications.map((cert, index) => (
                   <li key={index} className="text-sm text-gray-300">• {cert}</li>
@@ -146,7 +148,7 @@ function Template11({ cvData }) {
 
             {/* Skills Section */}
             <section>
-              <h2 className="font-bold mb-4 uppercase">Skills</h2>
+              <h2 className="font-bold mb-4 uppercase border-b pb-2">Skills</h2>
               <ul className="space-y-1">
                 {mockData.skills.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-300">• {skill}</li>
@@ -156,7 +158,7 @@ function Template11({ cvData }) {
 
             {/* Language Section */}
             <section>
-              <h2 className="font-bold mb-4 uppercase">Language</h2>
+              <h2 className="font-bold mb-4 uppercase border-b pb-2">Language</h2>
               <ul className="space-y-1">
                 {mockData.languages.map((lang, index) => (
                   <li key={index} className="text-sm text-gray-300">• {lang}</li>
@@ -169,7 +171,7 @@ function Template11({ cvData }) {
           <div className="p-8 space-y-8">
             {/* About Me Section */}
             <section>
-              <h2 className="text-[#2D3748] font-bold mb-4 uppercase">About me</h2>
+              <h2 className="text-[#323B4C] font-bold mb-4 uppercase border-[#323B4C] border-b pb-2">About me</h2>
               <p className="text-sm text-gray-600 leading-relaxed">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.
               </p>
@@ -177,13 +179,15 @@ function Template11({ cvData }) {
 
             {/* Experience Section */}
             <section>
-              <h2 className="text-[#2D3748] font-bold mb-6 uppercase">Experience</h2>
+              <h2 className="text-[#2D3748] font-bold mb-6 uppercase border-[#323B4C] border-b pb-2">Experience</h2>
               <div className="space-y-6">
                 {mockData.experience.map((exp, index) => (
                   <div key={index} className="mb-6">
-                    <div className="mb-2">
+                    <div className="mb-2 flex justify-between">
+                      <div>
                       <h3 className="text-[#2D3748] font-medium">{exp.title}</h3>
                       <p className="text-gray-600 text-sm">{exp.company}</p>
+                      </div>
                       <p className="text-gray-500 text-sm">{exp.period}</p>
                     </div>
                     <p className="text-sm text-gray-600">{exp.description}</p>
@@ -194,7 +198,7 @@ function Template11({ cvData }) {
 
             {/* Reference Section */}
             <section>
-              <h2 className="text-[#2D3748] font-bold mb-4 uppercase">Reference</h2>
+              <h2 className="text-[#2D3748] font-bold mb-4 uppercase border-[#323B4C] border-b pb-2">Reference</h2>
               <div className="grid grid-cols-2 gap-4">
                 {mockData.references.map((ref, index) => (
                   <div key={index}>
