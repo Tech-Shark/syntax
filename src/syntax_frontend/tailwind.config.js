@@ -8,7 +8,10 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-  	extend: {
+		extend: {
+			animation: {
+        'spin-once': 'spin 3s linear',
+      },
   		fontFamily: {
   			outfit: ['Outfit', 'sans-serif']
   		},
@@ -59,7 +62,7 @@ export default {
   				'5': 'hsl(var(--chart-5))'
   			}
   		},
-  		keyframes: {
+			keyframes: {
   			'accordion-down': {
   				from: {
   					height: '0'
@@ -90,8 +93,6 @@ export default {
   			'accordion-up': 'accordion-up 0.2s ease-out',
 			  'slide-up': 'slideUp 0.5s ease-in-out',
 			  'slide-down': 'slideDown 0.5s ease-in-out',
-
-
   		}
   	}
   },
