@@ -72,18 +72,18 @@ function Template22({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
+    <div className="min-h-screen bg-gray-700 p-8">
+      <div className="max-w-4xl mx-auto bg-white text-[#696969] shadow-lg p-8">
         {/* Header Section */}
         <div className="mb-12">
           <div className="flex justify-between">
             <div>
-              <h1 className="text-3xl font-medium text-gray-800">
+              <h1 className="text-6xl font-medium text-[#343434]">
                 {mockData.firstName}<br/>{mockData.lastName}
               </h1>
-              <p className="text-gray-600 mt-2">{mockData.title}</p>
+              <p className="text-gray-600 text-3xl mt-2">{mockData.title}</p>
             </div>
-            <div className="space-y-1 text-sm text-gray-600">
+            <div className="space-y-1 text-lg text-gray-600">
               <div className="flex items-center gap-2">
                 <BsTelephone className="text-gray-400" />
                 <span>{mockData.contact.phone}</span>
@@ -106,7 +106,7 @@ function Template22({ cvData }) {
 
         {/* Work Experience Section */}
         <section className="mb-8">
-          <h2 className="text-gray-800 font-medium mb-6 uppercase bg-gray-100 p-2">
+          <h2 className="text-[#343434] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
             Work Experience
           </h2>
           <div className="space-y-6">
@@ -117,7 +117,7 @@ function Template22({ cvData }) {
                   <p>{exp.period}</p>
                 </div>
                 <div>
-                  <h3 className="text-gray-800 font-medium mb-2">{exp.title}</h3>
+                  <h3 className="text-[#343434] font-medium mb-2">{exp.title}</h3>
                   <p className="text-sm text-gray-600">{exp.description}</p>
                 </div>
               </div>
@@ -127,7 +127,7 @@ function Template22({ cvData }) {
 
         {/* Education Section */}
         <section className="mb-8">
-          <h2 className="text-gray-800 font-medium mb-6 uppercase bg-gray-100 p-2">
+          <h2 className="text-[#343434] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
             Education
           </h2>
           <div className="space-y-6">
@@ -138,7 +138,7 @@ function Template22({ cvData }) {
                   <p>{edu.period}</p>
                 </div>
                 <div>
-                  <h3 className="text-gray-800 font-medium mb-2">{edu.degree}</h3>
+                  <h3 className="text-[#343434] font-medium mb-2">{edu.degree}</h3>
                   <p className="text-sm text-gray-600">{edu.description}</p>
                 </div>
               </div>
@@ -147,11 +147,11 @@ function Template22({ cvData }) {
         </section>
 
         {/* Skills Section */}
-        <section>
-          <h2 className="text-gray-800 font-medium mb-6 uppercase bg-gray-100 p-2">
-            Skill
+        <section className="grid grid-cols-[175px_1fr_1fr]">
+          <h2 className="text-[#343434] h-[20%] w-[80%] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
+            Skills
           </h2>
-          <div className="grid grid-cols-2 gap-8">
+          {/* <div className="grid grid-cols-2 gap-8"> */}
             <div>
               <h3 className="text-gray-800 mb-2">Personal</h3>
               <ul className="space-y-1">
@@ -161,14 +161,14 @@ function Template22({ cvData }) {
               </ul>
             </div>
             <div>
-              <h3 className="text-gray-800 mb-2">Professional</h3>
+              <h3 className="text-[#343434] mb-2">Professional</h3>
               <ul className="space-y-1">
                 {mockData.skills.professional.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">{skill}</li>
                 ))}
               </ul>
             </div>
-          </div>
+          {/* </div> */}
         </section>
       </div>
     </div>
