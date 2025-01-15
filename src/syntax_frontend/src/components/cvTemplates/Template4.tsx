@@ -4,9 +4,60 @@ import { IoMailSharp } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { IoGlobeOutline } from "react-icons/io5";
 
-function Template4({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Define type for contact details
+interface Contact {
+  phone: string;
+  email: string;
+  address: string;
+  website: string;
+}
+
+// Define type for work experience
+interface WorkExperience {
+  company: string;
+  title: string;
+  period: string;
+  responsibilities: string[];
+}
+
+// Define type for education
+interface Education {
+  degree: string;
+  school: string;
+  period: string;
+}
+
+// Define type for references
+interface Reference {
+  name: string;
+  title: string;
+  phone: string;
+  email: string;
+}
+
+// Define type for cvData
+interface CvData {
+  firstName: string;
+  lastName: string;
+  title: string;
+  contact: Contact;
+  profile: string;
+  skills: string[];
+  languages: string[];
+  workExperience: WorkExperience[];
+  education: Education[];
+  references: Reference[];
+}
+
+// Define props type for Template4
+interface Template4Props {
+  cvData?: CvData;
+}
+
+const Template4: React.FC<Template4Props> = ({ cvData }) => {
+
+   // Mock data for demonstration
+  const mockData: CvData = cvData || {
     firstName: "AHMDD",
     lastName: "SAAH",
     title: "MARKETING MANAGER",
@@ -28,7 +79,7 @@ function Template4({ cvData }) {
       "Customer Orientation",
       "Adaptability to Change"
     ],
-    languages: ["English (Fluent)"],
+    languages: ["English (Fluent)", "Arabic (Fluent)"],
     workExperience: [
       {
         company: "Borcelle Studio",
@@ -62,6 +113,11 @@ function Template4({ cvData }) {
         degree: "Master of Business Management",
         school: "School of Business | Wireless University",
         period: "2020 - 2021"
+      },
+      {
+        degree: "Master of Business Management",
+        school: "School of Business | Wireless University",
+        period: "2020 - 2021"
       }
     ],
     references: [
@@ -74,12 +130,15 @@ function Template4({ cvData }) {
     ]
   };
 
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
         {/* Header */}
         <header className="mb-8">
-          <h1 className="text-3xl font-bold text-[#2D3748] mb-1">{mockData.firstName} {mockData.lastName}</h1>
+          <h1 className="text-3xl font-bold text-[#2D3748] mb-1">
+            {mockData.firstName} {mockData.lastName}
+          </h1>
           <p className="text-gray-600">{mockData.title}</p>
         </header>
 
@@ -88,7 +147,9 @@ function Template4({ cvData }) {
           <div className="space-y-6">
             {/* Contact Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Contact</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">
+                Contact
+              </h2>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-600">
                   <GiRotaryPhone className="text-lg" />
@@ -111,7 +172,9 @@ function Template4({ cvData }) {
 
             {/* Skills Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Skills</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">
+                Skills
+              </h2>
               <ul className="space-y-1">
                 {mockData.skills.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">• {skill}</li>
@@ -121,7 +184,9 @@ function Template4({ cvData }) {
 
             {/* Languages Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Languages</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">
+                Languages
+              </h2>
               <ul className="space-y-1">
                 {mockData.languages.map((language, index) => (
                   <li key={index} className="text-sm text-gray-600">• {language}</li>
@@ -131,7 +196,9 @@ function Template4({ cvData }) {
 
             {/* References Section */}
             <section>
-              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">Reference</h2>
+              <h2 className="text-[#2D3748] font-semibold mb-3 uppercase border-b border-gray-300 pb-1">
+                References
+              </h2>
               {mockData.references.map((ref, index) => (
                 <div key={index} className="text-sm">
                   <p className="font-medium text-gray-700">{ref.name}</p>
@@ -192,6 +259,6 @@ function Template4({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template4;

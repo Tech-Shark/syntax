@@ -4,9 +4,53 @@ import { GiRotaryPhone } from "react-icons/gi";
 import { CiLocationOn } from "react-icons/ci";
 import { IoGlobeOutline } from "react-icons/io5";
 
-function Template3({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Define types for CV data structure
+interface Contact {
+  email: string;
+  phone: string;
+  address: string;
+  website: string;
+}
+
+interface Education {
+  degree: string;
+  school: string;
+  years: string;
+}
+
+interface Experience {
+  title: string;
+  company: string;
+  period: string;
+  responsibilities: string[];
+}
+
+interface Reference {
+  name: string;
+  title: string;
+  phone: string;
+  email: string;
+}
+
+interface CvData {
+  firstName: string;
+  lastName: string;
+  title: string;
+  contact: Contact;
+  aboutMe: string;
+  education: Education[];
+  skills: string[];
+  languages: string[];
+  experience: Experience[];
+  references: Reference[];
+}
+
+interface Template3Props {
+  cvData?: CvData;
+}
+
+const Template3: React.FC<Template3Props> = ({ cvData }) => {
+  const mockData: CvData = cvData || {
     firstName: "DONNA",
     lastName: "STROUPE",
     title: "Sales Representative",
@@ -200,6 +244,6 @@ function Template3({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template3;

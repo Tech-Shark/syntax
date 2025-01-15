@@ -1,21 +1,67 @@
 import React from "react";
-import { IoMailOutline } from "react-icons/io5";
+import { IoMailOutline, IoGlobeOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
-import { IoGlobeOutline } from "react-icons/io5";
 
-function Template14({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Type definitions for CV data
+interface Contact {
+  phone: string;
+  email: string;
+  address: string;
+  website: string;
+}
+
+interface SkillSet {
+  technical: string[];
+}
+
+interface WorkExperience {
+  company: string;
+  title: string;
+  period: string;
+  achievements: string[];
+}
+
+interface Education {
+  degree: string;
+  school: string;
+  period: string;
+}
+
+interface Certification {
+  name: string;
+  organization: string;
+  year: string;
+}
+
+interface CvData {
+  name: string;
+  title: string;
+  contact: Contact;
+  summary: string;
+  skills: SkillSet;
+  workExperience: WorkExperience[];
+  education: Education[];
+  certifications: Certification[];
+}
+
+interface Template14Props {
+  cvData?: CvData; // Optional prop for custom CV data
+}
+
+const Template14: React.FC<Template14Props> = ({ cvData }) => {
+  // Mock data as fallback
+  const mockData: CvData = {
     name: "RICHARD SANCHEZ",
     title: "SOFTWARE DEVELOPER",
     contact: {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
       address: "123 Anywhere St., Any City",
-      website: "www.reallygreatsite.com"
+      website: "www.reallygreatsite.com",
     },
-    summary: "Highly skilled and detail-oriented software developer with 5 years of experience designing, developing, and deploying enterprise level applications. Proficient in multiple programming languages, software development methodologies, and database management systems. Strong problem-solving abilities and excellent communication skills.",
+    summary:
+      "Highly skilled and detail-oriented software developer with 5 years of experience designing, developing, and deploying enterprise-level applications. Proficient in multiple programming languages, software development methodologies, and database management systems. Strong problem-solving abilities and excellent communication skills.",
     skills: {
       technical: [
         "Strong problem solving",
@@ -25,8 +71,8 @@ function Template14({ cvData }) {
         "Collaboration",
         "Leadership",
         "Critical thinking",
-        "Attention to detail"
-      ]
+        "Attention to detail",
+      ],
     },
     workExperience: [
       {
@@ -34,11 +80,11 @@ function Template14({ cvData }) {
         title: "Software Developer",
         period: "2020 - Present",
         achievements: [
-          "Collaborate with cross functional teams to identify and innovate features and requirements",
+          "Collaborate with cross-functional teams to identify and innovate features and requirements",
           "Conduct code reviews and provide feedback to improve code quality",
           "Develop and execute web tests and perform system testing to ensure software quality",
-          "Troubleshoot and resolve software defects and issues"
-        ]
+          "Troubleshoot and resolve software defects and issues",
+        ],
       },
       {
         company: "Giggling Platypus Co.",
@@ -48,8 +94,8 @@ function Template14({ cvData }) {
           "Developed and maintained software applications",
           "Conducted code reviews and provided feedback to improve code quality",
           "Developed and executed tests and performed system testing to ensure software quality",
-          "Troubleshoot and resolved software defects and issues"
-        ]
+          "Troubleshoot and resolved software defects and issues",
+        ],
       },
       {
         company: "Keithston and Partners",
@@ -58,35 +104,37 @@ function Template14({ cvData }) {
         achievements: [
           "Conduct code reviews and provide feedback to improve code quality",
           "Develop and execute web tests and perform system testing to ensure software quality",
-          "Contribute to the continuous improvement of software development processes and best practices"
-        ]
-      }
+          "Contribute to the continuous improvement of software development processes and best practices",
+        ],
+      },
     ],
     education: [
       {
         degree: "Master in Data Science & Big Data",
         school: "Sigma University",
-        period: "2020-2021"
+        period: "2020-2021",
       },
       {
         degree: "Bachelor of Science in Computer Science",
         school: "Imperial Company",
-        period: "2015-2019"
-      }
+        period: "2015-2019",
+      },
     ],
     certifications: [
       {
         name: "Certified Scrum Developer",
         organization: "Listen & Co",
-        year: "2020-2021"
+        year: "2020-2021",
       },
       {
         name: "Certified Kubernetes Administrator",
         organization: "Hanover and Take",
-        year: "2019"
-      }
-    ]
+        year: "2019",
+      },
+    ],
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -95,25 +143,25 @@ function Template14({ cvData }) {
         <div className="bg-gray-100 p-8">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-2xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-              <p className="text-gray-600 text-sm uppercase tracking-wider">{mockData.title}</p>
+              <h1 className="text-2xl font-bold text-gray-800 mb-1">{data.name}</h1>
+              <p className="text-gray-600 text-sm uppercase tracking-wider">{data.title}</p>
             </div>
             <div className="flex flex-col gap-1 text-sm text-gray-600">
               <div className="flex items-center gap-2">
                 <BsTelephone className="text-gray-400" />
-                <span>{mockData.contact.phone}</span>
+                <span>{data.contact.phone}</span>
               </div>
               <div className="flex items-center gap-2">
                 <IoMailOutline className="text-gray-400" />
-                <span>{mockData.contact.email}</span>
+                <span>{data.contact.email}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CiLocationOn className="text-gray-400" />
-                <span>{mockData.contact.address}</span>
+                <span>{data.contact.address}</span>
               </div>
               <div className="flex items-center gap-2">
                 <IoGlobeOutline className="text-gray-400" />
-                <span>{mockData.contact.website}</span>
+                <span>{data.contact.website}</span>
               </div>
             </div>
           </div>
@@ -124,9 +172,7 @@ function Template14({ cvData }) {
           <section className="mb-8">
             <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Summary</h2>
             <div className="pl-4 border-l-2 border-gray-200">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {mockData.summary}
-              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{data.summary}</p>
             </div>
           </section>
 
@@ -135,7 +181,7 @@ function Template14({ cvData }) {
             <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Skills</h2>
             <div className="pl-4 border-l-2 border-gray-200">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {mockData.skills.technical.map((skill, index) => (
+                {data.skills.technical.map((skill, index) => (
                   <p key={index} className="text-sm text-gray-600">{skill}</p>
                 ))}
               </div>
@@ -146,7 +192,7 @@ function Template14({ cvData }) {
           <section className="mb-8">
             <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Work Experience</h2>
             <div className="pl-4 border-l-2 border-gray-200 space-y-6">
-              {mockData.workExperience.map((exp, index) => (
+              {data.workExperience.map((exp, index) => (
                 <div key={index}>
                   <div className="flex justify-between items-start mb-2">
                     <div>
@@ -169,7 +215,7 @@ function Template14({ cvData }) {
           <section className="mb-8">
             <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Education</h2>
             <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
-              {mockData.education.map((edu, index) => (
+              {data.education.map((edu, index) => (
                 <div key={index}>
                   <h3 className="text-gray-800 font-medium text-sm">{edu.degree}</h3>
                   <p className="text-gray-600 text-sm">{edu.school}</p>
@@ -183,7 +229,7 @@ function Template14({ cvData }) {
           <section>
             <h2 className="text-gray-800 font-medium mb-3 uppercase text-sm tracking-wider">Certifications</h2>
             <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
-              {mockData.certifications.map((cert, index) => (
+              {data.certifications.map((cert, index) => (
                 <div key={index}>
                   <h3 className="text-gray-800 font-medium text-sm">{cert.name}</h3>
                   <p className="text-gray-600 text-sm">{cert.organization}</p>
@@ -196,6 +242,6 @@ function Template14({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template14;

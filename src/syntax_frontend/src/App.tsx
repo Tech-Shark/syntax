@@ -16,6 +16,7 @@ import SavedInfo from "./Pages/WelcomeScreen/savedInfo";
 import JobDescription from "./Pages/WelcomeScreen/jobDescription";
 import CvTemplate from "./Pages/WelcomeScreen/cvTemplates";
 import SavedTemplates from "./Pages/WelcomeScreen/saved-templates";
+import CreativeResume from "./Pages/WelcomeScreen/creativeResume";
 
 // Auth pages
 import AuthWelcome from "./Pages/Auth/authWelcome";
@@ -28,6 +29,8 @@ import UserDashboard from "./Pages/Dashboard/UserDashboard/userDashboard";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard/DashboardAdmin";
 import PricingManagement from "./Pages/Dashboard/AdminDashboard/pricingManagement";
 import Pricing from "@/Pages/Dashboard/UserDashboard/Pricing/pricing";
+import CreatePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/createPromo";
+
 
 
 function App() {
@@ -48,6 +51,7 @@ function App() {
           <Route path="/job_description" element={<JobDescription />} />
           <Route path="/cv-templates" element={<CvTemplate />} />
           <Route path="/saved-templates" element={<SavedTemplates />} />
+          <Route path="/creative-resume" element={<CreativeResume />} />
 
           {/* auth pages */}
           <Route path="/auth-welcome" element={<AuthWelcome />} />
@@ -60,6 +64,8 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/pricing-management" element={<PricingManagement />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/promo-management" element={<CreatePromotion />} />
+
         </Routes>
       </BrowserRouter>
     </Provider>

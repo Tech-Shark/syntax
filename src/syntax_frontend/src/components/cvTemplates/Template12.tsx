@@ -4,9 +4,58 @@ import { IoMailOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 
-function Template12({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Type definitions for CV data
+interface Contact {
+  address: string;
+  email: string;
+  linkedin: string;
+  phone: string;
+  github: string;
+}
+
+interface TechnicalSkills {
+  column1: string[];
+  column2: string[];
+  column3: string[];
+}
+
+interface ProfessionalExperience {
+  title: string;
+  period: string;
+  achievements: string[];
+}
+
+interface Education {
+  degree: string;
+  school: string;
+  period: string;
+  details: string[];
+}
+
+interface AdditionalInfo {
+  languages: string[];
+  certifications: string[];
+  awards: string[];
+}
+
+interface CvData {
+  name: string;
+  title: string;
+  contact: Contact;
+  summary: string;
+  technicalSkills: TechnicalSkills;
+  professionalExperience: ProfessionalExperience[];
+  education: Education[];
+  additionalInfo: AdditionalInfo;
+}
+
+interface Template12Props {
+  cvData?: CvData; // Optional prop for custom CV data
+}
+
+const Template12: React.FC<Template12Props> = ({ cvData }) => {
+  // Mock data as fallback
+  const mockData: CvData = {
     name: "DANIEL GALLEGO",
     title: "UX DESIGNER",
     contact: {
@@ -14,25 +63,14 @@ function Template12({ cvData }) {
       email: "hello@reallygreatsite.com",
       linkedin: "www.linkedin.com",
       phone: "+234 080 1234 5678",
-      github: "github.com"
+      github: "github.com",
     },
-    summary: "UX Designer with a focus on delivering impactful results, eager to tackle dynamic challenges and apply creativity with intuitive user experiences. Demonstrated proficiency in project management, user-centric problem-solving, and seamless collaboration across teams. Skilled in leveraging state-of-the-art tools and methodologies to streamline processes and elevate user satisfaction.",
+    summary:
+      "UX Designer with a focus on delivering impactful results, eager to tackle dynamic challenges and apply creativity with intuitive user experiences. Demonstrated proficiency in project management, user-centric problem-solving, and seamless collaboration across teams. Skilled in leveraging state-of-the-art tools and methodologies to streamline processes and elevate user satisfaction.",
     technicalSkills: {
-      column1: [
-        "Prototyping Tools",
-        "User Research",
-        "Information Architecture"
-      ],
-      column2: [
-        "Interaction Design",
-        "Visual Design",
-        "Wireframing"
-      ],
-      column3: [
-        "Accessibility",
-        "Responsive Design",
-        "User Testing Tools"
-      ]
+      column1: ["Prototyping Tools", "User Research", "Information Architecture"],
+      column2: ["Interaction Design", "Visual Design", "Wireframing"],
+      column3: ["Accessibility", "Responsive Design", "User Testing Tools"],
     },
     professionalExperience: [
       {
@@ -41,8 +79,8 @@ function Template12({ cvData }) {
         achievements: [
           "Led development of an advanced automation system, achieving a 15% increase in operational efficiency.",
           "Streamlined manufacturing processes, reducing production costs by 10%.",
-          "Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime."
-        ]
+          "Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.",
+        ],
       },
       {
         title: "System UX Engineer, XarrowAI Industries",
@@ -50,9 +88,9 @@ function Template12({ cvData }) {
         achievements: [
           "Designed and optimised a robotic control system, realizing a 12% performance improvement.",
           "Coordinated testing and validation, ensuring compliance with industry standards.",
-          "Provided technical expertise, contributing to a 15% reduction in system failures."
-        ]
-      }
+          "Provided technical expertise, contributing to a 15% reduction in system failures.",
+        ],
+      },
     ],
     education: [
       {
@@ -61,58 +99,60 @@ function Template12({ cvData }) {
         period: "Aug 2016 - Oct 2019",
         details: [
           "Major in Automotive Technology",
-          "Thesis on \"Technological Advancements within the current Mechatronics Industry\""
-        ]
+          "Thesis on 'Technological Advancements within the current Mechatronics Industry'",
+        ],
       },
       {
         degree: "Bachelor of Design in Process Engineering",
         school: "Engineering University",
         period: "May 2014 - May 2016",
-        details: [
-          "Relevant coursework in Structural Design and Project Management"
-        ]
-      }
+        details: ["Relevant coursework in Structural Design and Project Management"],
+      },
     ],
     additionalInfo: {
       languages: ["English", "French", "Mandarin"],
-      certifications: ["Professional Design Engineer (PDE) License", "Project Management Tech (PMT)"],
+      certifications: [
+        "Professional Design Engineer (PDE) License",
+        "Project Management Tech (PMT)",
+      ],
       awards: [
         "Most Innovative Employee of the Year (2023)",
         "Overall Best Employee Division Two (2024)",
-        "Outstanding Project Lead (2022)"
-      ]
-    }
+        "Outstanding Project Lead (2022)",
+      ],
+    },
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
         {/* Header Section */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-          <h2 className="text-lg text-gray-600 mb-3">{mockData.title}</h2>
-          
+          <h1 className="text-3xl font-bold text-gray-800 mb-1">{data.name}</h1>
+          <h2 className="text-lg text-gray-600 mb-3">{data.title}</h2>
           {/* Contact Info */}
           <div className="flex flex-wrap gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
               <CiLocationOn className="text-gray-400" />
-              <span>{mockData.contact.address}</span>
+              <span>{data.contact.address}</span>
             </div>
             <div className="flex items-center gap-1">
               <IoMailOutline className="text-gray-400" />
-              <span>{mockData.contact.email}</span>
+              <span>{data.contact.email}</span>
             </div>
             <div className="flex items-center gap-1">
               <BsTelephone className="text-gray-400" />
-              <span>{mockData.contact.phone}</span>
+              <span>{data.contact.phone}</span>
             </div>
             <div className="flex items-center gap-1">
               <FaLinkedin className="text-gray-400" />
-              <span>{mockData.contact.linkedin}</span>
+              <span>{data.contact.linkedin}</span>
             </div>
             <div className="flex items-center gap-1">
               <FaGithub className="text-gray-400" />
-              <span>{mockData.contact.github}</span>
+              <span>{data.contact.github}</span>
             </div>
           </div>
         </div>
@@ -122,9 +162,7 @@ function Template12({ cvData }) {
           <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
             Summary
           </h2>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {mockData.summary}
-          </p>
+          <p className="text-sm text-gray-600 leading-relaxed">{data.summary}</p>
         </section>
 
         {/* Technical Skills Section */}
@@ -133,21 +171,13 @@ function Template12({ cvData }) {
             Technical Skills
           </h2>
           <div className="grid grid-cols-3 gap-4">
-            <div>
-              {mockData.technicalSkills.column1.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
-              ))}
-            </div>
-            <div>
-              {mockData.technicalSkills.column2.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
-              ))}
-            </div>
-            <div>
-              {mockData.technicalSkills.column3.map((skill, index) => (
-                <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
-              ))}
-            </div>
+            {Object.values(data.technicalSkills).map((skills, colIndex) => (
+              <div key={colIndex}>
+                {skills.map((skill: string, index: number) => (
+                  <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                ))}
+              </div>
+            ))}
           </div>
         </section>
 
@@ -156,7 +186,7 @@ function Template12({ cvData }) {
           <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
             Professional Experience
           </h2>
-          {mockData.professionalExperience.map((exp, index) => (
+          {data.professionalExperience.map((exp, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
                 <h3 className="text-gray-800 font-medium">{exp.title}</h3>
@@ -164,7 +194,9 @@ function Template12({ cvData }) {
               </div>
               <ul className="list-disc pl-4">
                 {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm text-gray-600 mb-1">{achievement}</li>
+                  <li key={idx} className="text-sm text-gray-600 mb-1">
+                    {achievement}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -176,7 +208,7 @@ function Template12({ cvData }) {
           <h2 className="text-sm font-bold bg-gray-200 text-gray-700 px-3 py-1 mb-3 uppercase">
             Education
           </h2>
-          {mockData.education.map((edu, index) => (
+          {data.education.map((edu, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
                 <div>
@@ -187,7 +219,9 @@ function Template12({ cvData }) {
               </div>
               <ul className="list-disc pl-4">
                 {edu.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm text-gray-600 mb-1">{detail}</li>
+                  <li key={idx} className="text-sm text-gray-600 mb-1">
+                    {detail}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -200,14 +234,22 @@ function Template12({ cvData }) {
             Additional Information
           </h2>
           <div className="text-sm text-gray-600">
-            <p><strong>Languages:</strong> {mockData.additionalInfo.languages.join(", ")}</p>
-            <p><strong>Certifications:</strong> {mockData.additionalInfo.certifications.join(", ")}</p>
-            <p><strong>Awards/Activities:</strong> {mockData.additionalInfo.awards.join(", ")}</p>
+            <p>
+              <strong>Languages:</strong> {data.additionalInfo.languages.join(", ")}
+            </p>
+            <p>
+              <strong>Certifications:</strong>{" "}
+              {data.additionalInfo.certifications.join(", ")}
+            </p>
+            <p>
+              <strong>Awards/Activities:</strong>{" "}
+              {data.additionalInfo.awards.join(", ")}
+            </p>
           </div>
         </section>
       </div>
     </div>
   );
-}
+};
 
 export default Template12;
