@@ -28,7 +28,7 @@ import SigninInternetIdentity from "./Pages/Auth/signinInternetIdentity";
 import UserDashboard from "./Pages/Dashboard/UserDashboard/userDashboard";
 import AdminDashboard from "./Pages/Dashboard/AdminDashboard/DashboardAdmin";
 import PricingManagement from "./Pages/Dashboard/AdminDashboard/pricingManagement";
-import Pricing from "@/Pages/Dashboard/UserDashboard/Pricing/pricing";
+import Pricing from "./Pages/Dashboard/UserDashboard/Pricing/pricing";
 import CreatePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/createPromo";
 
 
