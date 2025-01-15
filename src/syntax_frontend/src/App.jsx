@@ -34,7 +34,6 @@ import Template18 from './components/cvTemplates/Template18';
 import Template19 from './components/cvTemplates/Template19';
 import Template20 from './components/cvTemplates/Template20';
 import Template21 from './components/cvTemplates/Template21';
-import Template22 from './components/cvTemplates/Template22';
 
 const router = createBrowserRouter([
   {
@@ -171,10 +170,6 @@ const router = createBrowserRouter([
   {
     path: "/temp21",
     element: <Template21 />
-  },
-  {
-    path: "/temp22",
-    element: <Template22 />
   },
   
 ]);

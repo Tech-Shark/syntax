@@ -1,197 +1,218 @@
 import React from "react";
+import { FiPhone } from "react-icons/fi";
 import { IoMailOutline } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
-import { BsTelephone } from "react-icons/bs";
 import { IoGlobeOutline } from "react-icons/io5";
+import { CiLocationOn } from "react-icons/ci";
 
-function Template15({ cvData }) {
-  // Mock data for demonstration
+function Template16({ cvData }) {
   const mockData = {
-    name: "RICHARD SANCHEZ",
-    title: "SOFTWARE DEVELOPER",
+    firstName: "ITSUKI",
+    lastName: "TAKAHASHI",
+    title: "SOFTWARE ENGINEER",
     contact: {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
       address: "123 Anywhere St., Any City",
       website: "www.reallygreatsite.com"
     },
-    summary: "Highly skilled and detail-oriented software developer with 5 years of experience designing, developing, and deploying enterprise level applications. Proficient in multiple programming languages, software development methodologies, and database management systems. Strong problem-solving abilities and excellent communication skills.",
-    skills: [
-      "Strong problem solving",
-      "Analytical skills",
-      "Interpersonal Skills",
-      "Communication",
-      "Collaboration",
-      "Leadership",
-      "Critical thinking",
-      "Attention to detail"
+    education: [
+      {
+        school: "Fauget University",
+        degree: "Computer Science",
+        period: "2010-2014"
+      },
+      {
+        school: "Borcelle High School",
+        address: "123 Anywhere St., Any City",
+        period: "2008-2011"
+      }
+    ],
+    certification: [
+      {
+        organization: "Liceria & Co.",
+        title: "Web Design & Development",
+        year: "2019"
+      },
+      {
+        organization: "Fauget Company",
+        title: "Web Design & Development",
+        year: "2021"
+      }
     ],
     workExperience: [
       {
-        company: "Fradel and Spies Co",
-        title: "Software Developer",
-        period: "2020 - Present",
-        achievements: [
-          "Collaborate with cross functional teams to identify and innovate features and requirements",
-          "Conduct code reviews and provide feedback to improve code quality",
-          "Develop and execute web tests and perform system testing to ensure software quality",
-          "Troubleshoot and resolve software defects and issues"
-        ]
+        title: "Web Developer",
+        company: "Liceria & Co. / 2019 - Present",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
       },
       {
-        company: "Giggling Platypus Co.",
-        title: "Software Engineer",
-        period: "2018 - 2020",
-        achievements: [
-          "Developed and maintained software applications",
-          "Conducted code reviews and provided feedback to improve code quality",
-          "Developed and executed tests and performed system testing to ensure software quality",
-          "Troubleshoot and resolved software defects and issues"
-        ]
+        title: "Web Designer",
+        company: "Borcelle Company / 2016-2018",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
       },
       {
-        company: "Keithston and Partners",
-        title: "Software Developer",
-        period: "Jan 2017 - Jul 2018",
-        achievements: [
-          "Conduct code reviews and provide feedback to improve code quality",
-          "Develop and execute web tests and perform system testing to ensure software quality",
-          "Contribute to the continuous improvement of software development processes and best practices"
-        ]
+        title: "Web Development Intern",
+        company: "Fauget / 2014-2015",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
       }
     ],
-    education: [
+    skills: [
+      "Databases",
+      "Networking basics",
+      "Operating Systems",
+      "Cross-platform software",
+      "Encryption",
+      "Unit testing",
+      "Integration testing",
+      "System testing",
+      "Critical Thinking",
+      "Time management"
+    ],
+    courses: [
       {
-        degree: "Master in Data Science & Big Data",
-        school: "Sigma University",
-        period: "2020-2021"
+        organization: "Borcelle Tech",
+        title: "Web Design & Development",
+        year: "2019"
       },
       {
-        degree: "Bachelor of Science in Computer Science",
-        school: "Imperial Company",
-        period: "2015-2019"
+        organization: "Fauget Corp",
+        title: "Web Design & Development",
+        year: "2020"
       }
     ],
-    certifications: [
+    awards: [
       {
-        name: "Certified Scrum Developer",
-        organization: "Listen & Co",
-        period: "2020-2021"
-      },
-      {
-        name: "Certified Kubernetes Administrator",
-        organization: "Hanover and Take",
-        period: "2019"
+        title: "Best Web Designer and Developer",
+        organization: "Liceria & Co.",
+        date: "08/2021"
       }
     ]
   };
 
   return (
     <div className="min-h-screen bg-gray-700 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg">
-        {/* Header Section */}
-        <div className="bg-gray-100 p-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-            <p className="text-gray-600 text-sm uppercase tracking-wider">{mockData.title}</p>
-          </div>
-          <div className="flex gap-6 mt-4 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <BsTelephone className="text-gray-500" />
-              <span>{mockData.contact.phone}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <IoMailOutline className="text-gray-500" />
-              <span>{mockData.contact.email}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <CiLocationOn className="text-gray-500" />
-              <span>{mockData.contact.address}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <IoGlobeOutline className="text-gray-500" />
-              <span>{mockData.contact.website}</span>
-            </div>
-          </div>
+      <div className="max-w-4xl mx-auto bg-[#FAFAFA] text-[#454B42] shadow-lg">
+        {/* Two Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+          {/* Left Column */}
+          <div className="">
+        <div className="mb-12 bg-[#FAFAFA] w-full p-10">
+          <h1 className="text-5xl font-light mb-1">
+            {mockData.firstName}<br/>{mockData.lastName}
+          </h1>
+          <p className="text-xl mt-2 uppercase tracking-wider">
+            {mockData.title}
+          </p>
         </div>
+            {/* Education Section */}
+            <section className="mb-8 pl-10">
+              <h2 className="font-medium mb-4 text-xl uppercase">Education</h2>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+              {mockData.education.map((edu, index) => (
+                <div key={index} className="mb-4">
+                  <h3 className="">{edu.school}</h3>
+                  <p className="text-sm">{edu.degree}</p>
+                  {edu.address && (
+                    <p className="text-sm">{edu.address}</p>
+                  )}
+                  <p className="text-sm">{edu.period}</p>
+                </div>
+              ))}
+              </div>
+            </section>
 
-        <div className="p-8">
-          {/* Summary Section */}
-          <section className="mb-8">
-            <h2 className="text-gray-500 text-sm mb-3 uppercase tracking-wider">Summary</h2>
-            <div className="pl-4 border-l-2 border-gray-200">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {mockData.summary}
-              </p>
-            </div>
-          </section>
+            {/* Certification Section */}
+            <section className="mb-8 pl-10">
+              <h2 className="font-medium mb-4 text-xl uppercase">Certification</h2>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
+              {mockData.certification.map((cert, index) => (
+                <div key={index} className="mb-4">
+                  <h3 className="">{cert.organization}</h3>
+                  <p className="text-sm">{cert.title}</p>
+                  <p className="text-sm">{cert.year}</p>
+                </div>
+              ))}
+              </div>
+            </section>
 
-          {/* Skills Section */}
-          <section className="mb-8">
-            <h2 className="text-gray-500 text-sm mb-3 uppercase tracking-wider">Skills</h2>
-            <div className="pl-4 border-l-2 border-gray-200">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2">
-                {mockData.skills.map((skill, index) => (
-                  <p key={index} className="text-sm text-gray-600">• {skill}</p>
-                ))}
+            {/* Work Experience Section */}
+            <section className="pl-8 pb-10">
+              <h2 className="font-medium mb-4 uppercase text-xl">Work Experience</h2>
+              {mockData.workExperience.map((exp, index) => (
+                <div key={index} className="mb-6">
+                  <h3 className="text-gray-800">{exp.title}</h3>
+                  <p className="text-gray-600 text-sm mb-2">{exp.company}</p>
+                  <p className="text-gray-500 text-sm">{exp.description}</p>
+                </div>
+              ))}
+            </section>
+          </div>
+
+          {/* Right Column */}
+          <div className="flex gap-12">
+            <div className="w-0.5 h-full bg-[#EBEBEB]"></div>
+            <div className="pt-10">
+            {/* Contact Section */}
+            <div className="flex flex-col gap-2 mb-8">
+              <div className="flex items-center gap-2 text-gray-600">
+                <FiPhone className="text-lg" />
+                <span className="text-sm">{mockData.contact.phone}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <IoMailOutline className="text-lg" />
+                <span className="text-sm">{mockData.contact.email}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <CiLocationOn className="text-lg" />
+                <span className="text-sm">{mockData.contact.address}</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600">
+                <IoGlobeOutline className="text-lg" />
+                <span className="text-sm">{mockData.contact.website}</span>
               </div>
             </div>
-          </section>
+            {/* Skills Section */}
+            <section className="mb-8">
+              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Skills</h2>
+              <ul className="space-y-1">
+                {mockData.skills.map((skill, index) => (
+                  <li key={index} className="text-gray-600 text-sm flex items-center gap-2">
+                    <span>→</span>
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </section>
 
-          {/* Work Experience Section */}
-          <section className="mb-8">
-            <h2 className="text-gray-500 text-sm mb-3 uppercase tracking-wider">Work Experience</h2>
-            <div className="pl-4 border-l-2 border-gray-200 space-y-6">
-              {mockData.workExperience.map((exp, index) => (
-                <div key={index}>
-                  <div className="mb-2">
-                    <h3 className="text-gray-800 font-medium">{exp.company}</h3>
-                    <div className="flex justify-between items-center">
-                      <p className="text-gray-600 text-sm italic">{exp.title}</p>
-                      <span className="text-gray-500 text-sm">{exp.period}</span>
-                    </div>
-                  </div>
-                  <ul className="list-disc pl-4 space-y-1">
-                    {exp.achievements.map((achievement, idx) => (
-                      <li key={idx} className="text-sm text-gray-600">{achievement}</li>
-                    ))}
-                  </ul>
+            {/* Course Section */}
+            <section className="mb-8">
+              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Course</h2>
+              {mockData.courses.map((course, index) => (
+                <div key={index} className="mb-4">
+                  <h3 className="text-gray-800">{course.organization}</h3>
+                  <p className="text-gray-600 text-sm">{course.title}</p>
+                  <p className="text-gray-500 text-sm">{course.year}</p>
                 </div>
               ))}
-            </div>
-          </section>
+            </section>
 
-          {/* Education Section */}
-          <section className="mb-8">
-            <h2 className="text-gray-500 text-sm mb-3 uppercase tracking-wider">Education</h2>
-            <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
-              {mockData.education.map((edu, index) => (
-                <div key={index}>
-                  <h3 className="text-gray-800 font-medium text-sm">{edu.degree}</h3>
-                  <p className="text-gray-600 text-sm">{edu.school}</p>
-                  <p className="text-gray-500 text-sm">{edu.period}</p>
+            {/* Awards Section */}
+            <section className="">
+              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Awards</h2>
+              {mockData.awards.map((award, index) => (
+                <div key={index} className="mb-4">
+                  <h3 className="text-gray-800">{award.title}</h3>
+                  <p className="text-gray-600 text-sm">{award.organization}</p>
+                  <p className="text-gray-500 text-sm">{award.date}</p>
                 </div>
               ))}
+            </section>
             </div>
-          </section>
-
-          {/* Certifications Section */}
-          <section>
-            <h2 className="text-gray-500 text-sm mb-3 uppercase tracking-wider">Certifications</h2>
-            <div className="pl-4 border-l-2 border-gray-200 grid grid-cols-2 gap-4">
-              {mockData.certifications.map((cert, index) => (
-                <div key={index}>
-                  <h3 className="text-gray-800 font-medium text-sm">{cert.name}</h3>
-                  <p className="text-gray-600 text-sm">{cert.organization}</p>
-                  <p className="text-gray-500 text-sm">{cert.period}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Template15;
+export default Template16;

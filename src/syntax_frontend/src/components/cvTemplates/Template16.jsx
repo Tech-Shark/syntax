@@ -1,218 +1,138 @@
 import React from "react";
-import { FiPhone } from "react-icons/fi";
-import { IoMailOutline } from "react-icons/io5";
-import { IoGlobeOutline } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
 
-function Template16({ cvData }) {
+function Template17({ cvData }) {
+  // Mock data for demonstration
   const mockData = {
-    firstName: "ITSUKI",
-    lastName: "TAKAHASHI",
-    title: "SOFTWARE ENGINEER",
+    name: "HARPER RUSSO",
     contact: {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
-      address: "123 Anywhere St., Any City",
-      website: "www.reallygreatsite.com"
+      website: "@reallygreatsite",
+      address: "123 Anywhere St., Any City, ST 12345"
     },
-    education: [
+    title: "BUSINESS OPERATIONS MANAGER",
+    summary: "I am a proficient Business Operations Manager with a strong focus on achieving outcomes, possessing in-depth expertise in media management and assuming leadership responsibilities. I have demonstrated exceptional leadership capabilities while overseeing and directing media operations in North America and the APAC region. I have a proven track record of enhancing team performance, fostering internal loyalty, and cultivating collaborative alliances with internal and external stakeholders.",
+    strengths: [
+      "P&L Management",
+      "Business Development",
+      "Strategic Planning",
+      "Financial Reporting",
+      "Negotiation Skills",
+      "Client Relationship Management",
+      "Team Leadership",
+      "Communication",
+      "Operations Management"
+    ],
+    experience: [
       {
-        school: "Fauget University",
-        degree: "Computer Science",
-        period: "2010-2014"
+        company: "Ginyard International Co.",
+        title: "Operations Manager",
+        period: "October 2019 - Present",
+        description: "Demonstrated exceptional leadership by overseeing nationwide operations, resulting in a phenomenal growth rate of 120% within two years. Played a pivotal role in spearheading the conception and execution of subscription video-on-demand over-the-top streaming products.",
+        accomplishments: [
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec augue pharetra, imperdiet ex ut, lorem feugiat pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Nunc vel ex in velit volutpat commodo sit amet vitae elit. Nam et sagittis vitae ex volutpat ipsa.",
+          "Aenean tristique mattis vitae facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Vivamus aliquam leo molestie velit placerat, eget tristique mauris egestas. Fusce luctus nulla eget lorem imperdiet pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Proin et nisl tellend, posuere lectus et, leo. Praesent vitae massa id odio vulputate posuere is."
+        ]
       },
       {
-        school: "Borcelle High School",
-        address: "123 Anywhere St., Any City",
-        period: "2008-2011"
-      }
-    ],
-    certification: [
-      {
-        organization: "Liceria & Co.",
-        title: "Web Design & Development",
-        year: "2019"
-      },
-      {
-        organization: "Fauget Company",
-        title: "Web Design & Development",
-        year: "2021"
-      }
-    ],
-    workExperience: [
-      {
-        title: "Web Developer",
-        company: "Liceria & Co. / 2019 - Present",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
-      },
-      {
-        title: "Web Designer",
-        company: "Borcelle Company / 2016-2018",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
-      },
-      {
-        title: "Web Development Intern",
-        company: "Fauget / 2014-2015",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent erat lacus, condimentum quis hendrerit et, convalis ac quam. Nam faucibus quis dui vel mollis. Cras tincidunt ligula nec nisi vulputate ornare."
-      }
-    ],
-    skills: [
-      "Databases",
-      "Networking basics",
-      "Operating Systems",
-      "Cross-platform software",
-      "Encryption",
-      "Unit testing",
-      "Integration testing",
-      "System testing",
-      "Critical Thinking",
-      "Time management"
-    ],
-    courses: [
-      {
-        organization: "Borcelle Tech",
-        title: "Web Design & Development",
-        year: "2019"
-      },
-      {
-        organization: "Fauget Corp",
-        title: "Web Design & Development",
-        year: "2020"
-      }
-    ],
-    awards: [
-      {
-        title: "Best Web Designer and Developer",
-        organization: "Liceria & Co.",
-        date: "08/2021"
+        company: "Giggling Platypus Co.",
+        title: "Business Development Manager",
+        period: "August 2017 - September 2019",
+        description: "Drove the organisation to remarkable achievements, realising an exceptional growth rate of 180% over two years. Proactively identified solutions to enhance the sales team's capabilities.",
+        accomplishments: [
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquam justo et libero sodales.",
+          "Vivamus aliquam leo molestie velit placerat, eget tristique mauris egestas. Vivamus euismod leo molestie velit pharetra, eget tristique mauris egestas.",
+          "Ut euismod neque in tellus bibendum, et tristique quam bibendum. Sed eu orci at malesu at.",
+          "Suspendisse ornare purus ut viverra semper. Vestibulum ante ipsum primis in faucibus orci luctus."
+        ]
       }
     ]
   };
 
   return (
     <div className="min-h-screen bg-gray-700 p-8">
-      <div className="max-w-4xl mx-auto bg-[#FAFAFA] text-[#454B42] shadow-lg">
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
-          {/* Left Column */}
-          <div className="">
-        <div className="mb-12 bg-[#FAFAFA] w-full p-10">
-          <h1 className="text-5xl font-light mb-1">
-            {mockData.firstName}<br/>{mockData.lastName}
-          </h1>
-          <p className="text-xl mt-2 uppercase tracking-wider">
+      <div className="max-w-4xl mx-auto text-black bg-white shadow-lg p-8">
+        {/* Header Section */}
+        <div className="text-center mt-10 mb-8">
+          <h1 className="text-4xl font-bold mb-2">{mockData.name}</h1>
+          <div className="text-sm space-y-1">
+            <div className="flex justify-center gap-4">
+              <span>{mockData.contact.phone}</span>
+              <span>•</span>
+              <span>{mockData.contact.email}</span>
+              <span>•</span>
+              <span>{mockData.contact.website}</span>
+            </div>
+            <div>{mockData.contact.address}</div>
+          </div>
+        </div>
+
+        <hr className="border-black font-bold bg-black h-1 my-6" />
+
+        {/* Title and Summary */}
+        <div className="mb-8">
+          <h2 className="text-center text-xl font-bold mb-4 uppercase">
             {mockData.title}
+          </h2>
+          <p className="text-sm leading-relaxed">
+            {mockData.summary}
           </p>
         </div>
-            {/* Education Section */}
-            <section className="mb-8 pl-10">
-              <h2 className="font-medium mb-4 text-xl uppercase">Education</h2>
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
-              {mockData.education.map((edu, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="">{edu.school}</h3>
-                  <p className="text-sm">{edu.degree}</p>
-                  {edu.address && (
-                    <p className="text-sm">{edu.address}</p>
-                  )}
-                  <p className="text-sm">{edu.period}</p>
-                </div>
-              ))}
-              </div>
-            </section>
 
-            {/* Certification Section */}
-            <section className="mb-8 pl-10">
-              <h2 className="font-medium mb-4 text-xl uppercase">Certification</h2>
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-12">
-              {mockData.certification.map((cert, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="">{cert.organization}</h3>
-                  <p className="text-sm">{cert.title}</p>
-                  <p className="text-sm">{cert.year}</p>
-                </div>
-              ))}
-              </div>
-            </section>
+        <hr className="border-black font-bold bg-black my-6" />
 
-            {/* Work Experience Section */}
-            <section className="pl-8 pb-10">
-              <h2 className="font-medium mb-4 uppercase text-xl">Work Experience</h2>
-              {mockData.workExperience.map((exp, index) => (
-                <div key={index} className="mb-6">
-                  <h3 className="text-gray-800">{exp.title}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{exp.company}</p>
-                  <p className="text-gray-500 text-sm">{exp.description}</p>
-                </div>
-              ))}
-            </section>
+        {/* Strengths and Expertise */}
+        <section className="mb-8">
+          <h2 className="text-center text-xl font-bold mb-4 uppercase">
+            Strengths and Expertise
+          </h2>
+          <div className="grid grid-cols-3 gap-4">
+            {mockData.strengths.map((strength, index) => (
+              <p key={index} className="text-sm text-center">
+                {strength}
+              </p>
+            ))}
           </div>
+        </section>
 
-          {/* Right Column */}
-          <div className="flex gap-12">
-            <div className="w-0.5 h-full bg-gray-600"></div>
-            <div className="pt-10">
-            {/* Contact Section */}
-            <div className="flex flex-col gap-2 mb-8">
-              <div className="flex items-center gap-2 text-gray-600">
-                <FiPhone className="text-lg" />
-                <span className="text-sm">{mockData.contact.phone}</span>
+        <hr className="border-black font-bold bg-black my-6" />
+
+        {/* Professional Experience */}
+        <section>
+          <h2 className="text-center text-xl font-bold mb-6 uppercase">
+            Professional Experience
+          </h2>
+          {mockData.experience.map((exp, index) => (
+            <div key={index} className="mb-8">
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="font-bold">{exp.company}</h3>
+                  <p className="font-bold">{exp.title}</p>
+                </div>
+                <span className="font-bold">{exp.period}</span>
               </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <IoMailOutline className="text-lg" />
-                <span className="text-sm">{mockData.contact.email}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <CiLocationOn className="text-lg" />
-                <span className="text-sm">{mockData.contact.address}</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <IoGlobeOutline className="text-lg" />
-                <span className="text-sm">{mockData.contact.website}</span>
+              <p className="text-sm mb-4">
+                {exp.description}
+              </p>
+              <div>
+                <p className="mb-2">Accomplishments:</p>
+                <ul className="list-disc pl-5 space-y-2">
+                  {exp.accomplishments.map((accomplishment, idx) => (
+                    <li key={idx} className="text-sm mt-4">
+                      {accomplishment}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            {/* Skills Section */}
-            <section className="mb-8">
-              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Skills</h2>
-              <ul className="space-y-1">
-                {mockData.skills.map((skill, index) => (
-                  <li key={index} className="text-gray-600 text-sm flex items-center gap-2">
-                    <span>→</span>
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            {/* Course Section */}
-            <section className="mb-8">
-              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Course</h2>
-              {mockData.courses.map((course, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="text-gray-800">{course.organization}</h3>
-                  <p className="text-gray-600 text-sm">{course.title}</p>
-                  <p className="text-gray-500 text-sm">{course.year}</p>
-                </div>
-              ))}
-            </section>
-
-            {/* Awards Section */}
-            <section className="">
-              <h2 className="text-gray-800 font-medium mb-4 text-xl uppercase">Awards</h2>
-              {mockData.awards.map((award, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="text-gray-800">{award.title}</h3>
-                  <p className="text-gray-600 text-sm">{award.organization}</p>
-                  <p className="text-gray-500 text-sm">{award.date}</p>
-                </div>
-              ))}
-            </section>
-            </div>
-          </div>
-        </div>
+          ))}
+        </section>
       </div>
     </div>
   );
 }
 
-export default Template16;
+export default Template17;

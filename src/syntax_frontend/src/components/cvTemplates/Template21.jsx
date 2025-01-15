@@ -1,182 +1,178 @@
 import React from "react";
+import { BsTelephone } from "react-icons/bs";
+import { IoMailOutline } from "react-icons/io5";
+import { CiLocationOn } from "react-icons/ci";
+import { IoGlobeOutline } from "react-icons/io5";
 
-function Template21({ cvData }) {
+function Template22({ cvData }) {
   // Mock data for demonstration
   const mockData = {
-    name: "ESTELLE DARCY",
-    title: "PROCESS ENGINEER",
+    firstName: "MARSELINA",
+    lastName: "ZALIYANTI",
+    title: "Accountant",
     contact: {
-      address: "123 Anywhere St., Any City",
+      phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
+      address: "123 Anywhere St., Any City",
       website: "www.reallygreatsite.com"
     },
-    summary: "Practical Engineer with Significant Experience in Process Design. I have worked with some organizations, ensuring a professional approach to my profession, leveraging my expertise to optimize processes and deliver innovative solutions that meet business objectives.",
-    professionalExperience: [
+    workExperience: [
       {
-        title: "Instrument Tech, Morcelle Program",
-        period: "Jan 2024 - Present",
-        achievements: [
-          "Led development of an advanced automation system, achieving a 15% increase in operational efficiency.",
-          "Streamlined manufacturing processes, reducing production costs by 10%.",
-          "Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime."
-        ]
+        company: "Ingoude Company",
+        period: "2019 - Present",
+        title: "Senior Accountant",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
       },
       {
-        title: "Internship, XarrowAI Industries",
-        period: "Jun 2022 - Aug 2022",
-        achievements: [
-          "Designed and optimised a robotic control system, realizing a 12% performance improvement.",
-          "Coordinated testing and validation, ensuring compliance with industry standards.",
-          "Provided technical expertise, contributing to a 15% reduction in system failures."
-        ]
+        company: "Ingoude Company",
+        period: "2019 - Present",
+        title: "Accountant",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      },
+      {
+        company: "Ingoude Company",
+        period: "2019 - Present",
+        title: "Junior Accountant",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
       }
     ],
-    projects: [
+    education: [
       {
-        title: "Industrial Basics and General Application",
-        organization: "University of Engineering Process Cohort",
-        period: "Jan 2023 - Jun 2023",
-        details: [
-          "Automotive Technology",
-          "Technological Advancements within the current Chemical & Process Industry",
-          "Other relevant information."
-        ]
+        school: "Kembara University",
+        period: "2010-2014",
+        degree: "Master of Business Administration Accounting",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+      },
+      {
+        school: "Borcelle University",
+        period: "2008-2011",
+        degree: "Bachelor of Arts Accounting",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
       }
     ],
     skills: {
-      row1: ["Prototyping Tools", "Interaction Design", "Accessibility"],
-      row2: ["User Research", "Visual Design", "Responsive Design"]
-    },
-    education: [
-      {
-        degree: "Bachelor of Design in Process Engineering",
-        institution: "Engineering University",
-        period: "Sep 2019 - Sep 2023",
-        details: ["Relevant coursework in Process Design and Project Management."]
-      }
-    ],
-    additionalInfo: {
-      languages: "English, French, Mandarin",
-      certifications: "Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)",
-      awards: "Most Innovative Intern of the Year (2022), Overall Best Intern, Division Two (2022), Onboarding Project Lead (2024)"
+      personal: [
+        "Management Skills",
+        "Time Management",
+        "Negotiation",
+        "Critical Thinking",
+        "Communication Skills",
+        "Leadership"
+      ],
+      professional: [
+        "Financial Accounting",
+        "Managerial Accounting",
+        "Financial Reporting",
+        "Auditing",
+        "Expense Reporting",
+        "Accounts Payable",
+        "Account Receivable"
+      ]
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-700 p-8">
-      <div className="max-w-4xl mx-auto bg-white text-black shadow-lg p-8">
+      <div className="max-w-4xl mx-auto bg-white text-[#696969] shadow-lg p-8">
         {/* Header Section */}
-        <div className="mb-8 border-b-2 border-black pb-4">
-          <h1 className="text-4xl font-bold mb-1">{mockData.name}</h1>
-          <p className="font-bold mb-2 text-2xl">{mockData.title}</p>
-          <p className="text-sm">
-            {mockData.contact.address} | {mockData.contact.email} | {mockData.contact.website}
-          </p>
+        <div className="mb-12">
+          <div className="flex justify-between">
+            <div>
+              <h1 className="text-6xl font-medium text-[#343434]">
+                {mockData.firstName}<br/>{mockData.lastName}
+              </h1>
+              <p className="text-gray-600 text-3xl mt-2">{mockData.title}</p>
+            </div>
+            <div className="space-y-1 text-lg text-gray-600">
+              <div className="flex items-center gap-2">
+                <BsTelephone className="text-gray-400" />
+                <span>{mockData.contact.phone}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <IoMailOutline className="text-gray-400" />
+                <span>{mockData.contact.email}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CiLocationOn className="text-gray-400" />
+                <span>{mockData.contact.address}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <IoGlobeOutline className="text-gray-400" />
+                <span>{mockData.contact.website}</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Summary Section */}
+        {/* Work Experience Section */}
         <section className="mb-8">
-          <h2 className=" font-medium mb-3 uppercase border-b border-black pb-1">
-            Summary
+          <h2 className="text-[#343434] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
+            Work Experience
           </h2>
-          <p className="text-sm">
-            {mockData.summary}
-          </p>
-        </section>
-
-        {/* Professional Experience Section */}
-        <section className="mb-8">
-          <h2 className=" font-medium mb-3 uppercase border-b border-black pb-1">
-            Professional Experience
-          </h2>
-          {mockData.professionalExperience.map((exp, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="">{exp.title}</h3>
-                <span className="text-sm">{exp.period}</span>
+          <div className="space-y-6">
+            {mockData.workExperience.map((exp, index) => (
+              <div key={index} className="grid grid-cols-[150px_1fr] gap-6">
+                <div className="text-gray-600 text-sm">
+                  <p>{exp.company}</p>
+                  <p>{exp.period}</p>
+                </div>
+                <div>
+                  <h3 className="text-[#343434] font-medium mb-2">{exp.title}</h3>
+                  <p className="text-sm text-gray-600">{exp.description}</p>
+                </div>
               </div>
-              <ul className="list-disc pl-5 space-y-1">
-                {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm">{achievement}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-
-        {/* Projects Section */}
-        <section className="mb-8">
-          <h2 className="font-medium mb-3 uppercase border-b border-black pb-1">
-            Projects
-          </h2>
-          {mockData.projects.map((project, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="">{project.title}</h3>
-                <span className="text-sm">{project.period}</span>
-              </div>
-              <p className="text-sm mb-2">{project.organization}</p>
-              <ul className="list-disc pl-5 space-y-1">
-                {project.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm">{detail}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </section>
-
-        {/* Skills Section */}
-        <section className="mb-8">
-          <h2 className=" font-medium mb-3 uppercase border-b border-black pb-1">
-            Skills
-          </h2>
-          <div className="grid grid-cols-3 gap-4">
-            {mockData.skills.row1.map((skill, index) => (
-              <p key={index} className="text-sm">{skill}</p>
-            ))}
-            {mockData.skills.row2.map((skill, index) => (
-              <p key={index} className="text-sm">{skill}</p>
             ))}
           </div>
         </section>
 
         {/* Education Section */}
         <section className="mb-8">
-          <h2 className=" font-medium mb-3 uppercase border-b border-black pb-1">
+          <h2 className="text-[#343434] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
             Education
           </h2>
-          {mockData.education.map((edu, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h3 className="">{edu.degree}</h3>
-                  <p className="text-sm">{edu.institution}</p>
+          <div className="space-y-6">
+            {mockData.education.map((edu, index) => (
+              <div key={index} className="grid grid-cols-[150px_1fr] gap-6">
+                <div className="text-gray-600 text-sm">
+                  <p>{edu.school}</p>
+                  <p>{edu.period}</p>
                 </div>
-                <span className="text-sm">{edu.period}</span>
+                <div>
+                  <h3 className="text-[#343434] font-medium mb-2">{edu.degree}</h3>
+                  <p className="text-sm text-gray-600">{edu.description}</p>
+                </div>
               </div>
-              <ul className="list-disc pl-5">
-                {edu.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm">{detail}</li>
+            ))}
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section className="grid grid-cols-[175px_1fr_1fr]">
+          <h2 className="text-[#343434] h-[20%] w-[80%] font-medium mb-6 uppercase bg-[#EFEFEF] p-2">
+            Skills
+          </h2>
+          {/* <div className="grid grid-cols-2 gap-8"> */}
+            <div>
+              <h3 className="text-gray-800 mb-2">Personal</h3>
+              <ul className="space-y-1">
+                {mockData.skills.personal.map((skill, index) => (
+                  <li key={index} className="text-sm text-gray-600">{skill}</li>
                 ))}
               </ul>
             </div>
-          ))}
-        </section>
-
-        {/* Additional Information Section */}
-        <section>
-          <h2 className="font-medium mb-3 uppercase border-b border-black pb-1">
-            Additional Information
-          </h2>
-          <div className="text-sm space-y-1">
-            <p><strong>Languages:</strong> {mockData.additionalInfo.languages}</p>
-            <p><strong>Certifications:</strong> {mockData.additionalInfo.certifications}</p>
-            <p><strong>Awards/Activities:</strong> {mockData.additionalInfo.awards}</p>
-          </div>
+            <div>
+              <h3 className="text-[#343434] mb-2">Professional</h3>
+              <ul className="space-y-1">
+                {mockData.skills.professional.map((skill, index) => (
+                  <li key={index} className="text-sm text-gray-600">{skill}</li>
+                ))}
+              </ul>
+            </div>
+          {/* </div> */}
         </section>
       </div>
     </div>
   );
 }
 
-export default Template21;
+export default Template22;
