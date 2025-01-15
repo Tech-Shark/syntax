@@ -142,6 +142,12 @@ fn get_all_cv_analysis_for_identity() -> Vec<CVAnalysisResponse> {
     storage::cv::fetch_all_cv_analysis_for_identity(principal)
 }
 
+#[ic_cdk::query]
+fn get_single_cv_analysis_for_identity(cv_id: String) -> Vec<CVAnalysisResponse> {
+    let principal = ic_cdk::api::caller().to_text();
+    storage::cv::fetch_single_cv_analysis_for_identity(principal, cv_id)
+}
+
 #[ic_cdk::update]
 fn delete_cv_analysis(idx: String) -> String {
     let principal = ic_cdk::api::caller().to_text();

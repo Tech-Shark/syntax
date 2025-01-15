@@ -76,7 +76,7 @@ pub struct Error {
 }
 
 #[derive(CandidType, Deserialize)]
-pub enum UserResponse {
-    Ok(User),
+pub enum UserResponse<T = User> {
+    Ok(T),
     Err(Error),
 }

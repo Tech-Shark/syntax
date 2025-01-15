@@ -1,16 +1,11 @@
-use super::util::{
-    generate_random_string, map_biodata_for_add_new_user, map_biodata_for_update_user,
-    plan_is_valid,
-};
+use super::util::{map_biodata_for_add_new_user, map_biodata_for_update_user, plan_is_valid};
 use crate::{
     schema::{
         credit::INVALID_CREDIT_PLAN,
         setting::SETTING_KEY,
-        user::{
-            Error, User, UserInput, UserResponse, FREE_PLAN, ID_GENERATION_FAILED, NO_USER_FOUND,
-        },
+        user::{Error, User, UserInput, UserResponse, FREE_PLAN, NO_USER_FOUND},
     },
-    storage::thread_local::{CREDIT_MAP, SETTING_MAP, USER_MAP},
+    storage::thread_local::{ADMIN_MAP, CREDIT_MAP, SETTING_MAP, USER_MAP},
 };
 
 #[ic_cdk::query]
@@ -178,4 +173,37 @@ async fn get_users_by_tier(tier: String) -> Vec<User> {
     });
 
     res
+}
+
+#[ic_cdk::query]
+async fn get_user_role() -> UserResponse<String> {
+    let principal = ic_cdk::api::caller().to_text();
+
+    let user = USER_MAP
+        .with(|map| {
+            map.borrow()
+                .iter()
+                .map(|(_, value)| value.id)
+                .collect::<Vec<String>>()
+        })
+        .contains(&principal);
+
+    let admin = ADMIN_MAP
+        .with(|map| {
+            map.borrow()
+                .iter()
+                .map(|(_, value)| value.id)
+                .collect::<Vec<String>>()
+        })
+        .contains(&principal);
+
+    if user {
+        UserResponse::Ok("USER".to_string())
+    } else if admin {
+        UserResponse::Ok("ADMIN".to_string())
+    } else {
+        UserResponse::Err(Error {
+            message: NO_USER_FOUND.to_string(),
+        })
+    }
 }
