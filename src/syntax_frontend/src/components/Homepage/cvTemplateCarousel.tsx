@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import arrow_up from '@/assets/images/arrow_up.svg';
 import purple_arrow_up from '@/assets/images/purple_arrow_1.svg';
 import pentagon from '@/assets/images/pentagon2_icon.svg';
@@ -36,7 +37,9 @@ const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
 };
 
 const CvTemplateCarousel: React.FC = () => {
-  const templates = Array.from({ length: 20 }, (_, index) => ({
+  const navigate = useNavigate();
+
+  const templates = Array.from({ length: 22 }, (_, index) => ({
     id: index + 1,
     title: `Template ${index + 1}`,
     description: `Description for template ${index + 1}. Showcase your creativity with a bold yet structured design. Perfect for creative professionals, it highlights key accomplishments, skills, and portfolio work.`,
@@ -62,6 +65,11 @@ const CvTemplateCarousel: React.FC = () => {
     },
   };
 
+  const handleTemplateClick = (template: typeof templates[number]) => {
+    navigate("/creative-resume", { state: { template } });
+  };
+
+
   return (
     <Carousel
       responsive={responsive}
@@ -71,6 +79,7 @@ const CvTemplateCarousel: React.FC = () => {
       {templates.map((template) => (
         <div
           key={template.id}
+          onClick={() => handleTemplateClick(template)}
           className="bg-[#000006] text-white h-[33.9rem] w-[19.6rem] px-[0.84rem] py-[0.96rem] pb-[1.68rem] rounded-[0.46rem] shadow-gray-500 flex flex-col gap-5"
         >
           <div className="bg-[#E1E0F3] max-h-2/4">

@@ -3,15 +3,50 @@ import { IoMailOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 
-function Template13({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Type definitions for CV data
+interface Contact {
+  address: string;
+  phone: string;
+  email: string;
+  emailExtra?: string;
+}
+
+interface WorkHistory {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  achievements: string[];
+}
+
+interface Education {
+  degree: string;
+  year: string;
+  institution: string;
+  location: string;
+}
+
+interface CvData {
+  name: string;
+  contact: Contact;
+  workHistory: WorkHistory[];
+  skills: string[];
+  education: Education[];
+}
+
+interface Template13Props {
+  cvData?: CvData; // Optional prop for custom CV data
+}
+
+const Template13: React.FC<Template13Props> = ({ cvData }) => {
+  // Mock data as fallback
+  const mockData: CvData = {
     name: "JIM MYDDLETON",
     contact: {
       address: "53 Church Way, Bradford, BD19JR",
       phone: "079 1234 5678",
-      email: "jim.myddleton@exampl",
-      emailExtra: "e@example.com"
+      email: "jim.myddleton@example.com",
+      emailExtra: "e@example.com",
     },
     workHistory: [
       {
@@ -22,8 +57,8 @@ function Template13({ cvData }) {
         achievements: [
           "Managed 20-employee office, supervising workers, enhancing productivity and driving efficiency.",
           "Oversaw office budget to responsibly allocate equipment and resources.",
-          "Improved overall office efficiency by establishing smooth workflow processes, monitoring daily productivity and implementing modifications to eliminate operational bottlenecks."
-        ]
+          "Improved overall office efficiency by establishing smooth workflow processes, monitoring daily productivity and implementing modifications to eliminate operational bottlenecks.",
+        ],
       },
       {
         title: "Internal Communications Manager",
@@ -33,8 +68,8 @@ function Template13({ cvData }) {
         achievements: [
           "Applied brand awareness and appropriate tone of voice across all communications to strengthen company image.",
           "Maximised communication opportunities through intensive forward-planning and events research.",
-          "Devised and executed aligned communication strategy across six platforms."
-        ]
+          "Devised and executed aligned communication strategy across six platforms.",
+        ],
       },
       {
         title: "Office Assistant",
@@ -44,9 +79,9 @@ function Template13({ cvData }) {
         achievements: [
           "Managed day-to-day admin, including file organisation, spreadsheet development, and report writing.",
           "Created weekly and monthly reports and presentations, enabling improved operational analysis.",
-          "Maintained office files for reliable reference, including electronic and hard copies."
-        ]
-      }
+          "Maintained office files for reliable reference, including electronic and hard copies.",
+        ],
+      },
     ],
     skills: [
       "Mother tongue - English",
@@ -54,26 +89,26 @@ function Template13({ cvData }) {
       "Organisation - Multi-tasking ability and deadline driven",
       "Language skills - Spanish C1",
       "Job-related skills - Business administration and documentation control",
-      "Digital skills - Sage and Microsoft Office"
+      "Digital skills - Sage and Microsoft Office",
     ],
     education: [
       {
         degree: "Bachelor of Business Administration",
         year: "2007",
         institution: "University of Leeds",
-        location: "Leeds"
-      }
-    ]
+        location: "Leeds",
+      },
+    ],
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
         {/* Header Section */}
         <div className="border-b border-[#1e4976] pb-4 mb-6">
-          <h1 className="text-[#1e4976] text-3xl font-serif mb-0">
-            {mockData.name}
-          </h1>
+          <h1 className="text-[#1e4976] text-3xl font-serif mb-0">{data.name}</h1>
         </div>
 
         {/* Two Column Layout */}
@@ -85,7 +120,7 @@ function Template13({ cvData }) {
               <h2 className="text-[#1e4976] font-serif text-lg mb-4 uppercase border-b border-[#1e4976] pb-1">
                 Work History
               </h2>
-              {mockData.workHistory.map((job, index) => (
+              {data.workHistory.map((job, index) => (
                 <div key={index} className="mb-6">
                   <div className="mb-2">
                     <div className="flex justify-between items-start">
@@ -119,18 +154,18 @@ function Template13({ cvData }) {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-600">
                   <CiLocationOn className="text-[#1e4976]" />
-                  <span className="text-sm">{mockData.contact.address}</span>
+                  <span className="text-sm">{data.contact.address}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <BsTelephone className="text-[#1e4976]" />
-                  <span className="text-sm">{mockData.contact.phone}</span>
+                  <span className="text-sm">{data.contact.phone}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <IoMailOutline className="text-[#1e4976]" />
                   <span className="text-sm">
-                    {mockData.contact.email}
-                    <br />
-                    {mockData.contact.emailExtra}
+                    {data.contact.email}
+                    {data.contact.emailExtra && <br />}
+                    {data.contact.emailExtra}
                   </span>
                 </div>
               </div>
@@ -142,7 +177,7 @@ function Template13({ cvData }) {
                 Skills
               </h2>
               <ul className="space-y-2">
-                {mockData.skills.map((skill, index) => (
+                {data.skills.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">
                     • {skill}
                   </li>
@@ -155,7 +190,7 @@ function Template13({ cvData }) {
               <h2 className="text-[#1e4976] font-serif text-lg mb-4 uppercase border-b border-[#1e4976] pb-1">
                 Education
               </h2>
-              {mockData.education.map((edu, index) => (
+              {data.education.map((edu, index) => (
                 <div key={index}>
                   <h3 className="font-medium text-gray-800">{edu.degree}</h3>
                   <p className="text-gray-600 text-sm">{edu.year}</p>
@@ -170,6 +205,6 @@ function Template13({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template13;

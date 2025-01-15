@@ -1,12 +1,50 @@
 import React from "react";
 import { GiRotaryPhone } from "react-icons/gi";
-import { IoMailSharp } from "react-icons/io5";
+import { IoMailSharp, IoGlobeOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
-import { IoGlobeOutline } from "react-icons/io5";
 
-function Template5({ cvData }) {
+// Define types for cvData structure
+interface Contact {
+  phone: string;
+  email: string;
+  website: string;
+  address: string;
+}
+
+interface Education {
+  degree: string;
+  school: string;
+  period: string;
+}
+
+interface Experience {
+  title: string;
+  company: string;
+  location: string;
+  period: string;
+  description: string;
+}
+
+interface CvData {
+  firstName: string;
+  lastName: string;
+  title: string;
+  contact: Contact;
+  aboutMe: string;
+  education: Education[];
+  expertise: string[];
+  languages: string[];
+  experience: Experience[];
+}
+
+interface Template5Props {
+  cvData?: CvData;
+}
+
+const Template5: React.FC<Template5Props> = ({ cvData }) => {
+
   // Mock data for demonstration
-  const mockData = {
+  const mockData: CvData = cvData || {
     firstName: "JULIANA",
     lastName: "SILVA",
     title: "Art Director",
@@ -14,63 +52,60 @@ function Template5({ cvData }) {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
       website: "www.reallygreatsite.com",
-      address: "123 Anywhere St., Any City, ST 12345"
+      address: "123 Anywhere St., Any City, ST 12345",
     },
-    aboutMe: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros. Proin elementum. In elementum vel ut dui tristique feugiat. Maecen convallis, mi sit amet vestibulum mollis, neque nulla vulputate dolor, hendrerit faucibus eros nulla sit amet.",
+    aboutMe:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros. Proin elementum. In elementum vel ut dui tristique feugiat. Maecen convallis, mi sit amet vestibulum mollis, neque nulla vulputate dolor, hendrerit faucibus eros nulla sit amet.",
     education: [
       {
         degree: "Bachelor of Design",
         school: "Wardiere University",
-        period: "2008 - 2010"
+        period: "2008 - 2010",
       },
       {
         degree: "Bachelor of Design",
         school: "Wardiere University",
-        period: "2006 - 2008"
-      }
+        period: "2006 - 2008",
+      },
     ],
-    expertise: [
-      "Web Design",
-      "Branding",
-      "Graphic Design",
-      "SEO",
-      "Marketing"
-    ],
-    languages: [
-      "English",
-      "French"
-    ],
+    expertise: ["Web Design", "Branding", "Graphic Design", "SEO", "Marketing"],
+    languages: ["English", "French"],
     experience: [
       {
         title: "Digital Marketing Manager",
         company: "Company Name",
         location: "123 Anywhere St., Any City",
         period: "2019 - 2023",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat."
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat.",
       },
       {
         title: "Social Media Manager",
         company: "Company Name",
         location: "123 Anywhere St., Any City",
         period: "2017 - 2019",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat."
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat.",
       },
       {
         title: "Social Media Manager",
         company: "Company Name",
         location: "123 Anywhere St., Any City",
         period: "2015 - 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat."
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat.",
       },
       {
         title: "Social Media Manager",
         company: "Company Name",
         location: "123 Anywhere St., Any City",
         period: "2015 - 2017",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat."
-      }
-    ]
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pharetra in lorem at laoreet. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros elementum sit et dui tristique feugiat.",
+      },
+    ],
   };
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -130,7 +165,7 @@ function Template5({ cvData }) {
 
             {/* Language Section */}
             <div>
-              <h2 className="text-gray-800 font-medium mb-3 uppercase">Language</h2>
+              <h2 className="text-gray-800 font-medium mb-3 uppercase">Languages</h2>
               <ul className="space-y-1">
                 {mockData.languages.map((language, index) => (
                   <li key={index} className="text-gray-600 text-sm">{language}</li>
@@ -173,6 +208,6 @@ function Template5({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template5;
