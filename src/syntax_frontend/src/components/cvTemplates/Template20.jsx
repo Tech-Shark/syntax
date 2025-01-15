@@ -75,13 +75,13 @@ function Template20({ cvData }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg">
+    <div className="min-h-screen bg-gray-700 p-8">
+      <div className="max-w-4xl mx-auto bg-white text-black shadow-lg">
         {/* Header Section */}
-        <div className="text-[#0066cc] text-center py-8 bg-[#f0f7ff]">
-          <h1 className="text-3xl font-bold mb-1">{mockData.name}</h1>
-          <p className="text-gray-600">{mockData.title}</p>
-          <p className="text-sm text-gray-600 mt-2">
+        <div className="text-[#0066cc] text-left px-8 py-8">
+          <h1 className="text-4xl font-bold mb-1">{mockData.name}</h1>
+          <p className="text-black text-2xl text-bold">{mockData.title}</p>
+          <p className="text-sm text-black mt-2">
             {mockData.contact.address} | {mockData.contact.email} | {mockData.contact.website}
           </p>
         </div>
@@ -89,33 +89,33 @@ function Template20({ cvData }) {
         <div className="p-8">
           {/* Summary Section */}
           <section className="mb-8">
-            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-[#0066cc] pb-1">
+            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-t border-[#0066cc] pb-1">
               Summary
             </h2>
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm leading-relaxed">
               {mockData.summary}
             </p>
           </section>
 
           {/* Technical Skills Section */}
           <section className="mb-8">
-            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-[#0066cc] pb-1">
+            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-t border-[#0066cc] pb-1">
               Technical Skills
             </h2>
             <div className="grid grid-cols-3 gap-8">
               <div>
                 {mockData.technicalSkills.column1.map((skill, index) => (
-                  <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                  <p key={index} className="text-sm mb-1">{skill}</p>
                 ))}
               </div>
               <div>
                 {mockData.technicalSkills.column2.map((skill, index) => (
-                  <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                  <p key={index} className="text-sm mb-1">{skill}</p>
                 ))}
               </div>
               <div>
                 {mockData.technicalSkills.column3.map((skill, index) => (
-                  <p key={index} className="text-sm text-gray-600 mb-1">{skill}</p>
+                  <p key={index} className="text-sm mb-1">{skill}</p>
                 ))}
               </div>
             </div>
@@ -123,18 +123,18 @@ function Template20({ cvData }) {
 
           {/* Professional Experience Section */}
           <section className="mb-8">
-            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-[#0066cc] pb-1">
+            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-t border-[#0066cc] pb-1">
               Professional Experience
             </h2>
             {mockData.experience.map((exp, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-gray-800 font-medium">{exp.program}</h3>
-                  <span className="text-gray-500 text-sm">{exp.period}</span>
+                  <h3 className="font-medium">{exp.program}</h3>
+                  <span className="text-sm">{exp.period}</span>
                 </div>
                 <ul className="list-disc pl-5 space-y-1">
                   {exp.achievements.map((achievement, idx) => (
-                    <li key={idx} className="text-sm text-gray-600">{achievement}</li>
+                    <li key={idx} className="text-sm">{achievement}</li>
                   ))}
                 </ul>
               </div>
@@ -143,21 +143,21 @@ function Template20({ cvData }) {
 
           {/* Education Section */}
           <section className="mb-8">
-            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-[#0066cc] pb-1">
+            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-t border-[#0066cc] pb-1">
               Education
             </h2>
             {mockData.education.map((edu, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="text-gray-800">{edu.program}</h3>
-                    <p className="text-gray-600 text-sm">{edu.institution}</p>
+                    <h3 className="">{edu.program}</h3>
+                    <p className="text-sm">{edu.institution}</p>
                   </div>
-                  <span className="text-gray-500 text-sm">{edu.period}</span>
+                  <span className="text-sm">{edu.period}</span>
                 </div>
                 <ul className="list-disc pl-5">
                   {edu.details.map((detail, idx) => (
-                    <li key={idx} className="text-sm text-gray-600">{detail}</li>
+                    <li key={idx} className="text-sm">{detail}</li>
                   ))}
                 </ul>
               </div>
@@ -166,10 +166,10 @@ function Template20({ cvData }) {
 
           {/* Additional Information Section */}
           <section>
-            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-[#0066cc] pb-1">
+            <h2 className="text-[#0066cc] font-medium mb-3 uppercase border-b border-t border-[#0066cc] pb-1">
               Additional Information
             </h2>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm">
               <p><strong>Languages:</strong> {mockData.additionalInfo.languages.join(", ")}</p>
               <p><strong>Certifications:</strong> {mockData.additionalInfo.certifications.join(", ")}</p>
               <p><strong>Awards/Activities:</strong> {mockData.additionalInfo.awards.join(", ")}</p>
