@@ -116,7 +116,7 @@ const CreativeResume: React.FC = () => {
   return (
     <>
       <section className="flex font-outfit h-screen">
-        <div className="w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
+        <div className="hidden md:block w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
           <img src={syntax_logo} alt="syntax logo" />
           <div className="mt-20 flex flex-col gap-[1.62rem]">
             <span className="flex items-center justify-between text-lg font-semibold leading-normal text-[#000006]">
@@ -164,13 +164,13 @@ const CreativeResume: React.FC = () => {
             </button>
           </div>
 
-          <div className="flex flex-col gap-[2.91rem] flex-grow">
-            <div className="flex justify-between items-center">
-              <div className="flex flex-col gap-[0.1rem]">
+          <div className="flex flex-col gap-[2.91rem] flex-grow mt-9 lg:mt-3">
+            <div className="flex justify-center md:justify-between items-center">
+              <div className="flex flex-col gap-[0.1rem] text-center md:text-left">
                 <h5 className="text-[2.4rem] leading-normal font-bold">
                   Creative Resume
                 </h5>
-                <p className="font-normal leading-normal text-base">
+                <p className="font-normal leading-normal text-[0.88rem] md:text-base">
                   Pick a template that suits your style, or explore tailored <br />
                   recommendations based on your career goals.
                 </p>
@@ -178,11 +178,11 @@ const CreativeResume: React.FC = () => {
               <TopIcons />
             </div>
 
-            <div className="flex justify-between items-center">
-              <button className="bg-black text-white justify-center items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold" onClick={() => navigate("/user-dashboard")}>
+            <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 md:gap-0">
+              <button className="bg-black text-white self-center justify-center md:self-auto items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold" onClick={() => navigate("/user-dashboard")}>
                 Change Template
               </button>
-              <div className="flex gap-[1.88rem]">
+              <div className="flex justify-between w-full md:w-auto md:gap-[1.88rem]">
                 <button className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold">
                   Edit CV
                 </button>
@@ -199,7 +199,7 @@ const CreativeResume: React.FC = () => {
         </div>
 
         {/* AI Suggestion Section */}
-        <div className="bg-[#E1E0F3] w-[22rem] border-[#000006] border-[1.04px] flex flex-col gap-8 h-full">
+        <div className="hidden bg-[#E1E0F3] w-[22rem] border-[#000006] border-[1.04px] md:flex flex-col gap-8 h-full">
           {/* CV Score Section */}
           <div className="flex flex-col gap-8">
             <span className="flex flex-col gap-1 px-7 py-5">
