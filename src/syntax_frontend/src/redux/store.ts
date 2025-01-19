@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import userSlice from "./userSlice";
+// import userSlice from "./userSlice";
+import cvDataReducer from "./cvDataSlice";
+import pricingReducer from "./pricingSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userSlice,
+    // user: userSlice,
+    cvData: cvDataReducer,
+    pricing: pricingReducer,
   },
   devTools: true,
 });
