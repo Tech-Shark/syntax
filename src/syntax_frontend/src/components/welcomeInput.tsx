@@ -1,4 +1,3 @@
-import React from "react";
 
 interface WelcomeInputProps {
   label: string;
@@ -10,6 +9,7 @@ interface WelcomeInputProps {
   /** If true, render a <textarea> instead of <input> */
   isTextArea?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  required?: boolean; 
 }
 
 const WelcomeInput: React.FC<WelcomeInputProps> = ({
@@ -21,6 +21,7 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
   labelStyle = "px-[0.97rem] py-[0.7rem] bg-[#E8E8E8] h-[2.9rem] rounded-[0.48rem] w-[19rem] focus:outline-none focus:ring-2 focus:ring-[#3D3F4E] focus:ring-opacity-50",
   isTextArea = false,
   onChange,
+  required = true, // Default to true
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -32,21 +33,22 @@ const WelcomeInput: React.FC<WelcomeInputProps> = ({
         // Render a <textarea>
         <textarea
           id={id}
-          className={`${labelStyle} resize-none w-[19rem] h-72`} 
+          className={`${labelStyle} resize-none w-[19rem] h-44`}
           value={value}
           placeholder={placeholder}
           onChange={onChange}
+          required={required} // Apply the required attribute
         />
       ) : (
         // Default: <input>
         <input
           id={id}
           type={type}
-          className={`${labelStyle} `}
+          className={`${labelStyle}`}
           value={value}
           placeholder={placeholder}
           onChange={onChange}
-          
+          required={required} // Apply the required attribute
         />
       )}
     </div>

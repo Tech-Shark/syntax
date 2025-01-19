@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar';
+import grey_arrow from "@/assets/images/gray_icon.svg";
+import hamburger_menu from "@/assets/images/hamburger_menu.svg";
 import TopIcons from './topIcons';
 import download_icon from '@/assets/images/download_icon.svg'
 import DashboardData from './dashboardData';
@@ -19,15 +21,22 @@ import {
 
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
  
   return (
     <section className='flex font-outfit'>
         <Sidebar />
         <div className='px-4 md:px-6 pt-8 w-full h-screen overflow-x-auto'>
-          {/* <div>Hello ewo</div> */}
-          <div className='flex flex-col lg:flex-row justify-center lg:justify-between w-full mt-10 lg:mt-0 gap-3 lg:gap-0 items-center'>
+        <nav className='md:hidden flex justify-between items-center '>
+          <span className='flex items-center gap-2 cursor-pointer' onClick={() => navigate(-1)}>
+            <img src={grey_arrow} alt="back" />
+            <p className='font-semibold text-[#3D3F4E] leading-[1.7rem] text-center [text-shadow:0.67px_0.67px_13.28px_rgba(61,63,78,0.50)]'>Back</p>
+          </span>
+          <img src={hamburger_menu} alt="menu" />
+        </nav>
+          <div className='flex flex-col md:flex-row justify-center md:justify-between w-full mt-10 lg:mt-0 gap-3 lg:gap-0 items-center'>
           <h5 className='font-bold text-[2.8rem] leading-normal sm:text-3xl  lg:text-[3rem] md:leading-[4rem]'>Welcome Seyi</h5>
-          <p className='lg:hidden text-center text-[0.88rem] leading-normal font-normal'>Pick a template that suits your style, or explore tailored recommendations based on your career goals.</p>
+          <p className='md:hidden text-center text-[0.88rem] leading-normal font-normal'>Pick a template that suits your style, or explore tailored recommendations based on your career goals.</p>
             <TopIcons />
           </div>
 
@@ -44,7 +53,7 @@ const Dashboard: React.FC = () => {
         {/* Dashboard Data */}
         <DashboardData />
 
-          <div className='flex justify-between items-center  mt-12 '>
+        <div className='flex justify-between items-center  mt-12 '>
             <Collapsible>
             <CollapsibleTrigger className='flex items-center gap-2  font-semibold text-[1.2rem] leading-normal lg:text-[1.34rem] lg:leading-[1.68rem]'>My Templates
             <img src={my_template} alt="" />
@@ -68,7 +77,7 @@ const Dashboard: React.FC = () => {
             </p>
             <img src={arrow_up} alt="arrow up" className='w-[1.9rem] group-hover:rotate-[40deg] transition-all delay-300'/>
           </Link>
-          </div>  
+        </div>  
        
         {/* upload cv part */}
         <Link to="/welcome" className='flex items-center justify-center flex-col gap-[1.35rem] mt-[3.3rem] mb-0'>

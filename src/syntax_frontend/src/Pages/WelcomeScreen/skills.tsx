@@ -5,7 +5,8 @@ import WelcomeInput from "@/components/welcomeInput";
 import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
 import SidebarLinks from "@/components/SidebarLinks";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { FaTimes } from "react-icons/fa";
 
 const Skills: React.FC = () => {
   // State for skill inputs and lists
@@ -108,8 +109,8 @@ const Skills: React.FC = () => {
                       {skillList.map((skillItem, index) => (
                         <li key={index} className="flex justify-between items-center gap-2">
                           <span>{skillItem}</span>
-                          <FaMinus
-                            className="cursor-pointer text-[#5D6078] hover:text-red-500 transition-all"
+                          <FaTimes
+                            className="cursor-pointer text-red-500 hover:text-gray-500 transition-all"
                             onClick={() => removeSkill(index, setSkillList)}
                           />
                         </li>
