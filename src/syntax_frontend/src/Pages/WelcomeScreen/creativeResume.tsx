@@ -29,6 +29,7 @@ import purple_arrow_2 from '@/assets/images/purple_arrow_2.svg';
 import { BsDownload } from "react-icons/bs";
 import star_icon from "@/assets/images/purple_star.svg";
 import dropdown from "@/assets/images/drop_down_arrow.svg";
+import SavedTemplates from "./saved-templates";
 
 const CreativeResume: React.FC = () => {
   const location = useLocation();
@@ -96,6 +97,7 @@ const CreativeResume: React.FC = () => {
     if (!resumeRef.current) return;
 
     const element = resumeRef.current; // The element to convert to PDF
+    console.log(element);
     const options = {
       filename: "resume.pdf",
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
@@ -104,6 +106,12 @@ const CreativeResume: React.FC = () => {
     html2pdf().set(options).from(element).save();
   };
 
+  const handleSaveAndContinue = () => {
+  if (template) {
+    navigate("/saved-templates", { state: { savedTemplate: template } });
+    console.log(SavedTemplates);
+  }
+};
 
   return (
     <>
@@ -171,14 +179,14 @@ const CreativeResume: React.FC = () => {
             </div>
 
             <div className="flex justify-between items-center">
-              <button className="bg-black text-white justify-center items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold">
+              <button className="bg-black text-white justify-center items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold" onClick={() => navigate("/user-dashboard")}>
                 Change Template
               </button>
               <div className="flex gap-[1.88rem]">
                 <button className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold">
                   Edit CV
                 </button>
-                <button className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold" onClick={() => navigate("/saved-templates")}>
+                <button className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"  onClick={handleSaveAndContinue}>
                   Save and Continue
                 </button>
               </div>
