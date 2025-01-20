@@ -27,28 +27,28 @@ Our major aim is to see the quick adoption of blockchain technologies by the end
 
 ## Key Features
 
-1. **Grammar Checker:** Allows users to paste text and receive feedback on syntactic and grammatical errors, along with suggestions for improvement and a rewritten version of the text.
+<!--1. **Grammar Checker:** Allows users to paste text and receive feedback on syntactic and grammatical errors, along with suggestions for improvement and a rewritten version of the text. -->
 
-2. **CV Enhancer:** Enables users to optimize their CVs based on a job description by highlighting relevant skills, rewriting work experience sections, and generating a professional summary tailored to the job.experience, summary, and skills.
+1. **CV Enhancer:** Enables users to optimize their CVs based on a job description by highlighting relevant skills, rewriting work experience sections, and generating a professional summary tailored to the job.experience, summary, and skills.
 
-<!-- 3. **ATS-Friendly Resume Formatting:** The app offers customizable templates to ensure compatibility with Applicant Tracking Systems.
+2. **ATS-Friendly Resume Formatting:** The app offers customizable templates to ensure compatibility with Applicant Tracking Systems.
 
-4. **Multi-Language Support:** The app initially supports popular languages, with plans for expansion to others. -->
+<!--4. **Multi-Language Support:** The app initially supports popular languages, with plans for expansion to others. -->
 
 
 ## Architecture
 
 **Syntax** is an Internet Computer (ICP) application, which means it is hosted on a decentralized network that provides scalability and security for web services. The application comprises two main components:
 
-1. **`Frontend`:** Built using **React.js**, the frontend provides a user interface (UI) for interacting with the grammar checker and CV enhancer. It handles user input and displays analysis results from the backend services.
+1. **`Frontend`:** Built using **React.ts**, the frontend provides a user interface (UI) for interacting with the grammar checker and CV enhancer. It handles user input and displays analysis results from the backend services.
 
-2. **`Backend`:** Developed in **Rust**, the backend is deployed as a canister on the Internet Computer. It processes requests for grammar analysis and CV enhancement and stores the results.
+2. **`Backend`:** Developed in **Rust**, the backend is deployed as a canister on the Internet Computer. It processes requests for CV enhancement and stores the results.
 
 ### Tools and Technologies
 
   -  **`Internet Computer (ICP)`::** The underlying platform provides a decentralized environment for hosting the app's services.
-  -  **`Backend`:** `Rust` The primary language used for backend development, offering safety and performance benefits. The backend handles processing for grammar and CV analyses.. 
-  -  **`Frontend`:** `React.js` A JavaScript library used for building the user interface of the web application..
+  -  **`Backend`:** `Rust` The primary language used for backend development, offering safety and performance benefits. The backend handles processing for grammar and CV analyses.
+  -  **`Frontend`:** `React.ts` A JavaScript library used for building the user interface of the web application.
   -  **`Libraries`:** React Router, React Router Dom.
   -  **`Authorization`:** `Internet Identity`.
   -  **`Function Service Endpoint and Proxy`:** FastAPI (Python) deployed on Fly.io
@@ -57,7 +57,7 @@ Our major aim is to see the quick adoption of blockchain technologies by the end
 
 ## Functionalities and Workflow
 
-1. **Grammar Checker**
+<!--1. **Grammar Checker**
 The Grammar Checker allows users to analyze text for grammatical correctness and style. Here's how it works:
    - **`User Input`** The user pastes a paragraph of text into the grammar checker interface.
    - **`Analysis Request`** Upon clicking `Analyze`, a request is sent to the backend AI service to process the text.
@@ -75,14 +75,14 @@ The Grammar Checker allows users to analyze text for grammatical correctness and
          - `analyze_grammar`: Accepts a text index and GrammarUserInput, returns a GrammarResponse.
          - `get_grammar_analysis`: Retrieves a specific grammar analysis based on index and user identifier.
          - `get_all_grammar_analysis_for_identity`: Fetches all grammar analyses for a specific user identity.
-         - `delete_grammar_analysis`: Deletes a specific grammar analysis based on index and user identifier.
+         - `delete_grammar_analysis`: Deletes a specific grammar analysis based on index and user identifier. -->
 
-2. **CV Enhancer**
+1. **CV Enhancer**
 The CV Enhancer is designed to help users tailor their CVs to match a job description more effectively. Here’s how it functions:
    - **`User Input`**: Users provide a job description, job title, and their CV (or relevant sections) through the UI.
    - **`Analysis Request`**: After inputting the necessary information, the user initiates the CV enhancement process.
-   - **`AI Processing`**: The backend service analyzes the CV in the context of the provided job description and job title. It identifies relevant
-   - **`skills`**, rewrites work experience sections, and generates a professional summary that aligns with the job description.
+   - **`AI Processing`**: The backend service analyzes the CV in the context of the provided job description and job title. It identifies relevant areas and works on improving them through the `AI service`.
+   - **`skills`**, rewrites work experience and generates a professional summary that aligns with the job description.
    - **`Result Display`**: The results are returned to the frontend, highlighting key skills, providing rewritten work experience, and a professional summary. Users can download the enhanced CV or make further adjustments.
 
    ### Backend Definition for CV Analysis:
@@ -115,6 +115,7 @@ The CV Enhancer is designed to help users tailor their CVs to match a job descri
   - **Clone project** You can now clone the project from the base repo [Syntax](https://github.com/Tech-Shark/syntax.git)
   - **Deploy** You can deploy the project with 
 ```bash
+    npm install
     dfx start
     dfx deploy
     npm start
@@ -127,7 +128,7 @@ User authentication is managed using the AuthClient from the @dfinity/auth-clien
 
 ## Error Handling
 
-Errors in both grammar and CV analyses are managed through a structured Error type in the backend. The Error record contains a message field, providing details about the nature of the error, which helps in debugging and user feedback.
+Errors are managed through a structured Error type in the backend. The Error record contains a message field, providing details about the nature of the error, which helps in debugging and user feedback.
 
 
 ## Future Development Plans
@@ -135,9 +136,9 @@ Errors in both grammar and CV analyses are managed through a structured Error ty
 1. Integration of additional AI models or services
 2. Expansion of language support
 3. Development of collaboration/multi-user features
-4. Introduction of premium features or subscription-based services
+<!--4. Introduction of premium features or subscription-based services -->
 
 
 ## Conclusion
 
-`Syntax` leverages AI to offer advanced grammar checking and CV enhancement functionalities. By integrating a robust Rust backend with a React.js frontend, `Syntax` provides users with an intuitive and effective tool for improving their written content and optimizing CVs for job applications. The use of ICP technology ensures scalability, security, and reliability, making `Syntax` a versatile tool for users looking to enhance their writing and job application materials.
+`Syntax` leverages AI to offer CV enhancement functionalities. By integrating a robust Rust backend with a React.ts frontend, `Syntax` provides users with an intuitive and effective tool for improving and optimizing CVs for job applications. The use of ICP technology ensures scalability, security, and reliability, making `Syntax` a versatile tool for users looking to enhance their writing and job application materials.
