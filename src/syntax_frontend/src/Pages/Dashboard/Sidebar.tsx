@@ -73,7 +73,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="hidden md:block bg-[#E1E0F3] w-[8.31rem] h-screen relative">
+    <aside className="hidden md:block bg-[#E1E0F3] w-[8.31rem] relative">
       <ul className="flex flex-col items-center py-16 gap-8">
         <TooltipProvider>
           {tooltipItems.map((item, index) => (
