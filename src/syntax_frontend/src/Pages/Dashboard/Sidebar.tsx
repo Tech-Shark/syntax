@@ -6,7 +6,7 @@ import new_cv from "@/assets/images/new_cv.svg";
 import template from "@/assets/images/template_icon.svg";
 import saved_cv from "@/assets/images/bookmark.svg";
 import notification from "@/assets/images/notification.svg";
-import NotificationSideBar from "./UserDashboard/notificationsidebar"; // Correct the import path
+import NotificationSideBar from "./UserDashboard/notificationsidebar";
 import {
   Tooltip,
   TooltipContent,

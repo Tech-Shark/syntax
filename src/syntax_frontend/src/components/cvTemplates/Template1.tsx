@@ -187,7 +187,6 @@ const Template1: React.FC<Template1Props> = ({ cvData }) => {
               ))}
             </div>
           </div>
-
           <div className="w-[1px] bg-[#464A4E]"></div>
 
           {/* RIGHT COLUMN */}

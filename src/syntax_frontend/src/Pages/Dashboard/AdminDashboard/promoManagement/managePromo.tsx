@@ -33,7 +33,7 @@ const ManagePromotion: React.FC = () => {
           <div className="flex justify-between items-baseline mt-[3.13rem]">
             <h5 className="text-[2.5rem] font-bold leading-normal">Manage <br /> Promotions</h5>
             <p className="text-center font-normal text-lg leading-normal">Design and launch special offers to boost engagement or attract new <br /> users. Track active promotions and their performance.</p>
-            <button className="flex items-center justify-center px-[1.56rem] py-[0.31rem] bg-white border-2 border-black rounded-[0.25rem] text-[0.98rem] leading-[1.7rem] font-semibold">Create New</button>
+            <Link to="/create-promotion" className="flex items-center justify-center px-[1.56rem] py-[0.31rem] bg-white border-2 border-black rounded-[0.25rem] text-[0.98rem] leading-[1.7rem] font-semibold cursor-pointer">Create New</Link>
           </div>
 
         

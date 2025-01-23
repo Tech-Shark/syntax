@@ -1,21 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-interface ModalProps {
-  title: string;
+interface EditCvModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: any) => void;
-  initialData: any; // Initial CV data
+  cvData: any; // Replace with the actual CvData type for better type safety
+  onSave: (updatedCvData: any) => void;
 }
 
-const EditCvModal: React.FC<ModalProps> = ({
-  title,
-  isOpen,
-  onClose,
-  onSave,
-  initialData,
-}) => {
-  const [formData, setFormData] = useState(initialData);
+const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSave }) => {
+  const [formData, setFormData] = useState(cvData);
+
+  if (!isOpen) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -23,47 +18,51 @@ const EditCvModal: React.FC<ModalProps> = ({
   };
 
   const handleSave = () => {
-    onSave(formData); // Pass edited data back to parent component
+    onSave(formData);
+    onClose();
   };
-
-  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg w-4/5 md:w-2/3 lg:w-1/2 p-6">
-        <h2 className="text-xl font-semibold mb-4">{title}</h2>
-        <div className="space-y-4">
-          {/* Prepopulate fields with current data */}
+      <div className="bg-white w-[90%] md:w-[40%] p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-4">Edit CV</h2>
+        <div className="flex flex-col gap-4">
           <input
             type="text"
             name="firstName"
-            placeholder="First Name"
-            value={formData.firstName || ""}
+            value={formData.firstName}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
+            placeholder="First Name"
+            className="border border-gray-300 rounded-md p-2"
           />
           <input
             type="text"
             name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName || ""}
+            value={formData.lastName}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
+            placeholder="Last Name"
+            className="border border-gray-300 rounded-md p-2"
           />
           <textarea
             name="profile"
-            placeholder="Profile Summary"
-            value={formData.profile || ""}
+            value={formData.profile}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded"
-          ></textarea>
-          {/* Add fields for contact, skills, education, etc., dynamically */}
+            placeholder="Profile Summary"
+            className="border border-gray-300 rounded-md p-2"
+          />
+          {/* Add more fields for other editable sections */}
         </div>
-        <div className="mt-4 flex justify-end gap-4">
-          <button className="px-4 py-2 bg-gray-300 rounded" onClick={onClose}>
+        <div className="flex justify-end gap-4 mt-4">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-gray-200 text-black rounded-md"
+          >
             Cancel
           </button>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded" onClick={handleSave}>
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md"
+          >
             Save
           </button>
         </div>

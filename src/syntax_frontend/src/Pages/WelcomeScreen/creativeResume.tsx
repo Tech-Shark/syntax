@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
-import syntax_logo from "@/assets/images/syntax_logo.svg"
+import hamburger_menu from "@/assets/images/hamburger_menu.svg";
+import MobileSidebar from "@/components/Dashboard/mobileSidebar";
 import Template1 from "@/components/cvTemplates/Template1";
 import Template2 from "@/components/cvTemplates/Template2";
 import Template3 from "@/components/cvTemplates/Template3";
@@ -31,11 +32,14 @@ import star_icon from "@/assets/images/purple_star.svg";
 import dropdown from "@/assets/images/drop_down_arrow.svg";
 import SavedTemplates from "./saved-templates";
 
+
 const CreativeResume: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const template = location.state?.template;
   const resumeRef = useRef<HTMLDivElement>(null);
+   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
 
   if (!template) {
     return <div>No template selected</div>;
@@ -102,7 +106,6 @@ const CreativeResume: React.FC = () => {
       filename: "resume.pdf",
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
-
     html2pdf().set(options).from(element).save();
   };
 
@@ -111,12 +114,16 @@ const CreativeResume: React.FC = () => {
     navigate("/saved-templates", { state: { savedTemplate: template } });
     console.log(SavedTemplates);
   }
-};
+  };
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <>
       <section className="flex font-outfit h-screen">
-        <div className="hidden md:block w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
+        {/* <div className="hidden md:block w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
           <img src={syntax_logo} alt="syntax logo" />
           <div className="mt-20 flex flex-col gap-[1.62rem]">
             <span className="flex items-center justify-between text-lg font-semibold leading-normal text-[#000006]">
@@ -148,9 +155,9 @@ const CreativeResume: React.FC = () => {
               <img src={dropdown} alt="dropdown" />
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Middle Content */}
-        <div className="flex-1 flex flex-col px-4 md:px-6 pt-8 pb-5 h-full overflow-x-hidden">
+        <div className="flex-1 flex flex-col px-4 md:px-6 pt-8 pb-5 h-full overflow-y-auto ">
           <div className="flex justify-between">
             <div className="flex items-center gap-5">
               <img src={purple_arrow_2} alt="back" />
@@ -158,10 +165,14 @@ const CreativeResume: React.FC = () => {
                 Back
               </p>
             </div>
-            <button className="flex items-center justify-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] font-semibold leading-[1.73rem] gap-[0.6rem]"  onClick={handleDownload}>
+            <div className="flex items-center gap-5">
+              <button className="flex items-center justify-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] font-semibold leading-[1.73rem] gap-[0.6rem]"  onClick={handleDownload}>
               <BsDownload className="h-4 w-4 text-black cursor-pointer" />
               Download
-            </button>
+              </button>
+              <img src={hamburger_menu} alt="hamburger menu" className="lg:hidden w-6 h-6 cursor-pointer" onClick={toggleSidebar}/>
+            </div>
+            <MobileSidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
           </div>
 
           <div className="flex flex-col gap-[2.91rem] flex-grow mt-9 lg:mt-3">
@@ -247,6 +258,7 @@ const CreativeResume: React.FC = () => {
             </div>
           </div>
         </div>
+
       </section>
     </>
   );
