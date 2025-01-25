@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import html2pdf from "html2pdf.js";
+import EditCvModal from "@/components/editCv/editCvModal";
 import hamburger_menu from "@/assets/images/hamburger_menu.svg";
 import MobileSidebar from "@/components/Dashboard/mobileSidebar";
 import Template1 from "@/components/cvTemplates/Template1";
@@ -30,7 +31,7 @@ import purple_arrow_2 from '@/assets/images/purple_arrow_2.svg';
 import { BsDownload } from "react-icons/bs";
 import star_icon from "@/assets/images/purple_star.svg";
 import dropdown from "@/assets/images/drop_down_arrow.svg";
-import SavedTemplates from "./saved-templates";
+// import SavedTemplates from "./saved-templates";
 
 
 const CreativeResume: React.FC = () => {
@@ -38,8 +39,102 @@ const CreativeResume: React.FC = () => {
   const navigate = useNavigate();
   const template = location.state?.template;
   const resumeRef = useRef<HTMLDivElement>(null);
-   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [cvData, setCvData] = useState({
+    name: "BAILEY DUPONT",
+    lastName: "SCHWAIGER",
+    title: "MARKETING MANAGER",
+    contact: {
+      phone: "0806-289-8015",
+      email: "john.doe@example.com",
+      address: "5 Quarters Road, GRA, Ikot Ekpene, Akwa Ibom State, Nigeria",
+      website: "www.abn.com"
+    },
+    interests: [
+      "TRAVELING",
+      "POLITICS",
+      "ARTS & ENTERTAINMENT",
+      "ILLUSTRATION"
+    ],
+    education: [
+      {
+        level: "MASTER'S DEGREE",
+        school: "Top University for Advanced Studies",
+        period: "2018 - 2020"
+      },
+      {
+        level: "COLLEGE",
+        school: "Amazing College of Technology",
+        period: "2014 - 2018"
+      },
+      {
+        level: "SECONDARY SCHOOL",
+        school: "Really Great High School",
+        period: "2010 - 2014"
+      }
+    ],
+    profile: "I am a qualified and professional web developer with five years of experience in database administration and website design. Strong creative and analytical skills. Team player with an eye for details.",
+    experience: [
+      {
+        title: "APPLICATIONS DEVELOPER",
+        company: "Really Great Company",
+        location: "Australia",
+        period: "2016 - Present",
+        description: "The opportunity to work in an organization that encourages its engineers to move across different areas such as backend, infrastructure, and mobile development is particularly appealing. I believe this would allow me to further develop my versatility as a developer, which has been a key strength throughout my career.",
+        achievements: [
+          "Database administration and website design",
+          "Built the logic for a streamlined ad-serving platform that scaled",
+          "Educational institutions and online classroom management"
+        ]
+      }
+    ]
+  });
   
+
+  const handleDownload = () => {
+    if (!resumeRef.current) return;
+
+    const element = resumeRef.current; // The element to convert to PDF
+    console.log(element);
+    const options = {
+      filename: "resume.pdf",
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    html2pdf().set(options).from(element).save();
+  };
+
+  const handleSaveAndContinue = () => {
+  if (template) {
+    // Pass both template data and CV data
+    navigate("/saved-templates", { 
+      state: { 
+        savedTemplate: {
+          ...template,
+          cvData: cvData
+        } 
+      } 
+    });
+  }
+};
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+   const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleSaveCvData = (updatedCvData: any) => {
+    setCvData(updatedCvData);
+    console.log("Updated CV Data:", updatedCvData);
+  };
+
 
   if (!template) {
     return <div>No template selected</div>;
@@ -51,7 +146,7 @@ const CreativeResume: React.FC = () => {
       case 1:
         return <Template1 />;
       case 2:
-        return <Template2 />;
+        return <Template2 cvData={cvData} onEdit={handleOpenEditModal}/>;
       case 3:
         return <Template3 />;
       case 4:
@@ -97,28 +192,6 @@ const CreativeResume: React.FC = () => {
     }
   };
 
-  const handleDownload = () => {
-    if (!resumeRef.current) return;
-
-    const element = resumeRef.current; // The element to convert to PDF
-    console.log(element);
-    const options = {
-      filename: "resume.pdf",
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    html2pdf().set(options).from(element).save();
-  };
-
-  const handleSaveAndContinue = () => {
-  if (template) {
-    navigate("/saved-templates", { state: { savedTemplate: template } });
-    console.log(SavedTemplates);
-  }
-  };
-  
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   return (
     <>
@@ -194,9 +267,15 @@ const CreativeResume: React.FC = () => {
                 Change Template
               </button>
               <div className="flex justify-between w-full md:w-auto md:gap-[1.88rem]">
-                <button className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold">
+                <button className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold" onClick={handleOpenEditModal}>
                   Edit CV
                 </button>
+                <EditCvModal
+                  isOpen={isEditModalOpen}
+                  onClose={handleCloseEditModal}
+                  cvData={cvData}
+                  onSave={handleSaveCvData}
+                />      
                 <button className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"  onClick={handleSaveAndContinue}>
                   Save and Continue
                 </button>

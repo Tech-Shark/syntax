@@ -40,9 +40,14 @@ interface CvData {
 
 interface Template2Props {
   cvData?: CvData;
+  onEdit?: () => void; // Callback to open the modal
 }
 
-const Template2: React.FC<Template2Props> = ({ cvData }) => {
+interface Template1Props {
+  onEdit: (data: any) => void; // Callback to open the modal
+}
+
+const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
 
   // Mock data for demonstration
   const mockData: CvData = cvData || {
@@ -109,6 +114,9 @@ const Template2: React.FC<Template2Props> = ({ cvData }) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <button onClick={onEdit} className="hidden mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">
+            Edit CV
+      </button>
       <div className="container mx-auto p-4 pt-6 md:p-6 lg:p">
         <div className="max-w-5xl shadow-lg pb-10 bg-white mx-auto w-full flex flex-col items-center">
           {/* NAME AND TITLE */}
