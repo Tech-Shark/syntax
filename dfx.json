@@ -5,14 +5,18 @@
       "build": "cargo build --target wasm32-unknown-unknown --release",
       "wasm": "target/wasm32-unknown-unknown/release/syntax_backend.wasm",
       "package": "syntax_backend",
-      "type": "rust",
-      "did": "src/syntax_frontend/assetstorage.did"
-
+      "type": "rust"
     },
     "internet_identity": {
-      "type": "pull",
-      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
-  },
+      "type": "custom",
+      "candid": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity.did",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/latest/download/internet_identity_dev.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+     }
+    },
     "syntax_frontend": {
       "dependencies": [
         "syntax_backend",

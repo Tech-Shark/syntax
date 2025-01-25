@@ -111,6 +111,8 @@ impl Storable for GrammarAnalysisMap {
         is_fixed_size: false,
     };
 }
+
+
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct GrammarAnalysisResponse {
     pub idx: String,
