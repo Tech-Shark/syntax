@@ -9,7 +9,7 @@ const Signup: React.FC = () => {
       heading="Start Your Journey!"
       subheading="Start Your Journey with Internet Identity."
       altText="(Your anchor is a unique number provided by Internet Identity.)"
-      nextButtonTo="/signup-internet"
+      nextButtonTo="/signin-internet"
       /> 
     </>
   );

@@ -6,7 +6,7 @@ import new_cv from "@/assets/images/new_cv.svg";
 import template from "@/assets/images/template_icon.svg";
 import saved_cv from "@/assets/images/bookmark.svg";
 import notification from "@/assets/images/notification.svg";
-import NotificationSideBar from "./UserDashboard/notificationsidebar"; // Correct the import path
+import NotificationSideBar from "./UserDashboard/notificationsidebar";
 import {
   Tooltip,
   TooltipContent,
@@ -73,7 +73,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="hidden md:block bg-[#E1E0F3] w-[8.31rem] h-screen relative">
+    <aside className="hidden md:block bg-[#E1E0F3] w-[8.31rem] relative">
       <ul className="flex flex-col items-center py-16 gap-8">
         <TooltipProvider>
           {tooltipItems.map((item, index) => (
