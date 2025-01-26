@@ -1,4 +1,5 @@
 import React from "react";
+import { TemplateComponentProps } from "@/types/cv.types";
 import { GiRotaryPhone } from "react-icons/gi";
 import { IoMailSharp } from "react-icons/io5";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -109,6 +110,9 @@ const Template1: React.FC<Template1Props> = ({ cvData }) => {
 
   return (
     <div className="min-h-screen text-[#706F6F] bg-gray-600 py-10">
+      <button className="hidden mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">
+            Edit CV
+      </button>
       <div className="max-w-5xl shadow-lg bg-white mx-auto w-full flex flex-col items-center">
         {/* NAME AND TITLE */}
         <header className="w-full bg-[#F4F4F4] text-left py-20 px-10 mt-10">
@@ -187,7 +191,6 @@ const Template1: React.FC<Template1Props> = ({ cvData }) => {
               ))}
             </div>
           </div>
-
           <div className="w-[1px] bg-[#464A4E]"></div>
 
           {/* RIGHT COLUMN */}

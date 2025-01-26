@@ -30,6 +30,7 @@ import AdminDashboard from "./Pages/Dashboard/AdminDashboard/DashboardAdmin";
 import PricingManagement from "./Pages/Dashboard/AdminDashboard/pricingManagement";
 import Pricing from "./Pages/Dashboard/UserDashboard/Pricing/pricing";
 import CreatePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/createPromo";
+import ManagePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/managePromo";
 
 
 
@@ -64,8 +65,8 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/pricing-management" element={<PricingManagement />} />
           <Route path="/pricing" element={<Pricing />} />
-          <Route path="/promo-management" element={<CreatePromotion />} />
-
+          <Route path="/create-promotion" element={<CreatePromotion />} />
+          <Route path="/manage-promotion" element={<ManagePromotion />} />
         </Routes>
       </BrowserRouter>
     </Provider>
