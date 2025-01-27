@@ -6,6 +6,7 @@ import new_cv from "@/assets/images/new_cv.svg";
 import template from "@/assets/images/template_icon.svg";
 import saved_cv from "@/assets/images/bookmark.svg";
 import notification from "@/assets/images/notification.svg";
+import NotificationSideBar from "./UserDashboard/notificationsidebar";
 import {
   Tooltip,
   TooltipContent,
@@ -54,7 +55,7 @@ const tooltipItems = [
     alt: "Notification icon",
     label: "Notification",
     size: "w-[2.25rem] aspect-square",
-    action: null, // Custom action for toggling notification sidebar
+    action: "toggle-notification", // Custom action for toggling notification sidebar
   },
 ];
 
@@ -72,7 +73,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="bg-[#E1E0F3] w-[8.31rem] h-screen relative">
+    <aside className="hidden md:block bg-[#E1E0F3] w-[8.31rem] relative">
       <ul className="flex flex-col items-center py-16 gap-8">
         <TooltipProvider>
           {tooltipItems.map((item, index) => (
@@ -88,13 +89,11 @@ function Sidebar() {
         </TooltipProvider>
       </ul>
 
-      {/* Notification Sidebar */}
-      {isNotificationOpen && (
-        <div className="absolute top-0 right-0 bg-white w-80 h-screen shadow-lg p-4">
-          <h2 className="text-lg font-semibold">Notifications</h2>
-          <p>No new notifications</p>
-        </div>
-      )}
+      {/* Notification Component */}
+      <NotificationSideBar
+        isOpen={isNotificationOpen}
+        onClose={() => setNotificationOpen(false)}
+      />
     </aside>
   );
 }

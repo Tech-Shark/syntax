@@ -3,16 +3,57 @@ import { IoMailSharp } from "react-icons/io5";
 import { FiPhone } from "react-icons/fi";
 import { IoGlobeOutline } from "react-icons/io5";
 
-function Template10({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Type definitions for props and mock data
+interface Contact {
+  phone: string;
+  email: string;
+  address: string;
+  portfolio: string;
+}
+
+interface ProfessionalExperience {
+  title: string;
+  company: string;
+  period: string;
+  achievements: string[];
+}
+
+interface Education {
+  school: string;
+  degree: string;
+  period: string;
+  highlights: string[];
+}
+
+interface Certificate {
+  name: string;
+  organization: string;
+  year: string;
+}
+
+interface CvData {
+  name: string;
+  title: string;
+  contact: Contact;
+  professionalExperience: ProfessionalExperience[];
+  education: Education[];
+  certificates: Certificate[];
+}
+
+interface Template10Props {
+  cvData?: CvData; // Optional prop for custom CV data
+}
+
+const Template10: React.FC<Template10Props> = ({ cvData }) => {
+  // Mock data as a fallback
+  const mockData: CvData = {
     name: "Samira Alcaraz",
     title: "Mechanical Engineer",
     contact: {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
       address: "123 Anywhere St., Any City, ST 12345",
-      portfolio: "www.reallygreatsite.com"
+      portfolio: "www.reallygreatsite.com",
     },
     professionalExperience: [
       {
@@ -22,8 +63,8 @@ function Template10({ cvData }) {
         achievements: [
           "Spearheaded the development of advanced materials, resulting in a 15% increase in product efficiency",
           "Conducted comprehensive experiments and data analysis, leading to three published journal papers",
-          "Collaborated with cross-functional teams to ideate and prototype innovative solutions for industry-specific challenges"
-        ]
+          "Collaborated with cross-functional teams to ideate and prototype innovative solutions for industry-specific challenges",
+        ],
       },
       {
         title: "Mechanical Engineer",
@@ -32,9 +73,9 @@ function Template10({ cvData }) {
         achievements: [
           "Created and optimized mechanical systems for manufacturing processes, improving production speed by 20%",
           "Drafted and implemented quality control procedures, reducing defects and inconsistencies by 30%",
-          "Supported the creation of detailed project reports and documentation for senior stakeholders"
-        ]
-      }
+          "Supported the creation of detailed project reports and documentation for senior stakeholders",
+        ],
+      },
     ],
     education: [
       {
@@ -44,8 +85,8 @@ function Template10({ cvData }) {
         highlights: [
           "GPA: 3.8",
           "Best Thesis Awardee",
-          "Recognition for Extended Research Paper"
-        ]
+          "Recognition for Extended Research Paper",
+        ],
       },
       {
         school: "South City College",
@@ -54,61 +95,61 @@ function Template10({ cvData }) {
         highlights: [
           "GPA: 3.8",
           "Editor-in-Chief, SCC Newsletter",
-          "President, The Innovation Society"
-        ]
-      }
+          "President, The Innovation Society",
+        ],
+      },
     ],
     certificates: [
       {
         name: "Project Management",
         organization: "The Project Management Institute",
-        year: "2027"
+        year: "2027",
       },
       {
         name: "System Optimization",
         organization: "Scrum Learning Society",
-        year: "2028"
+        year: "2028",
       },
       {
         name: "Risk Management and Mitigation",
         organization: "Internal Auditors Team",
-        year: "2028"
+        year: "2028",
       },
       {
         name: "Vendor Relations",
         organization: "South City College",
-        year: "2030"
-      }
-    ]
+        year: "2030",
+      },
+    ],
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
         {/* Header Section */}
         <div className="flex justify-between items-start mb-6">
-          <h1 className="text-2xl font-medium text-gray-900">
-            {mockData.name}
-          </h1>
-          <p className="text-gray-600">{mockData.title}</p>
+          <h1 className="text-2xl font-medium text-gray-900">{data.name}</h1>
+          <p className="text-gray-600">{data.title}</p>
         </div>
 
         {/* Contact Information */}
         <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-gray-600 mb-6">
           <div className="flex items-center gap-2">
             <FiPhone className="text-gray-400" />
-            <span>Phone: {mockData.contact.phone}</span>
+            <span>Phone: {data.contact.phone}</span>
           </div>
           <div className="flex items-center gap-2">
             <IoMailSharp className="text-gray-400" />
-            <span>Email: {mockData.contact.email}</span>
+            <span>Email: {data.contact.email}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span>Address: {mockData.contact.address}</span>
+            <span>Address: {data.contact.address}</span>
           </div>
           <div className="flex items-center gap-2">
             <IoGlobeOutline className="text-gray-400" />
-            <span>Portfolio: {mockData.contact.portfolio}</span>
+            <span>Portfolio: {data.contact.portfolio}</span>
           </div>
         </div>
 
@@ -119,7 +160,7 @@ function Template10({ cvData }) {
           <h2 className="text-sm font-bold text-gray-900 uppercase mb-4">
             Professional Experience
           </h2>
-          {mockData.professionalExperience.map((exp, index) => (
+          {data.professionalExperience.map((exp, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
                 <div>
@@ -130,7 +171,9 @@ function Template10({ cvData }) {
               </div>
               <ul className="list-disc pl-4 mt-2 space-y-1">
                 {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{achievement}</li>
+                  <li key={idx} className="text-sm text-gray-600">
+                    {achievement}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -144,7 +187,7 @@ function Template10({ cvData }) {
           <h2 className="text-sm font-bold text-gray-900 uppercase mb-4">
             Education
           </h2>
-          {mockData.education.map((edu, index) => (
+          {data.education.map((edu, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between mb-1">
                 <div>
@@ -155,7 +198,9 @@ function Template10({ cvData }) {
               </div>
               <ul className="list-disc pl-4 mt-2">
                 {edu.highlights.map((highlight, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{highlight}</li>
+                  <li key={idx} className="text-sm text-gray-600">
+                    {highlight}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -170,9 +215,11 @@ function Template10({ cvData }) {
             Certificates
           </h2>
           <div className="grid grid-cols-2 gap-4">
-            {mockData.certificates.map((cert, index) => (
+            {data.certificates.map((cert, index) => (
               <div key={index} className="text-sm">
-                <p className="text-gray-800 font-medium">{cert.name} | {cert.year}</p>
+                <p className="text-gray-800 font-medium">
+                  {cert.name} | {cert.year}
+                </p>
                 <p className="text-gray-600">{cert.organization}</p>
               </div>
             ))}
@@ -181,6 +228,6 @@ function Template10({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template10;

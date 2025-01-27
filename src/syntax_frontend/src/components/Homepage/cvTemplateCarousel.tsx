@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import arrow_up from '@/assets/images/arrow_up.svg';
 import purple_arrow_up from '@/assets/images/purple_arrow_1.svg';
 import pentagon from '@/assets/images/pentagon2_icon.svg';
@@ -36,7 +37,9 @@ const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
 };
 
 const CvTemplateCarousel: React.FC = () => {
-  const templates = Array.from({ length: 20 }, (_, index) => ({
+  const navigate = useNavigate();
+
+  const templates = Array.from({ length: 22 }, (_, index) => ({
     id: index + 1,
     title: `Template ${index + 1}`,
     description: `Description for template ${index + 1}. Showcase your creativity with a bold yet structured design. Perfect for creative professionals, it highlights key accomplishments, skills, and portfolio work.`,
@@ -62,37 +65,45 @@ const CvTemplateCarousel: React.FC = () => {
     },
   };
 
+  const handleTemplateClick = (template: typeof templates[number]) => {
+    navigate("/creative-resume", { state: { template } });
+  };
+
+
   return (
     <Carousel
       responsive={responsive}
       customLeftArrow={<CustomLeftArrow />}
       customRightArrow={<CustomRightArrow />}
+      className="ml-2 sm:ml-0"
     >
       {templates.map((template) => (
         <div
           key={template.id}
-          className="bg-[#000006] text-white h-[33.9rem] w-[19.6rem] px-[0.84rem] py-[0.96rem] pb-[1.68rem] rounded-[0.46rem] shadow-gray-500 flex flex-col gap-5"
+          onClick={() => handleTemplateClick(template)}
+          className="bg-[#000006] text-white h-[33.9rem] w-[19.6rem] px-[0.84rem] py-[0.96rem] lg:pb-[1.68rem] rounded-[0.46rem] shadow-gray-500 flex flex-col gap-5"
         >
-          <div className="bg-[#E1E0F3] max-h-2/4">
-            <div className="group relative lg:h-[14.2rem] group-hover:h-auto group-hover:w-auto min-w-full md:w-4/5 overflow-hidden cursor-pointer pt-10">
+          <div className="bg-[#E1E0F3] h-[35%] lg:h-2/4">
+            <div className="group relative h-[12.5rem] lg:h-[14.2rem] group-hover:h-auto group-hover:w-auto min-w-full md:w-4/5 overflow-hidden cursor-pointer pt-10">
               <img
                 src={hero_banner_1}
                 alt={`hero banner ${template.id}`}
-                className="h-full w-4/5 md:w-full absolute group-hover:-translate-y-6 lg:group-hover:-translate-y-4 transition-all duration-300 delay-500 ease-in-out left-7 md:left-0 group-hover:scale-150"
+                className="h-full w-full absolute 
+                translate-x-[-1rem] md:translate-x-0 group-hover:-translate-y-6 lg:group-hover:-translate-y-4 transition-all duration-300 delay-500 ease-in-out left-7 md:left-0 group-hover:scale-150"
               />
               <img
                 src={hero_banner_2}
                 alt={`hero banner ${template.id}`}
-                className="h-full w-4/5 md:w-full absolute md:translate-x-[-4rem] lg:translate-x-[-2rem] -translate-y-5 group-hover:-translate-y-7 lg:group-hover:-translate-y-0 group-hover:-rotate-12 transition-all duration-300 delay-500 ease-in-out -left-0 md:left-0 group-hover:scale-150"
+                className="h-full w-full absolute translate-x-[-2rem] md:translate-x-[-4rem] lg:translate-x-[-2rem] -translate-y-5 group-hover:-translate-y-7 lg:group-hover:-translate-y-0 group-hover:-rotate-12 transition-all duration-300 delay-500 ease-in-out -left-0 md:left-0 group-hover:scale-150"
               />
               <img
                 src={hero_banner}
                 alt={`hero banner ${template.id}`}
-                className="h-full w-4/5 md:w-full absolute md:translate-x-[3rem] lg:translate-x-[5rem] -translate-y-4 group-hover:rotate-[18deg] lg:group-hover:rotate-12 transition-all duration-700 delay-500 ease-in-out left-14 md:left-0 group-hover:scale-150"
+                className="h-full w-full absolute translate-x-[-0.6rem]  md:translate-x-[3rem] lg:translate-x-[5rem] -translate-y-4 group-hover:rotate-[18deg] lg:group-hover:rotate-12 transition-all duration-700 delay-500 ease-in-out left-14 md:left-0 group-hover:scale-150"
               />
             </div>
           </div>
-          <div className="flex flex-col gap-5 pt-[0.96rem]">
+          <div className="flex flex-col gap-5 pt-7 lg:pt-[0.96rem]">
             <div className="flex justify-between items-center">
               <img src={purple_arrow_up} alt="purple arrow up" />
               <div className="flex gap-2">

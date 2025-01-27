@@ -4,9 +4,52 @@ import { IoMailSharp } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { IoGlobeOutline } from "react-icons/io5";
 
-function Template8({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+// Type definitions for the props and mock data
+interface Contact {
+  phone: string;
+  email: string;
+  website: string;
+  address: string;
+}
+
+interface Education {
+  degree: string;
+  school: string;
+  period: string;
+  description: string;
+}
+
+interface Language {
+  name: string;
+  level: number;
+}
+
+interface WorkExperience {
+  title: string;
+  company: string;
+  period: string;
+  responsibilities: string[];
+}
+
+interface CvData {
+  firstName: string;
+  lastName: string;
+  title: string;
+  contact: Contact;
+  profile: string;
+  skills: string[];
+  education: Education[];
+  languages: Language[];
+  workExperience: WorkExperience[];
+}
+
+interface Template8Props {
+  cvData?: CvData; // Optional prop for custom CV data
+}
+
+const Template8: React.FC<Template8Props> = ({ cvData }) => {
+  // Mock data as fallback
+  const mockData: CvData = {
     firstName: "JONATHAN",
     lastName: "PATTERSON",
     title: "GRAPHIC DESIGNER",
@@ -14,33 +57,29 @@ function Template8({ cvData }) {
       phone: "123-456-7890",
       email: "hello@mygreatsite.com",
       website: "www.reallygreatsite.com",
-      address: "123 Anywhere St., Any City"
+      address: "123 Anywhere St., Any City",
     },
-    profile: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus neque nec ullamcorper est. Fusce laoreet interdum sapien, eu fermentum ex placerat eget. Praesent hendrerit nulla in lectus placerat. Fusce facilisis venenatis lacus in lobortis. Donec hendrerit libero eget est tempor quis. Nunc sed scelerisque eros, vulputate in ipsum. Vestibulum pellentesque augue in lobortis ullamcorper. In aliquet nisi non finibus molestie pretium. augue in lobortis ullamcorper. In aliquet",
-    skills: [
-      "Skill name here",
-      "Your skill",
-      "Special skills",
-      "List your skills"
-    ],
+    profile:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus neque nec ullamcorper est. Fusce laoreet interdum sapien, eu fermentum ex placerat eget. Praesent hendrerit nulla in lectus placerat.",
+    skills: ["Skill name here", "Your skill", "Special skills", "List your skills"],
     education: [
       {
         degree: "Your Degree Name",
         school: "Your Institution Name",
         period: "2016-2018",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
       {
         degree: "Your Degree Name",
         school: "Your Institution Name",
         period: "2014-2016",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      }
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      },
     ],
     languages: [
       { name: "English", level: 100 },
       { name: "German", level: 80 },
-      { name: "Spanish", level: 60 }
+      { name: "Spanish", level: 60 },
     ],
     workExperience: [
       {
@@ -49,37 +88,28 @@ function Template8({ cvData }) {
         period: "2020-2022",
         responsibilities: [
           "Lorem ipsum dolor est amet consectetur adipiscing elit. Aliquam sagittis",
-          "Praesent hendrerit nulla in lectus placerat. Fusce facilisis venenatis lacus in lobortis",
-          "Nunc sed scelerisque eros, vulputate in ipsum. Vestibulum pellentesque augue in lobortis ullamcorper",
-          "In aliquet nisi non finibus molestie pretium",
-          "Fusce non hendrerit. Aliquam sagittis",
-          "Sed non efficitur libero. Proin dui non. accumsan sodales semper mattis",
-          "Maecenas sed nulla eget velit tristique placerat. Praesent a scelerisque erat",
-          "Aliquam sagittis mi at sapien dictum ut consequat massa placerat"
-        ]
+          "Praesent hendrerit nulla in lectus placerat.",
+          "Nunc sed scelerisque eros, vulputate in ipsum.",
+        ],
       },
       {
         title: "Your Job Position here",
         company: "Company name",
-        period: "2020-2022",
+        period: "2018-2020",
         responsibilities: [
           "Lorem ipsum dolor est amet consectetur adipiscing elit. Aliquam sagittis",
-          "Praesent hendrerit nulla in lectus placerat. Fusce facilisis venenatis lacus in lobortis",
-          "Nunc sed scelerisque eros, vulputate in ipsum. Vestibulum pellentesque augue in lobortis ullamcorper",
-          "In aliquet nisi non finibus molestie pretium",
-          "Fusce non hendrerit. Aliquam sagittis"
-        ]
-      }
-    ]
+          "Praesent hendrerit nulla in lectus placerat.",
+        ],
+      },
+    ],
   };
 
-  // Function to render language level bars
-  const LanguageLevel = ({ level }) => (
+  const data = cvData || mockData;
+
+  // Language level bar component
+  const LanguageLevel: React.FC<{ level: number }> = ({ level }) => (
     <div className="w-32 h-2 bg-gray-200 rounded-full">
-      <div 
-        className="h-full bg-gray-600 rounded-full" 
-        style={{ width: `${level}%` }}
-      ></div>
+      <div className="h-full bg-gray-600 rounded-full" style={{ width: `${level}%` }}></div>
     </div>
   );
 
@@ -89,11 +119,9 @@ function Template8({ cvData }) {
         {/* Header Section */}
         <div className="p-8 text-center">
           <h1 className="text-3xl font-light text-gray-800 tracking-wide mb-1">
-            {mockData.firstName} {mockData.lastName}
+            {data.firstName} {data.lastName}
           </h1>
-          <p className="text-gray-600 uppercase tracking-wider text-sm">
-            {mockData.title}
-          </p>
+          <p className="text-gray-600 uppercase tracking-wider text-sm">{data.title}</p>
         </div>
 
         <hr className="border-gray-200" />
@@ -107,19 +135,19 @@ function Template8({ cvData }) {
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-gray-600">
                   <GiRotaryPhone className="text-lg" />
-                  <span className="text-sm">{mockData.contact.phone}</span>
+                  <span className="text-sm">{data.contact.phone}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <IoMailSharp className="text-lg" />
-                  <span className="text-sm">{mockData.contact.email}</span>
+                  <span className="text-sm">{data.contact.email}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <IoGlobeOutline className="text-lg" />
-                  <span className="text-sm">{mockData.contact.website}</span>
+                  <span className="text-sm">{data.contact.website}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <CiLocationOn className="text-lg" />
-                  <span className="text-sm">{mockData.contact.address}</span>
+                  <span className="text-sm">{data.contact.address}</span>
                 </div>
               </div>
             </section>
@@ -128,7 +156,7 @@ function Template8({ cvData }) {
             <section>
               <h2 className="text-gray-800 font-medium mb-4 uppercase">Skills</h2>
               <ul className="space-y-1">
-                {mockData.skills.map((skill, index) => (
+                {data.skills.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">{skill}</li>
                 ))}
               </ul>
@@ -137,7 +165,7 @@ function Template8({ cvData }) {
             {/* Education Section */}
             <section>
               <h2 className="text-gray-800 font-medium mb-4 uppercase">Education</h2>
-              {mockData.education.map((edu, index) => (
+              {data.education.map((edu, index) => (
                 <div key={index} className="mb-4">
                   <h3 className="text-gray-800 font-medium text-sm">{edu.degree}</h3>
                   <p className="text-gray-600 text-sm">{edu.school}</p>
@@ -151,7 +179,7 @@ function Template8({ cvData }) {
             <section>
               <h2 className="text-gray-800 font-medium mb-4 uppercase">Languages</h2>
               <div className="space-y-3">
-                {mockData.languages.map((lang, index) => (
+                {data.languages.map((lang, index) => (
                   <div key={index} className="flex items-center justify-between">
                     <span className="text-sm text-gray-600">{lang.name}</span>
                     <LanguageLevel level={lang.level} />
@@ -166,16 +194,14 @@ function Template8({ cvData }) {
             {/* Profile Section */}
             <section>
               <h2 className="text-gray-800 font-medium mb-4 uppercase">Profile</h2>
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {mockData.profile}
-              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{data.profile}</p>
             </section>
 
             {/* Work Experience Section */}
             <section>
               <h2 className="text-gray-800 font-medium mb-6 uppercase">Work Experience</h2>
               <div className="space-y-6">
-                {mockData.workExperience.map((exp, index) => (
+                {data.workExperience.map((exp, index) => (
                   <div key={index} className="mb-6">
                     <div className="flex justify-between items-start mb-2">
                       <div>
@@ -198,6 +224,6 @@ function Template8({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template8;

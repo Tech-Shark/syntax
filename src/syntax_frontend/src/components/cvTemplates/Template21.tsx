@@ -1,16 +1,69 @@
 import React from "react";
 
-function Template21({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+interface Contact {
+  address: string;
+  email: string;
+  website: string;
+}
+
+interface ProfessionalExperience {
+  title: string;
+  period: string;
+  achievements: string[];
+}
+
+interface Project {
+  title: string;
+  organization: string;
+  period: string;
+  details: string[];
+}
+
+interface Skills {
+  row1: string[];
+  row2: string[];
+}
+
+interface Education {
+  degree: string;
+  institution: string;
+  period: string;
+  details: string[];
+}
+
+interface AdditionalInfo {
+  languages: string;
+  certifications: string;
+  awards: string;
+}
+
+interface CvData {
+  name: string;
+  title: string;
+  contact: Contact;
+  summary: string;
+  professionalExperience: ProfessionalExperience[];
+  projects: Project[];
+  skills: Skills;
+  education: Education[];
+  additionalInfo: AdditionalInfo;
+}
+
+interface Template21Props {
+  cvData?: CvData;
+}
+
+const Template21: React.FC<Template21Props> = ({ cvData }) => {
+  const mockData: CvData = {
     name: "ESTELLE DARCY",
     title: "PROCESS ENGINEER",
     contact: {
       address: "123 Anywhere St., Any City",
       email: "hello@reallygreatsite.com",
-      website: "www.reallygreatsite.com"
+      website: "www.reallygreatsite.com",
     },
-    summary: "Practical Engineer with Significant Experience in Process Design. I have worked with some organizations, ensuring a professional approach to my profession, leveraging my expertise to optimize processes and deliver innovative solutions that meet business objectives.",
+    summary:
+      "Practical Engineer with Significant Experience in Process Design. I have worked with some organizations, ensuring a professional approach to my profession, leveraging my expertise to optimize processes and deliver innovative solutions that meet business objectives.",
     professionalExperience: [
       {
         title: "Instrument Tech, Morcelle Program",
@@ -18,8 +71,8 @@ function Template21({ cvData }) {
         achievements: [
           "Led development of an advanced automation system, achieving a 15% increase in operational efficiency.",
           "Streamlined manufacturing processes, reducing production costs by 10%.",
-          "Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime."
-        ]
+          "Implemented preventive maintenance strategies, resulting in a 20% decrease in equipment downtime.",
+        ],
       },
       {
         title: "Internship, XarrowAI Industries",
@@ -27,9 +80,9 @@ function Template21({ cvData }) {
         achievements: [
           "Designed and optimised a robotic control system, realizing a 12% performance improvement.",
           "Coordinated testing and validation, ensuring compliance with industry standards.",
-          "Provided technical expertise, contributing to a 15% reduction in system failures."
-        ]
-      }
+          "Provided technical expertise, contributing to a 15% reduction in system failures.",
+        ],
+      },
     ],
     projects: [
       {
@@ -39,38 +92,42 @@ function Template21({ cvData }) {
         details: [
           "Automotive Technology",
           "Technological Advancements within the current Chemical & Process Industry",
-          "Other relevant information."
-        ]
-      }
+          "Other relevant information.",
+        ],
+      },
     ],
     skills: {
       row1: ["Prototyping Tools", "Interaction Design", "Accessibility"],
-      row2: ["User Research", "Visual Design", "Responsive Design"]
+      row2: ["User Research", "Visual Design", "Responsive Design"],
     },
     education: [
       {
         degree: "Bachelor of Design in Process Engineering",
         institution: "Engineering University",
         period: "Sep 2019 - Sep 2023",
-        details: ["Relevant coursework in Process Design and Project Management."]
-      }
+        details: ["Relevant coursework in Process Design and Project Management."],
+      },
     ],
     additionalInfo: {
       languages: "English, French, Mandarin",
-      certifications: "Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)",
-      awards: "Most Innovative Intern of the Year (2022), Overall Best Intern, Division Two (2022), Onboarding Project Lead (2024)"
-    }
+      certifications:
+        "Professional Design Engineer (PDE) License, Project Management Tech (PMT), Structural Process Design (SPD)",
+      awards:
+        "Most Innovative Intern of the Year (2022), Overall Best Intern, Division Two (2022), Onboarding Project Lead (2024)",
+    },
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg p-8">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-          <p className="text-gray-600 mb-2">{mockData.title}</p>
+          <h1 className="text-2xl font-bold text-gray-800 mb-1">{data.name}</h1>
+          <p className="text-gray-600 mb-2">{data.title}</p>
           <p className="text-sm text-gray-600">
-            {mockData.contact.address} | {mockData.contact.email} | {mockData.contact.website}
+            {data.contact.address} | {data.contact.email} | {data.contact.website}
           </p>
         </div>
 
@@ -79,9 +136,7 @@ function Template21({ cvData }) {
           <h2 className="text-gray-800 font-medium mb-3 uppercase border-b border-gray-300 pb-1">
             Summary
           </h2>
-          <p className="text-sm text-gray-600">
-            {mockData.summary}
-          </p>
+          <p className="text-sm text-gray-600">{data.summary}</p>
         </section>
 
         {/* Professional Experience Section */}
@@ -89,7 +144,7 @@ function Template21({ cvData }) {
           <h2 className="text-gray-800 font-medium mb-3 uppercase border-b border-gray-300 pb-1">
             Professional Experience
           </h2>
-          {mockData.professionalExperience.map((exp, index) => (
+          {data.professionalExperience.map((exp, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-gray-800">{exp.title}</h3>
@@ -97,7 +152,9 @@ function Template21({ cvData }) {
               </div>
               <ul className="list-disc pl-5 space-y-1">
                 {exp.achievements.map((achievement, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{achievement}</li>
+                  <li key={idx} className="text-sm text-gray-600">
+                    {achievement}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -109,7 +166,7 @@ function Template21({ cvData }) {
           <h2 className="text-gray-800 font-medium mb-3 uppercase border-b border-gray-300 pb-1">
             Projects
           </h2>
-          {mockData.projects.map((project, index) => (
+          {data.projects.map((project, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-gray-800">{project.title}</h3>
@@ -118,7 +175,9 @@ function Template21({ cvData }) {
               <p className="text-gray-600 text-sm mb-2">{project.organization}</p>
               <ul className="list-disc pl-5 space-y-1">
                 {project.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{detail}</li>
+                  <li key={idx} className="text-sm text-gray-600">
+                    {detail}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -131,11 +190,15 @@ function Template21({ cvData }) {
             Skills
           </h2>
           <div className="grid grid-cols-3 gap-4">
-            {mockData.skills.row1.map((skill, index) => (
-              <p key={index} className="text-sm text-gray-600">{skill}</p>
+            {data.skills.row1.map((skill, index) => (
+              <p key={index} className="text-sm text-gray-600">
+                {skill}
+              </p>
             ))}
-            {mockData.skills.row2.map((skill, index) => (
-              <p key={index} className="text-sm text-gray-600">{skill}</p>
+            {data.skills.row2.map((skill, index) => (
+              <p key={index} className="text-sm text-gray-600">
+                {skill}
+              </p>
             ))}
           </div>
         </section>
@@ -145,7 +208,7 @@ function Template21({ cvData }) {
           <h2 className="text-gray-800 font-medium mb-3 uppercase border-b border-gray-300 pb-1">
             Education
           </h2>
-          {mockData.education.map((edu, index) => (
+          {data.education.map((edu, index) => (
             <div key={index} className="mb-4">
               <div className="flex justify-between items-start mb-2">
                 <div>
@@ -156,7 +219,9 @@ function Template21({ cvData }) {
               </div>
               <ul className="list-disc pl-5">
                 {edu.details.map((detail, idx) => (
-                  <li key={idx} className="text-sm text-gray-600">{detail}</li>
+                  <li key={idx} className="text-sm text-gray-600">
+                    {detail}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -169,14 +234,20 @@ function Template21({ cvData }) {
             Additional Information
           </h2>
           <div className="text-sm text-gray-600 space-y-1">
-            <p><strong>Languages:</strong> {mockData.additionalInfo.languages}</p>
-            <p><strong>Certifications:</strong> {mockData.additionalInfo.certifications}</p>
-            <p><strong>Awards/Activities:</strong> {mockData.additionalInfo.awards}</p>
+            <p>
+              <strong>Languages:</strong> {data.additionalInfo.languages}
+            </p>
+            <p>
+              <strong>Certifications:</strong> {data.additionalInfo.certifications}
+            </p>
+            <p>
+              <strong>Awards/Activities:</strong> {data.additionalInfo.awards}
+            </p>
           </div>
         </section>
       </div>
     </div>
   );
-}
+};
 
 export default Template21;

@@ -3,49 +3,91 @@ import { IoMailOutline } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
 import { BsTelephone } from "react-icons/bs";
 
-function Template19({ cvData }) {
-  // Mock data for demonstration
-  const mockData = {
+interface Contact {
+  phone: string;
+  email: string;
+  address: string;
+}
+
+interface WorkExperience {
+  company: string;
+  period: string;
+  title: string;
+  description: string;
+}
+
+interface Education {
+  school: string;
+  period: string;
+  degree: string;
+  description: string;
+}
+
+interface Skills {
+  personal: string[];
+  professional: string[];
+}
+
+interface CvData {
+  name: string;
+  title: string;
+  contact: Contact;
+  workExperience: WorkExperience[];
+  education: Education[];
+  skills: Skills;
+}
+
+interface Template19Props {
+  cvData?: CvData;
+}
+
+const Template19: React.FC<Template19Props> = ({ cvData }) => {
+  const mockData: CvData = {
     name: "ANNA KATRINA MARCHESI",
     title: "Accountant",
     contact: {
       phone: "+123-456-7890",
       email: "hello@reallygreatsite.com",
-      address: "123 Anywhere St., Any City"
+      address: "123 Anywhere St., Any City",
     },
     workExperience: [
       {
         company: "Liceria & Co.",
         period: "2019 - Present",
         title: "Senior Accountant",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
       {
         company: "Liceria & Co.",
         period: "2019 - Present",
         title: "Accountant",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       },
       {
         company: "Liceria & Co.",
         period: "2019 - Present",
         title: "Junior Accountant",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-      }
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      },
     ],
     education: [
       {
         school: "Fauget University",
         period: "2010-2014",
         degree: "Master of Business Administration Accounting",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
       },
       {
         school: "Borcelle University",
         period: "2008-2011",
         degree: "Bachelor of Arts Accounting",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
-      }
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      },
     ],
     skills: {
       personal: [
@@ -54,7 +96,7 @@ function Template19({ cvData }) {
         "Negotiation",
         "Critical Thinking",
         "Communication Skills",
-        "Leadership"
+        "Leadership",
       ],
       professional: [
         "Financial Accounting",
@@ -63,30 +105,32 @@ function Template19({ cvData }) {
         "Auditing",
         "Expense Reporting",
         "Accounts Payable",
-        "Account Receivable"
-      ]
-    }
+        "Account Receivable",
+      ],
+    },
   };
+
+  const data = cvData || mockData;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-3xl mx-auto bg-white shadow-lg p-8">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-1">{mockData.name}</h1>
-          <p className="text-gray-600 mb-4">{mockData.title}</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-1">{data.name}</h1>
+          <p className="text-gray-600 mb-4">{data.title}</p>
           <div className="flex gap-8 text-sm text-gray-600 border-t border-b border-gray-200 py-3">
             <div className="flex items-center gap-2">
               <BsTelephone className="text-gray-400" />
-              <span>{mockData.contact.phone}</span>
+              <span>{data.contact.phone}</span>
             </div>
             <div className="flex items-center gap-2">
               <IoMailOutline className="text-gray-400" />
-              <span>{mockData.contact.email}</span>
+              <span>{data.contact.email}</span>
             </div>
             <div className="flex items-center gap-2">
               <CiLocationOn className="text-gray-400" />
-              <span>{mockData.contact.address}</span>
+              <span>{data.contact.address}</span>
             </div>
           </div>
         </div>
@@ -97,7 +141,7 @@ function Template19({ cvData }) {
             Work Experience
           </h2>
           <div className="space-y-6">
-            {mockData.workExperience.map((exp, index) => (
+            {data.workExperience.map((exp, index) => (
               <div key={index}>
                 <div className="grid grid-cols-[120px_1fr] gap-4">
                   <div className="text-gray-500 text-sm">
@@ -121,7 +165,7 @@ function Template19({ cvData }) {
             Education
           </h2>
           <div className="space-y-6">
-            {mockData.education.map((edu, index) => (
+            {data.education.map((edu, index) => (
               <div key={index}>
                 <div className="grid grid-cols-[120px_1fr] gap-4">
                   <div className="text-gray-500 text-sm">
@@ -142,13 +186,13 @@ function Template19({ cvData }) {
         {/* Skills Section */}
         <section>
           <h2 className="text-gray-800 font-medium mb-4 uppercase text-center border-b border-gray-200 pb-2">
-            Skill
+            Skills
           </h2>
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h3 className="text-gray-700 mb-2">Personal</h3>
               <ul className="space-y-1">
-                {mockData.skills.personal.map((skill, index) => (
+                {data.skills.personal.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">{skill}</li>
                 ))}
               </ul>
@@ -156,7 +200,7 @@ function Template19({ cvData }) {
             <div>
               <h3 className="text-gray-700 mb-2">Professional</h3>
               <ul className="space-y-1">
-                {mockData.skills.professional.map((skill, index) => (
+                {data.skills.professional.map((skill, index) => (
                   <li key={index} className="text-sm text-gray-600">{skill}</li>
                 ))}
               </ul>
@@ -166,6 +210,6 @@ function Template19({ cvData }) {
       </div>
     </div>
   );
-}
+};
 
 export default Template19;

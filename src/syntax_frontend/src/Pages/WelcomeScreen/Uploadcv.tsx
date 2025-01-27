@@ -1,7 +1,7 @@
 import { useState } from "react";
 import pdfToText from "react-pdftotext";
 import { useDispatch } from "react-redux";
-import { setPersonalInformation } from "@/redux/cvDataSlice";
+import { setPersonalInformation, setWorkExperience } from "@/redux/cvDataSlice";
 import { parseCvText } from "@/utils/cvParser";
 import Loading from "@/components/loader";
 import { Link } from "react-router-dom";
@@ -26,11 +26,12 @@ const UploadCv: React.FC = () => {
       setIsLoading(true); // Start loading
       try {
         const text = await pdfToText(file);
-        console.log(text);
         // Parse the extracted text
         const parsedData = parseCvText(text);
-      // Dispatch parsed data to Redux
-      dispatch(setPersonalInformation(parsedData));
+        // Dispatch parsed personal information
+        dispatch(setPersonalInformation(parsedData.personalInformation));
+        // Dispatch parsed work experience
+        dispatch(setWorkExperience(parsedData.workExperience));
       } catch (error) {
         console.error("Failed to extract text from pdf", error);
       } finally {
