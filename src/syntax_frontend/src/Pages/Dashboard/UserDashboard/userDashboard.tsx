@@ -16,11 +16,27 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-
-
+import { useUser } from '@/contexts/AuthContext';
+import { useEffect, useState } from 'react';
+import { getSingleUser } from '@/Api/apiService';
+import React from 'react';
 
 
 const Dashboard: React.FC = () => {
+  const [name, setName] = useState("")
+
+  const { userDetails } = useUser()
+
+      const singleUserData = async() => {
+        const details = userDetails?.full_name[0].split(" ")
+      return setName(details[0])
+    }
+
+useEffect(()=> {
+  singleUserData()
+},[])
+
+
   const navigate = useNavigate();
  
   return (
@@ -35,7 +51,7 @@ const Dashboard: React.FC = () => {
           <img src={hamburger_menu} alt="menu" />
         </nav>
           <div className='flex flex-col md:flex-row justify-center md:justify-between w-full mt-10 lg:mt-0 gap-3 lg:gap-0 items-center'>
-          <h5 className='font-bold text-[2.8rem] leading-normal sm:text-3xl  lg:text-[3rem] md:leading-[4rem]'>Welcome Seyi</h5>
+          <h5 className='font-bold text-[2.8rem] leading-normal sm:text-3xl  lg:text-[3rem] md:leading-[4rem]'>Welcome {name}</h5>
           <p className='md:hidden text-center text-[0.88rem] leading-normal font-normal'>Pick a template that suits your style, or explore tailored recommendations based on your career goals.</p>
             <TopIcons />
           </div>

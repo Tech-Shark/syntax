@@ -32,9 +32,12 @@ import { BsDownload } from "react-icons/bs";
 import star_icon from "@/assets/images/purple_star.svg";
 import dropdown from "@/assets/images/drop_down_arrow.svg";
 // import SavedTemplates from "./saved-templates";
+import { analyzeCvData, getSingleUser, updateUserProfile } from "@/Api/apiService";
+import { toast } from 'react-toastify';
 
 
 const CreativeResume: React.FC = () => {
+  const [ saveLoading, setSaveLoading ] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   const template = location.state?.template;
@@ -104,18 +107,60 @@ const CreativeResume: React.FC = () => {
     html2pdf().set(options).from(element).save();
   };
 
-  const handleSaveAndContinue = () => {
+  const handleSaveAndContinue = async() => {
+    
   if (template) {
-    // Pass both template data and CV data
-    navigate("/saved-templates", { 
-      state: { 
-        savedTemplate: {
-          ...template,
-          cvData: cvData
-        } 
-      } 
-    });
+    try {
+      const userCheck:any = await getSingleUser();
+      const educationString = cvData.education
+        .map((edu: any) => `${edu.level} - ${edu.school} (${edu.period})`)
+        .join('; ');
+
+      const updateInput:any = {
+        bio: [
+          {
+            education: [educationString],
+            address: [cvData.contact.address],
+            summary: [cvData.profile],
+            contact_number: [cvData.contact.phone],
+            full_name: [`${cvData.name} ${cvData.lastName}`],
+            email: [cvData.contact.email],
+            linkedin: [],
+            marital_status: [],
+            nationality: [],
+            date_of_birth: [],
+            github: []
+          }
+        ],
+        plan: userCheck.other.plan
+      };
+
+      try {
+        const updateResponse = await updateUserProfile(updateInput);
+
+        if ('Ok' in updateResponse) {
+          toast.success("CV data saved successfully and user profile updated successfully with recent data!");
+          navigate("/saved-templates", { 
+            state: { 
+              savedTemplate: {
+                ...template,
+                cvData: cvData
+              } 
+            } 
+          });
+        } else if ('Err' in updateResponse) {
+          toast.error(updateResponse.Err.message);
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        toast.error("Failed to save CV data");
+      }
+    } catch (error) {
+      console.error('Error checking user:', error);
+      toast.error("Error checking user profile");
+    }
   }
+
 };
   
   const toggleSidebar = () => {
@@ -130,9 +175,63 @@ const CreativeResume: React.FC = () => {
     setIsEditModalOpen(false);
   };
 
-  const handleSaveCvData = (updatedCvData: any) => {
+  const handleSaveCvData = async (updatedCvData: any) => {
     setCvData(updatedCvData);
-    console.log("Updated CV Data:", updatedCvData);
+    setSaveLoading(true);
+    
+    try {
+      // const analysisData = {
+      //   job_title: cvData.experience[0].title,
+      //   cv_text: cvData.profile,
+      //   job_description: cvData.experience[0].description
+      // }
+
+      // const analyseCv = await analyzeCvData(analysisData)
+      // console.log('analysis', analyseCv)
+      const userCheck:any = await getSingleUser();
+      const educationString = updatedCvData.education
+        .map((edu: any) => `${edu.level} - ${edu.school} (${edu.period})`)
+        .join('; ');
+
+      const updateInput:any = {
+        bio: [
+          {
+            education: [educationString],
+            address: [updatedCvData.contact.address],
+            summary: [updatedCvData.profile],
+            contact_number: [updatedCvData.contact.phone],
+            full_name: [`${updatedCvData.name} ${updatedCvData.lastName}`],
+            email: [updatedCvData.contact.email],
+            linkedin: [],
+            marital_status: [],
+            nationality: [],
+            date_of_birth: [],
+            github: []
+          }
+        ],
+        plan: userCheck.other.plan
+      };
+
+      try {
+        const updateResponse = await updateUserProfile(updateInput);
+
+        if ('Ok' in updateResponse) {
+          toast.success("CV data saved successfully and user profile updated successfully with recent data!");
+          setSaveLoading(false)
+        } else if ('Err' in updateResponse) {
+          toast.error(updateResponse.Err.message);
+          setSaveLoading(false)
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        toast.error("Failed to save CV data");
+        setSaveLoading(false)
+      }
+    } catch (error) {
+      console.error('Error checking user:', error);
+      toast.error("Error checking user profile");
+      setSaveLoading(false)
+    }
   };
 
 
@@ -275,6 +374,7 @@ const CreativeResume: React.FC = () => {
                   onClose={handleCloseEditModal}
                   cvData={cvData}
                   onSave={handleSaveCvData}
+                  loading={saveLoading}
                 />      
                 <button className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"  onClick={handleSaveAndContinue}>
                   Save and Continue

@@ -31,6 +31,9 @@ import PricingManagement from "./Pages/Dashboard/AdminDashboard/pricingManagemen
 import Pricing from "./Pages/Dashboard/UserDashboard/Pricing/pricing";
 import CreatePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/createPromo";
 import ManagePromotion from "./Pages/Dashboard/AdminDashboard/promoManagement/managePromo";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -38,6 +41,19 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+      <AuthProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Routes>
           <Route path="/" element={<Homepage/>} />
           <Route path="/welcome" element={<WelcomeScreen />} />
@@ -68,6 +84,7 @@ function App() {
           <Route path="/create-promotion" element={<CreatePromotion />} />
           <Route path="/manage-promotion" element={<ManagePromotion />} />
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </Provider>
   );

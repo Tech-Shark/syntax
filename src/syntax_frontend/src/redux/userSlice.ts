@@ -10,6 +10,14 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+
+    // USER_ADD: (state, action: PayloadAction<UserAddPayload>) => {
+    //   const { profile } = action.payload;
+
+    //   // Set the user profile when a new user is added
+    //   state.profile = profile;
+    // },
+
     USER_UPDATE_PROFILE: (
       state,
       action: PayloadAction<UserUpdateProfilePayload>

@@ -5,11 +5,13 @@ interface EditCvModalProps {
   onClose: () => void;
   cvData: any;
   onSave: (updatedCvData: any) => void;
+  loading?: boolean
 }
 
-const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSave }) => {
+const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSave, loading=false }) => {
   const [formData, setFormData] = useState(cvData);
   const [activeSection, setActiveSection] = useState("personal");
+  // const [loading, setLoading] = useState<boolean>(false)
 
   if (!isOpen) return null;
 
@@ -284,14 +286,16 @@ const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSa
               <button
                 onClick={() => onSave(formData)}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex-1"
+                disabled = {loading}
               >
-                Save
+                {loading ? "Analysing CV..." : "Save"}
               </button>
               <button
                 onClick={handleSaveAndClose}
                 className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex-1"
+                disabled = {loading}
               >
-                Save & Close
+                {loading ? "Analysing CV..." : "Save and Close"}
               </button>
             </div>
           </div>
@@ -350,14 +354,16 @@ const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSa
           <button
             onClick={() => onSave(formData)}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            disabled = {loading}
           >
-            Save
+            {loading ? "Analysing CV..." : "Save"}
           </button>
           <button
             onClick={handleSaveAndClose}
             className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+            disabled = {loading}
           >
-            Save & Close
+            {loading ? "Analysing CV..." : "Save and Close"}
           </button>
         </div>
       </div>

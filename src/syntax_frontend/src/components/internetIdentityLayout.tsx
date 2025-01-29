@@ -5,8 +5,41 @@ import WelcomeDescription from "./welcomeDescription";
 import { NextButton } from "./welcomeNavButtons";
 import welcomeHeroBanner from "../assets/images/welcomeHerobanner.svg";
 import welcomeVideo from "../assets/images/Create Your Internet Identity in 2 Minutes.mp4"
+import { useUser } from "../contexts/AuthContext";
 
 const InternetIdentityLayout: React.FC = () => {
+
+  const { login } = useUser();
+
+  // const { handleSignup } = useUser();
+  // const [formData, setFormData] = useState<any>({
+  //   full_name: '',
+  //   email: '',
+  //   date_of_birth: '',
+  //   nationality: '',
+  //   address: '',
+  //   contact_number: '',
+  //   education: '',
+  //   marital_status: '',
+  //   linkedin: '',
+  //   github: '',
+  //   summary: ''
+  // });
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     await handleSignup(formData);
+  //     // Handle successful signup
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error('Signup failed:', error);
+  //   }
+  // };
+
+  const handleContinue = async () => {
+    await login();
+  };
 
    // State to track the current view: 'video' or 'screenshot'
   const [view, setView] = useState<'video' | 'screenshot'>('video');
@@ -71,7 +104,7 @@ const InternetIdentityLayout: React.FC = () => {
           </div>
 
           {/* Next Button */}
-          <NextButton to="/signup" />
+          <NextButton onClick={handleContinue} />
 
           {/* Additional Links */}
           <div className="flex flex-col items-center gap-2">

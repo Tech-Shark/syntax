@@ -4,9 +4,9 @@ import arrow4 from "../assets/images/arrow4.svg";
 
 interface NextButtonProps {
   /** The route to navigate to when this button is clicked. */
-  to: string;
+  to?: string;
   text?: string;
-  onClick?: () => boolean;
+  onClick?: () => boolean | void | any;
 }
 
 /**
@@ -19,7 +19,7 @@ export const NextButton: React.FC<NextButtonProps> = ({ to,  text = "Next", onCl
       // If the onClick function exists and returns false, stop navigation
       return;
     }
-    navigate(to);
+    to ? navigate(to) : null;
   };
 
   return (

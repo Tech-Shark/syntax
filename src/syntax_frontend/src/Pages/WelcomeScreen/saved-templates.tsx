@@ -54,7 +54,7 @@ const SavedTemplates: React.FC = () => {
        case 1:
         // return <Template1 cvData={cvData} />;
       case 2:
-        return <Template2 cvData={cvData}/>;
+        // return <Template2 cvData={cvData}/>;
       case 3:
         return <Template3 />;
       case 4:
