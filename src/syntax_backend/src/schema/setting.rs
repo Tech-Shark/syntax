@@ -1,4 +1,3 @@
-use crate::service::util::get_current_time;
 use candid::{CandidType, Decode, Encode};
 use ic_stable_structures::storable::{Bound, Storable};
 use serde::{Deserialize, Serialize};
@@ -9,31 +8,24 @@ pub const SETTING_KEY: &str = "Settings";
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct Setting {
-    pub max_freemium_users: SettingValue<u64>,
-    pub password: SettingValue<String>,
+    pub max_freemium_users: u64,
+    pub password: String,
+    pub paystack_secret: Option<String>,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
-pub struct SettingValue<T> {
-    pub value: T,
-    pub modified_by: Option<String>,
-    pub modified_at: Option<String>,
+pub struct SettingInput {
+    pub max_freemium_users: Option<u64>,
+    pub password: Option<String>,
+    pub paystack_secret: Option<String>,
 }
 
 impl Default for Setting {
     fn default() -> Self {
-        let time = get_current_time().to_string();
         Self {
-            max_freemium_users: SettingValue {
-                value: 100,
-                modified_at: Some(time.clone()),
-                modified_by: Some("Config created by default at runtime".to_string()),
-            },
-            password: SettingValue {
-                value: "12345".to_string(),
-                modified_at: Some(time.clone()),
-                modified_by: Some("Config created by default at runtime".to_string()),
-            },
+            max_freemium_users: 100,
+            password: "12345".to_string(),
+            paystack_secret: None,
         }
     }
 }
@@ -72,12 +64,18 @@ impl Storable for Setting {
 }
 
 #[derive(CandidType, Deserialize)]
+pub enum SettingResponseOk {
+    Message(String),
+    Setting(Setting),
+}
+
+#[derive(CandidType, Deserialize)]
 pub struct Error {
     pub message: String,
 }
 
 #[derive(CandidType, Deserialize)]
 pub enum SettingResponse {
-    Ok(Setting),
+    Ok(SettingResponseOk),
     Err(Error),
 }

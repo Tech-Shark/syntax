@@ -57,7 +57,7 @@ async fn add_single_credit_plan(
         }),
 
         Some(config) => {
-            if config.password.value != pwd {
+            if config.password != pwd {
                 CreditResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
@@ -84,7 +84,7 @@ async fn update_single_credit_plan(plan: String, credit: u64, pwd: String) -> Cr
         }),
 
         Some(config) => {
-            if config.password.value != pwd {
+            if config.password != pwd {
                 CreditResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
@@ -118,7 +118,7 @@ async fn delete_single_credit_plan(plan: String, pwd: String) -> CreditResponse 
         }),
 
         Some(config) => {
-            if config.password.value != pwd {
+            if config.password != pwd {
                 CreditResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })

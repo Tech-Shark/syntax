@@ -1,9 +1,9 @@
-use super::util::{generate_random_string, load_default_setting};
+use super::util::load_default_setting;
 use crate::{
     schema::{
         admin::{
-            Admin, AdminInput, AdminResponse, AdminResponseOk, AdminRole, Error,
-            ID_GENERATION_FAILED, INVALID_AUTH, NO_ADMIN_FOUND,
+            Admin, AdminInput, AdminResponse, AdminResponseOk, AdminRole, Error, INVALID_AUTH,
+            NO_ADMIN_FOUND,
         },
         setting::SETTING_KEY,
     },
@@ -95,7 +95,7 @@ async fn remove_all_user(pwd: String) -> AdminResponse {
         }),
 
         Some(data) => {
-            if data.password.value != pwd {
+            if data.password != pwd {
                 AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
@@ -118,7 +118,7 @@ async fn remove_all_credit(pwd: String) -> AdminResponse {
         }),
 
         Some(data) => {
-            if data.password.value != pwd {
+            if data.password != pwd {
                 AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
@@ -141,7 +141,7 @@ async fn remove_all_cv_analysis(pwd: String) -> AdminResponse {
         }),
 
         Some(data) => {
-            if data.password.value != pwd {
+            if data.password != pwd {
                 AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })
@@ -164,7 +164,7 @@ async fn remove_all_grammar(pwd: String) -> AdminResponse {
         }),
 
         Some(data) => {
-            if data.password.value != pwd {
+            if data.password != pwd {
                 AdminResponse::Err(Error {
                     message: INVALID_AUTH.to_string(),
                 })

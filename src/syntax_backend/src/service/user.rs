@@ -65,7 +65,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
     }
 
     // Check if there's still slot for FREEMIUM
-    if (total_users >= setting.max_freemium_users.value) && (input_tier == FREE_PLAN) {
+    if (total_users >= setting.max_freemium_users) && (input_tier == FREE_PLAN) {
         return UserResponse::Err(Error {
             message: "Maximum number of users on the free plan has been exhausted!".to_string(),
         });
