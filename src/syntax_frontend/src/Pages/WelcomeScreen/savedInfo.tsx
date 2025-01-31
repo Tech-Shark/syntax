@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 import { Link } from "react-router-dom";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
@@ -7,6 +10,13 @@ import arrow2 from "@/assets/images/arrow2.svg";
 
 
 const SavedInfo: React.FC = () => {
+  // Get all the data from redux store
+  const cvData = useSelector((state: RootState) => state.cvData);
+  useEffect(() => {
+    console.log(`All cv data from redux store: ${JSON.stringify(cvData)}`);
+  }, [cvData]);
+
+
   return (
     <>
       <section>

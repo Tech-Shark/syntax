@@ -261,14 +261,53 @@ const EditCvModal: React.FC<EditCvModalProps> = ({ isOpen, onClose, cvData, onSa
             </div>
             
             <div className="border-t pt-4">
-              <h2 className="text-lg font-bold mb-2">Quick Tips</h2>
-              <div className="space-y-2 text-gray-600">
+
+              {/* add ai component here for mobile */}
+              <h2 className="hidden md:flex text-lg font-bold mb-2">Quick Tips</h2>
+              <div className="hidden md:flex space-y-2 text-gray-600">
                 <p>🖋️ Use action verbs like "developed", "managed", "created"</p>
                 <p>📈 Include measurable achievements with numbers</p>
                 <p>🎯 Focus on relevant skills and experiences</p>
                 <p>📝 Keep paragraphs short and scannable</p>
                 <p>🔍 Double-check dates and contact information</p>
               </div>
+
+              {/* AI Suggestions Section */}
+    <div className="mt-6 border-t pt-4">
+      <h5 className="text-lg font-semibold leading-normal text-center">AI Suggestions</h5>
+      
+      {/* CV Score Section */}
+      <div className="bg-[#E1E0F3] border border-black p-4 rounded-md mt-4">
+        <p className="text-sm font-normal">Your CV Score</p>
+        <h5 className="text-3xl font-bold">70%</h5>
+
+        <div className="flex justify-between mt-3">
+          <span className="border border-black p-2 flex-1 text-center">
+            <p className="text-xs font-semibold">ATS Score</p>
+            <h5 className="text-lg font-semibold">70%</h5>
+          </span>
+          <span className="border border-black p-2 flex-1 text-center mx-1">
+            <p className="text-xs font-semibold">Content Quality</p>
+            <h5 className="text-lg font-semibold">70%</h5>
+          </span>
+          <span className="border border-black p-2 flex-1 text-center">
+            <p className="text-xs font-semibold">Formatting</p>
+            <h5 className="text-lg font-semibold">70%</h5>
+          </span>
+        </div>
+      </div>
+
+      {/* AI Suggestions - Content Improvements */}
+      <div className="mt-4">
+        <h5 className="text-base font-semibold">Content Suggestions</h5>
+        <div className="bg-red-100 text-sm p-3 mt-2 line-through">
+          Handled various tasks in the marketing department.
+        </div>
+        <div className="bg-blue-100 text-sm p-3 mt-1">
+          Executed data-driven marketing campaigns that increased lead generation by 25% over three months.
+        </div>
+      </div>
+    </div>
             </div>
           </div>
 

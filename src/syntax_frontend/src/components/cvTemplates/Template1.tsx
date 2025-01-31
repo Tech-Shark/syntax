@@ -1,5 +1,4 @@
 import React from "react";
-import { TemplateComponentProps } from "@/types/cv.types";
 import { GiRotaryPhone } from "react-icons/gi";
 import { IoMailSharp } from "react-icons/io5";
 import LanguageIcon from "@mui/icons-material/Language";

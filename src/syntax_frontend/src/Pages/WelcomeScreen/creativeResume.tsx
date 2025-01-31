@@ -41,7 +41,7 @@ const CreativeResume: React.FC = () => {
   const resumeRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [cvData, setCvData] = useState({
+  const [cvData, setCvData] = useState<CvData> ({
     name: "BAILEY DUPONT",
     lastName: "SCHWAIGER",
     title: "MARKETING MANAGER",
@@ -144,7 +144,7 @@ const CreativeResume: React.FC = () => {
   const renderTemplate = () => {
     switch (template.id) {
       case 1:
-        return <Template1 />;
+        // return <Template1 cvData={cvData} onEdit={handleOpenEditModal}/>;
       case 2:
         return <Template2 cvData={cvData} onEdit={handleOpenEditModal}/>;
       case 3:
@@ -232,7 +232,7 @@ const CreativeResume: React.FC = () => {
         {/* Middle Content */}
         <div className="flex-1 flex flex-col px-4 md:px-6 pt-8 pb-5 h-full overflow-y-auto ">
           <div className="flex justify-between">
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5" onClick={() => navigate(-1)}>
               <img src={purple_arrow_2} alt="back" />
               <p className="text-base text-[#3D3F4E] font-semibold leading-6 [text-shadow:0.67px_0.67px_13.28px_rgba(61,63,78,0.5)] cursor-pointer">
                 Back

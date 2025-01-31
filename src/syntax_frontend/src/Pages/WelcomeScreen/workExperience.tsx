@@ -85,6 +85,7 @@ const WorkExperience: React.FC = () => {
   };
 
   const handleNextClick = () => {
+    console.log(experiences);
     if (experiences.length === 0) {
       // Show error if no experience is added
       setErrors({
