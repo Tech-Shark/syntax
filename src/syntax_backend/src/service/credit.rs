@@ -38,8 +38,18 @@ async fn get_all_credit_plan() -> Vec<Credit> {
 }
 
 #[ic_cdk::update]
-async fn add_single_credit_plan(plan: String, credit: u64, pwd: String) -> CreditResponse {
+async fn add_single_credit_plan(
+    plan: String,
+    credit: u64,
+    price: u16,
+    pwd: String,
+) -> CreditResponse {
     let new_credit = if credit < 1 { 1 } else { credit };
+    let new_price = if new_credit > 2 && price < 1000 {
+        1000
+    } else {
+        price
+    };
 
     match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
         None => CreditResponse::Err(Error {
@@ -55,6 +65,7 @@ async fn add_single_credit_plan(plan: String, credit: u64, pwd: String) -> Credi
                 let updated_data = Credit {
                     name: Some(plan.clone()),
                     value: Some(new_credit),
+                    price: Some(new_price),
                 };
 
                 CREDIT_MAP.with(|map| map.borrow_mut().insert(plan, updated_data.clone()));

@@ -12,6 +12,7 @@ pub const INVALID_CREDIT_PLAN: &str = "Invalid credit plan!";
 pub struct Credit {
     pub name: Option<String>,
     pub value: Option<u64>,
+    pub price: Option<u16>,
 }
 
 impl Storable for Credit {
