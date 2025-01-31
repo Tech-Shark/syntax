@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import grey_arrow from "@/assets/images/gray_icon.svg";
 import hamburger_menu from "@/assets/images/hamburger_menu.svg";
 import TopIcons from './topIcons';
+import MobileSidebar from "@/components/Dashboard/mobileSidebar";
 import download_icon from '@/assets/images/download_icon.svg'
 import DashboardData from './dashboardData';
 import build_icon from '@/assets/images/build_icon.svg'
@@ -22,6 +24,11 @@ import {
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
  
   return (
     <section className='flex font-outfit'>
@@ -32,7 +39,8 @@ const Dashboard: React.FC = () => {
             <img src={grey_arrow} alt="back" />
             <p className='font-semibold text-[#3D3F4E] leading-[1.7rem] text-center [text-shadow:0.67px_0.67px_13.28px_rgba(61,63,78,0.50)]'>Back</p>
           </span>
-          <img src={hamburger_menu} alt="menu" />
+          <img src={hamburger_menu} alt="menu" onClick={toggleSidebar} />
+          <MobileSidebar isOpen={isSidebarOpen} onClose={toggleSidebar} />
         </nav>
           <div className='flex flex-col md:flex-row justify-center md:justify-between w-full mt-10 lg:mt-0 gap-3 lg:gap-0 items-center'>
           <h5 className='font-bold text-[2.8rem] leading-normal sm:text-3xl  lg:text-[3rem] md:leading-[4rem]'>Welcome Seyi</h5>

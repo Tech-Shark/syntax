@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { addEducation, updateEducation, removeEducation } from "@/redux/cvDataSlice";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
 import SidebarLinks from "@/components/SidebarLinks";
@@ -18,7 +21,9 @@ interface EducationRecord {
 }
 
 const Education: React.FC = () => {
-  const [educationRecords, setEducationRecords] = useState<EducationRecord[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  const educationRecords = useSelector((state: RootState) => state.cvData.education);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [currentEducation, setCurrentEducation] = useState<EducationRecord>({
     id: Date.now(),
     degreeType: "",
@@ -30,46 +35,60 @@ const Education: React.FC = () => {
     degreeClass: "",
   });
 
+
   const handleInputChange = (key: keyof EducationRecord, value: string) => {
     setCurrentEducation({ ...currentEducation, [key]: value });
+    setErrors(prev => ({ ...prev, [key]: "" }));
+  };
+
+   const validateFields = () => {
+    const newErrors: Record<string, string> = {};
+    const requiredFields: (keyof EducationRecord)[] = [
+      'degreeType', 'fieldStudy', 'universityName', 'location', 'startDate', 'endDate'
+    ];
+
+    requiredFields.forEach(field => {
+      if (!currentEducation[field]) {
+        newErrors[field] = "This field is required";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleAddEducation = (event: React.FormEvent) => {
     event.preventDefault();
+    
+    if (!validateFields()) return;
 
-    if (
-      currentEducation.degreeType &&
-      currentEducation.fieldStudy &&
-      currentEducation.universityName &&
-      currentEducation.location &&
-      currentEducation.startDate &&
-      currentEducation.endDate
-    ) {
-      setEducationRecords([
-        ...educationRecords,
-        { ...currentEducation, id: Date.now() },
-      ]);
-      setCurrentEducation({
-        id: Date.now(),
-        degreeType: "",
-        fieldStudy: "",
-        universityName: "",
-        location: "",
-        startDate: "",
-        endDate: "",
-        degreeClass: "",
-      });
-    } else {
-      alert("Please fill in all required fields before adding education.");
-    }
+    dispatch(addEducation({ ...currentEducation, id: Date.now() }));
+    setCurrentEducation({
+      id: Date.now(),
+      degreeType: "",
+      fieldStudy: "",
+      universityName: "",
+      location: "",
+      startDate: "",
+      endDate: "",
+      degreeClass: "",
+    });
   };
 
   const handleEditEducation = (id: number) => {
-    const educationToEdit = educationRecords.find((edu) => edu.id === id);
+    const educationToEdit = educationRecords.find(edu => edu.id === id);
     if (educationToEdit) {
       setCurrentEducation(educationToEdit);
-      setEducationRecords(educationRecords.filter((edu) => edu.id !== id));
+      dispatch(removeEducation(id));
     }
+  };
+
+  const handleNextClick = () => {
+    if (educationRecords.length === 0) {
+      setErrors({ form: "Please add at least one education record" });
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -88,66 +107,29 @@ const Education: React.FC = () => {
                 onSubmit={handleAddEducation}
                 className="flex flex-col gap-7 align-center justify-center p-3"
               >
-                <WelcomeInput
-                  label="Degree Type"
-                  id="degreeType"
-                  placeholder="Bachelor's"
-                  value={currentEducation.degreeType}
-                  onChange={(e) =>
-                    handleInputChange("degreeType", e.target.value)
-                  }
-                />
-                <WelcomeInput
-                  label="Field of Study"
-                  id="fieldStudy"
-                  placeholder="Computer Science"
-                  value={currentEducation.fieldStudy}
-                  onChange={(e) =>
-                    handleInputChange("fieldStudy", e.target.value)
-                  }
-                />
-                <WelcomeInput
-                  label="University/College Name"
-                  id="universityName"
-                  placeholder="Stanford University"
-                  value={currentEducation.universityName}
-                  onChange={(e) =>
-                    handleInputChange("universityName", e.target.value)
-                  }
-                />
-                <WelcomeInput
-                  label="Location"
-                  id="location"
-                  placeholder="Stanford, CA, United States"
-                  value={currentEducation.location}
-                  onChange={(e) => handleInputChange("location", e.target.value)}
-                />
-                <WelcomeInput
-                  label="Start Date"
-                  id="startDate"
-                  placeholder="Aug, 2020"
-                  value={currentEducation.startDate}
-                  onChange={(e) =>
-                    handleInputChange("startDate", e.target.value)
-                  }
-                />
-                <WelcomeInput
-                  label="End Date or Expected Graduation Date"
-                  id="endDate"
-                  placeholder="Aug, 2024"
-                  value={currentEducation.endDate}
-                  onChange={(e) => handleInputChange("endDate", e.target.value)}
-                />
-                <WelcomeInput
-                  label="Class of Degree (Optional)"
-                  id="degree"
-                  placeholder="First Class"
-                  value={currentEducation.degreeClass}
-                  onChange={(e) =>
-                    handleInputChange("degreeClass", e.target.value)
-                  }
-                />
-                {/* Save Education */}
+                {[
+                  { label: "Degree Type", key: "degreeType", placeholder: "Bachelor's" },
+                  { label: "Field of Study", key: "fieldStudy", placeholder: "Computer Science" },
+                  { label: "University/College Name", key: "universityName", placeholder: "Stanford University" },
+                  { label: "Location", key: "location", placeholder: "Stanford, CA, United States" },
+                  { label: "Start Date", key: "startDate", placeholder: "Aug, 2020" },
+                  { label: "End Date or Expected Graduation Date", key: "endDate", placeholder: "Aug, 2024" },
+                  { label: "Class of Degree (Optional)", key: "degreeClass", placeholder: "First Class", required: false },
+                ].map(({ label, key, placeholder, }) => (
+                  <div key={key}>
+                    <WelcomeInput
+                      label={label}
+                      id={key}
+                      placeholder={placeholder}
+                      value={currentEducation[key as keyof EducationRecord] as string}
+                      onChange={(e) => handleInputChange(key as keyof EducationRecord, e.target.value)}
+                    />
+                    {errors[key] && <p className="text-red-500 text-sm">{errors[key]}</p>}
+                  </div>
+                ))}
+
+                {errors.form && <p className="text-red-500 text-sm text-center">{errors.form}</p>}
+
                 <button
                   type="submit"
                   className="flex items-center justify-center gap-2 w-max rounded-[1.8rem] py-2 px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)] self-center"
@@ -163,7 +145,7 @@ const Education: React.FC = () => {
             </div>
 
             {/* Render Added Education */}
-            <div className="mt-10 w-full flex flex-col gap-6">
+            <div className="mt-10 w-full md:w-[70%] flex flex-col gap-6">
               {educationRecords.map((education) => (
                 <div
                   key={education.id}
@@ -195,7 +177,7 @@ const Education: React.FC = () => {
 
             <div className="flex gap-4">
               <BackButton />
-              <NextButton to="/achievements" />
+              <NextButton to="/achievements" onClick={handleNextClick} />
             </div>
           </div>
         </div>

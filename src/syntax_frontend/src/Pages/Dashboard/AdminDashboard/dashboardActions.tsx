@@ -1,23 +1,16 @@
-import download_icon from '@/assets/images/download_icon.svg'
-import plus_icon from '@/assets/images/plus_icon.svg'
+import { useNavigate } from "react-router-dom";
 
 const DashBoardAction: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className='flex gap-6 mt-8 font-semibold text-[0.93rem] leading-[1.73rem] flex-wrap'>
-            <div className='flex gap-4 rounded-[4px] bg-black text-white py-[0.313rem] px-[0.63rem] cursor-pointer w-[8rem] items-center min-w-fit'>
-              <p>Download</p>
-              <img src={download_icon} alt="download icon" />
-            </div>
-            <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2'>Credit Management
-            <img src={plus_icon} alt="add icon" />
+            <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2' >Credit Management
             </button>
-            <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2'>Promo Management
-            <img src={plus_icon} alt="add icon" />
+            <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2' onClick={()=>{navigate("/create-promotion")}}>Promo Management
             </button>
-            <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2'>Pricing Management
-            <img src={plus_icon} alt="add icon" />
-            </button>
+        <button className='text-[0.93rem] leading-[1.73rem] font-semibold border-2 border-black px-[0.625rem] py-[0.313rem] rounded-[4px] flex justify-between items-center gap-2' onClick={()=>{navigate("/pricing-management")}}>Pricing Management
+        </button>
       </div>
 
       <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">

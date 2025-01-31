@@ -8,7 +8,7 @@ interface WelcomeInputProps {
   labelStyle?: string;
   /** If true, render a <textarea> instead of <input> */
   isTextArea?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   required?: boolean; 
 }
 

@@ -1,6 +1,5 @@
 import { FaMinus } from "react-icons/fa";
 import admin_cancel_icon from '@/assets/images/admin_cancel_icon.svg';
-// import copy_icon from '@/assets/images/copy_icon.svg'
 import build_icon from '@/assets/images/build_icon.svg'
 import plus_icon from '@/assets/images/plus_icon.svg'
 import light_filter_icon from '@/assets/images/light_filter_icon.svg';
