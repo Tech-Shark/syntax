@@ -200,3 +200,10 @@ pub fn subtract_credit_from_user(user_id: &String) -> Option<String> {
         None => Some(NO_USER_FOUND.to_string()),
     }
 }
+
+pub fn get_setting() -> Option<Setting> {
+    match SETTING_MAP.with(|map| map.borrow().get(&SETTING_KEY.to_string())) {
+        Some(data) => Some(data),
+        None => None,
+    }
+}
