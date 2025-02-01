@@ -9,9 +9,9 @@ const MAX_VALUE_SIZE: u32 = 1000000;
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct CVUserInput {
-    pub job_title: String,
-    pub job_description: String,
+    pub cv_template: String,
     pub cv_text: String,
+    pub job_description: String,
 }
 
 impl Storable for CVUserInput {

@@ -2,7 +2,7 @@ import api from "../apiServiceSettings";
 
 export const icServiceCV = {
   async analyzeCvData(cvData: {
-    job_title: string;
+    cv_template: string;
     cv_text: string;
     job_description: string;
   }) {
@@ -40,7 +40,7 @@ export const icServiceCV = {
 
   async updateCVAnalysis(
     id: string,
-    cvInput: { job_title: string; cv_text: string; job_description: string },
+    cvInput: { cv_template: string; cv_text: string; job_description: string },
     analysisResult: any
   ) {
     return await api.update_cv_analysis(id, cvInput, analysisResult);

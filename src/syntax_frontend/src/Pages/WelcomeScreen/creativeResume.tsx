@@ -181,7 +181,7 @@ const CreativeResume: React.FC = () => {
     
     try {
       // const analysisData = {
-      //   job_title: cvData.experience[0].title,
+      //   cv_template: cvData.experience[0].title,
       //   cv_text: cvData.profile,
       //   job_description: cvData.experience[0].description
       // }

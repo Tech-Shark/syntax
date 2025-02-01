@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 
 interface CVUserInput {
-  job_title : string;
+  cv_template : string;
   cv_text : string;
   job_description : string;
 };
@@ -20,7 +20,7 @@ interface createJobData {
   companyName: string
   jobLocation: string
   jobType: string
-  salary: string
+  template: string
 }
 
 const JobDescription: React.FC = () => {
@@ -33,7 +33,7 @@ const JobDescription: React.FC = () => {
     companyName: "",
     jobLocation: "",
     jobType: "",
-    salary: "",
+    template: "",
   });
 
   const handleDataChange =
@@ -56,7 +56,7 @@ const JobDescription: React.FC = () => {
     const skills = data.skills
 
     const analyseCvData:CVUserInput = {
-      job_title: jobData.jobTitle,
+      cv_template: jobData.template,
       cv_text:JSON.stringify({skills:skills}),
       job_description: jobData.jobDescription
     }
@@ -133,9 +133,9 @@ const JobDescription: React.FC = () => {
               <WelcomeInput
                 label="Salary Range (Optional)"
                 id="salaryRange"
-                placeholder="$70,000 - $100,000"
-                onChange={handleDataChange("salary")}
-                value={jobData.salary}
+                placeholder="default"
+                onChange={handleDataChange("template")}
+                value={jobData.template}
               />
             </form>
             <div className="flex gap-4">
