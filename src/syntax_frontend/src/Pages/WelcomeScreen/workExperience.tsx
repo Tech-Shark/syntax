@@ -73,26 +73,25 @@ const WorkExperience: React.FC = () => {
   };
 
   const handleEditExperience = (id: number) => {
-    const experienceToEdit = experiences.find((exp) => exp.id === id);
+    const experienceToEdit = experiences.find((exp:any) => exp.id === id);
     if (experienceToEdit) {
       setCurrentExperience(experienceToEdit);
     }
   };
 
   const handleRemoveExperience = (id: number) => {
-    const updatedExperiences = experiences.filter((exp) => exp.id !== id);
-    dispatch(setWorkExperience(updatedExperiences)); // Update Redux state
+    const updatedExperiences = experiences.filter((exp:any) => exp.id !== id);
+    dispatch(setWorkExperience(updatedExperiences));
   };
 
   const handleNextClick = () => {
     if (experiences.length === 0) {
-      // Show error if no experience is added
       setErrors({
         addOneExperience: "Please add at least one experience before proceeding.",
       });
-      return false; // Prevent navigation
+      return false;
     }
-    return true; // Allow navigation
+    return true;
   };
 
   return (

@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
 import SidebarLinks from "@/components/SidebarLinks";
 import WelcomeInput from "@/components/welcomeInput";
 import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { addEducation, } from "@/redux/cvDataSlice";
+import { useNavigate } from "react-router-dom";
 
 interface EducationRecord {
   id: number;
@@ -29,6 +33,10 @@ const Education: React.FC = () => {
     endDate: "",
     degreeClass: "",
   });
+  
+  const dispatch = useDispatch<AppDispatch>();
+  
+  const navigate = useNavigate();
 
   const handleInputChange = (key: keyof EducationRecord, value: string) => {
     setCurrentEducation({ ...currentEducation, [key]: value });
@@ -49,6 +57,7 @@ const Education: React.FC = () => {
         ...educationRecords,
         { ...currentEducation, id: Date.now() },
       ]);
+
       setCurrentEducation({
         id: Date.now(),
         degreeType: "",
@@ -71,6 +80,11 @@ const Education: React.FC = () => {
       setEducationRecords(educationRecords.filter((edu) => edu.id !== id));
     }
   };
+
+const handleNext = () => {
+  dispatch(addEducation(educationRecords));
+  return navigate("/achievements");
+}
 
   return (
     <>
@@ -195,7 +209,7 @@ const Education: React.FC = () => {
 
             <div className="flex gap-4">
               <BackButton />
-              <NextButton to="/achievements" />
+              <NextButton onClick={handleNext} />
             </div>
           </div>
         </div>

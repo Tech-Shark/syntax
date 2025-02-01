@@ -32,7 +32,7 @@ import { BsDownload } from "react-icons/bs";
 import star_icon from "@/assets/images/purple_star.svg";
 import dropdown from "@/assets/images/drop_down_arrow.svg";
 // import SavedTemplates from "./saved-templates";
-import { analyzeCvData, getSingleUser, updateUserProfile } from "@/Api/apiService";
+import { icServiceUsers } from "@/Api/userHandlers/userHandlers";
 import { toast } from 'react-toastify';
 
 
@@ -111,7 +111,7 @@ const CreativeResume: React.FC = () => {
     
   if (template) {
     try {
-      const userCheck:any = await getSingleUser();
+      const userCheck:any = await icServiceUsers.getSingleUser();
       const educationString = cvData.education
         .map((edu: any) => `${edu.level} - ${edu.school} (${edu.period})`)
         .join('; ');
@@ -136,7 +136,7 @@ const CreativeResume: React.FC = () => {
       };
 
       try {
-        const updateResponse = await updateUserProfile(updateInput);
+        const updateResponse = await icServiceUsers.updateUser(updateInput);
 
         if ('Ok' in updateResponse) {
           toast.success("CV data saved successfully and user profile updated successfully with recent data!");
@@ -188,7 +188,7 @@ const CreativeResume: React.FC = () => {
 
       // const analyseCv = await analyzeCvData(analysisData)
       // console.log('analysis', analyseCv)
-      const userCheck:any = await getSingleUser();
+      const userCheck:any = await icServiceUsers.getSingleUser();
       const educationString = updatedCvData.education
         .map((edu: any) => `${edu.level} - ${edu.school} (${edu.period})`)
         .join('; ');
@@ -213,7 +213,7 @@ const CreativeResume: React.FC = () => {
       };
 
       try {
-        const updateResponse = await updateUserProfile(updateInput);
+        const updateResponse = await icServiceUsers.updateUser(updateInput);
 
         if ('Ok' in updateResponse) {
           toast.success("CV data saved successfully and user profile updated successfully with recent data!");

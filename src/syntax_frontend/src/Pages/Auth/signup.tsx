@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
-  const { user, login } = useUser();
+  const { user } = useUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,10 +12,6 @@ const Signup: React.FC = () => {
       navigate("/user-dashboard");
     }
   }, [user.isAuthenticated, navigate]);
-
-  const handleSignup = async () => {
-    await login();
-  };
 
   return (
     <>

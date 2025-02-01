@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import WelcomeHeader from "@/components/welcomeHeader";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
 import WelcomeDescription from "@/components/welcomeDescription";
 import WelcomeInput from "@/components/welcomeInput";
+import { updateSkills } from "@/redux/cvDataSlice";
 import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
 import SidebarLinks from "@/components/SidebarLinks";
 import { FaPlus } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Skills: React.FC = () => {
-  // State for skill inputs and lists
   const [technicalSkill, setTechnicalSkill] = useState("");
   const [technicalSkillsList, setTechnicalSkillsList] = useState<string[]>([]);
 
@@ -22,24 +26,88 @@ const Skills: React.FC = () => {
   const [additionalSkill, setAdditionalSkill] = useState("");
   const [additionalSkillsList, setAdditionalSkillsList] = useState<string[]>([]);
 
-  // Handlers for adding skills to the list
+  const navigate = useNavigate();
+  
+  let cvData = useSelector(
+    (state: RootState) => state.cvData
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const addSkill = (
     skill: string,
-    setList: React.Dispatch<React.SetStateAction<string[]>>,
-    setSkill: React.Dispatch<React.SetStateAction<string>>
+    setList: React.Dispatch<React.SetStateAction<string[]>> | any,
+    setSkill: React.Dispatch<React.SetStateAction<string>>,
+    skillCategory: string
   ) => {
     if (skill.trim()) {
-      setList((prevList) => [...prevList, skill]);
+      let finalCat;
+      if(skillCategory === 'Industry-Specific Skill'){
+        finalCat = 'industrySkill' as unknown as keyof typeof cvData.skills
+      }else if (skillCategory === "Technical Skill"){
+        finalCat = 'technicalSkill' as unknown as keyof typeof cvData.skills
+      }else if (skillCategory === "Soft Skill"){
+      finalCat = 'softSkill' as unknown as keyof typeof cvData.skills
+      }else{
+        finalCat = 'additionalSkill' as unknown as keyof typeof cvData.skills
+      }
+      const updatedSkills = [...cvData.skills[finalCat], { skillName: skill }];
+
+      dispatch(updateSkills({
+        category: finalCat,
+        updatedSkills,
+      }));
+
+      setList((prevList:any) => [...prevList, skill]);
       setSkill("");
     }
   };
 
-  // Handler for removing skills from the list
+
   const removeSkill = (
     index: number,
-    setList: React.Dispatch<React.SetStateAction<string[]>>
+    setList: React.Dispatch<React.SetStateAction<string[]>> | any,
+    skillCategory: string
   ) => {
-    setList((prevList) => prevList.filter((_, i) => i !== index));
+    let finalCat;
+    if (skillCategory === "Industry-Specific Skill") {
+      finalCat = "industrySkill" as keyof typeof cvData.skills;
+    } else if (skillCategory === "Technical Skill") {
+      finalCat = "technicalSkill" as keyof typeof cvData.skills;
+    } else if (skillCategory === "Soft Skill") {
+      finalCat = "softSkill" as keyof typeof cvData.skills;
+    } else {
+      finalCat = "additionalSkill" as keyof typeof cvData.skills;
+    }
+  
+    const updatedSkills = cvData.skills[finalCat].filter((_, i) => i !== index);
+  
+    dispatch(updateSkills({
+      category: finalCat,
+      updatedSkills,
+    }));
+    setList(updatedSkills);
+  };
+
+  const handleValidation = () => {
+    let newError = "";
+
+    if (technicalSkillsList.length === 0 &&
+      softSkillsList.length === 0 &&
+      industrySkillsList.length === 0 &&
+      additionalSkillsList.length === 0){
+        newError = "At least one skill is required";
+        toast.error(newError)
+        return false
+      }
+      return true
+  };
+
+  const handleNextClick = async () => {
+    if (handleValidation()) {
+     return navigate("/education");
+    }
+    return false;
   };
 
   return (
@@ -74,7 +142,7 @@ const Skills: React.FC = () => {
                     setSkillList: setSoftSkillsList,
                   },
                   {
-                    label: "Industry-Specific Skills",
+                    label: "Industry-Specific Skill",
                     placeholder: "Industry-Specific Skills",
                     skill: industrySkill,
                     setSkill: setIndustrySkill,
@@ -82,7 +150,7 @@ const Skills: React.FC = () => {
                     setSkillList: setIndustrySkillsList,
                   },
                   {
-                    label: "Additional Skills",
+                    label: "Additional Skill",
                     placeholder: "Presentation Skills",
                     skill: additionalSkill,
                     setSkill: setAdditionalSkill,
@@ -100,7 +168,7 @@ const Skills: React.FC = () => {
                     />
                     <div
                       className="h-[1.987rem] w-[1.987rem] sm:h-[2.2rem] sm:w-[2.2rem] flex items-center justify-center gap-[0.36056rem] border-2 border-[#5D6078] rounded-full hover:border-black text-[#5D6078] hover:text-black hover:transition-all hover:duration-300 ease-in-out cursor-pointer self-center"
-                      onClick={() => addSkill(skill, setSkillList, setSkill)}
+                      onClick={() => addSkill(skill, setSkillList, setSkill, label as keyof typeof cvData.skills)}
                     >
                       <FaPlus className="w-[1.3rem] h-[1.3rem] color-[#5D6078]" />
                     </div>
@@ -111,7 +179,7 @@ const Skills: React.FC = () => {
                           <span>{skillItem}</span>
                           <FaTimes
                             className="cursor-pointer text-red-500 hover:text-gray-500 transition-all"
-                            onClick={() => removeSkill(index, setSkillList)}
+                            onClick={() => removeSkill(index, setSkillList, label as keyof typeof cvData.skills)}
                           />
                         </li>
                       ))}
@@ -123,7 +191,7 @@ const Skills: React.FC = () => {
             </div>
             <div className="flex gap-4">
               <BackButton />
-              <NextButton to="/education" />
+              <NextButton onClick={handleNextClick} />
             </div>
           </div>
         </div>

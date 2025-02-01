@@ -1,11 +1,46 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import WelcomeHeader from "@/components/welcomeHeader";
 import WelcomeDescription from "@/components/welcomeDescription";
 import WelcomeHeroBanner from "../../assets/images/welcomeHerobanner.svg";
 import arrow1 from "../../assets/images/arrow1.svg";
 import arrow2 from "../../assets/images/arrow2.svg";
+import { useEffect } from "react";
+import { icServiceUsers, UserInput } from "@/Api/userHandlers/userHandlers";
+import { toast } from "react-toastify";
+import { useUser } from "@/contexts/AuthContext";
 
 const WelcomeScreen: React.FC = () => {
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const { user } = useUser()
+
+  useEffect(()=> {
+    const checkUser = async () => {
+      try {
+        const userCheck = await icServiceUsers.getSingleUser();
+        if ('Err' in userCheck) {
+          const userInput: UserInput = {
+            bio: [],
+            plan: "Free"
+          };
+          await icServiceUsers.addNewUser(userInput);
+        }
+        toast.success("Welcome back!");
+        if (user.isAuthenticated && !location.state?.fromDashboard) {
+         return navigate("/user-dashboard");
+        }
+      } catch (error) {
+        console.error("Error checking user:", error);
+        toast.error("Error checking user profile");
+      }
+    }
+
+    checkUser()
+  },[])
+
   return (
     <>
       <section className="">

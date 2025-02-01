@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState, AppDispatch } from "@/redux/store";
@@ -8,12 +8,16 @@ import WelcomeDescription from "@/components/welcomeDescription";
 import WelcomeInput from "@/components/welcomeInput";
 import { NextButton } from "@/components/welcomeNavButtons";
 import SidebarLinks from "@/components/SidebarLinks";
+import { icServiceUsers } from "@/Api/userHandlers/userHandlers";
 
 const PersonalInformation: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const personalInfo = useSelector(
     (state: RootState) => state.cvData.personalInformation
+  );
+  const cvData = useSelector(
+    (state: RootState) => state.cvData
   );
 
   // Local state for errors
@@ -44,7 +48,7 @@ const PersonalInformation: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     if (handleValidation()) {
       navigate("/work-experience"); // Navigate to the next page
       return true;
@@ -52,6 +56,15 @@ const PersonalInformation: React.FC = () => {
     // Validation failed
     return false;
   };
+
+  // useEffect(() => {
+  //   const storedData: any = localStorage.getItem("personalInfo")
+  //   const extractedData = JSON.parse(`${storedData}`);
+  //   if (storedData) {
+  //     setPersonalData(extractedData);
+  //   }
+  // }, []);
+
 
   return (
     <>

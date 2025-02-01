@@ -6,6 +6,10 @@ import { NextButton, BackButton } from "@/components/welcomeNavButtons";
 import arrow2 from "../../assets/images/arrow2.svg";
 import SidebarLinks from "@/components/SidebarLinks";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { useNavigate } from "react-router-dom";
+import { updateAchievement } from "@/redux/cvDataSlice";
 
 const Achievement: React.FC = () => {
   // State for achievement inputs and lists
@@ -21,6 +25,8 @@ const Achievement: React.FC = () => {
   const [milestone, setMilestone] = useState("");
   const [milestonesList, setMilestonesList] = useState<string[]>([]);
 
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   // Handlers for adding achievements to the list
   const addAchievement = (
@@ -41,6 +47,24 @@ const Achievement: React.FC = () => {
   ) => {
     setList((prevList) => prevList.filter((_, i) => i !== index));
   };
+
+  const handleNext = () => {
+    if(awardsList.length > 0 ||
+      certificationsList.length > 0 ||
+      academicHonorsList.length > 0 ||
+      milestonesList.length > 0){
+
+        const updatedAchievements = {
+          awards: awardsList,
+          certifications: certificationsList,
+          academicHonors: academicHonorsList,
+          milestones: milestonesList,
+          };
+
+      dispatch(updateAchievement(updatedAchievements));
+      }
+    navigate("/portfolio");
+  }
 
   return (
     <>
@@ -137,7 +161,7 @@ const Achievement: React.FC = () => {
             </div>
             <div className="flex gap-4">
               <BackButton />
-              <NextButton to="/portfolio" />
+              <NextButton onClick={handleNext} />
             </div>
           </div>
         </div>

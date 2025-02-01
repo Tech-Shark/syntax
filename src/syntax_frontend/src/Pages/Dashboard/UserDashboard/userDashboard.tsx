@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/collapsible";
 import { useUser } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
-import { getSingleUser } from '@/Api/apiService';
+import { icServiceUsers } from "@/Api/userHandlers/userHandlers"
 import React from 'react';
 
 
@@ -29,7 +29,9 @@ const Dashboard: React.FC = () => {
 
       const singleUserData = async() => {
         const details = userDetails?.full_name[0].split(" ")
-      return setName(details[0])
+        if(details.length){
+          return setName(details[0])
+        }
     }
 
 useEffect(()=> {
@@ -83,11 +85,11 @@ useEffect(()=> {
           {/* get started button */}
         <div className="group flex lg:hidden items-center hover:bg-black rounded-full hover:p-2 hover:text-white transition-all delay-300">
             <span className="hidden items-center text-white gap-2 px-4 cursor-pointer group-hover:flex group-hover:transition-all group-hover:duration-300 group-hover:ease-in">
-            <Link to="/welcome"><h5 className='font-medium text-[1.125rem]'>Get started</h5></Link>
+            <Link to="/create-cv"><h5 className='font-medium text-[1.125rem]'>Get started</h5></Link>
           </span>
           <img src={build_icon} alt="build icon" className='w-[3rem] h-[3rem] cursor-pointer group-hover:transition-all group-hover:duration-300 group-hover:ease-in group-hover:w-[2rem] group-hover:h-[2rem] group-hover:rotate-[40deg]' />
         </div>
-          <Link to="/welcome" className='hidden group lg:flex items-center font-semibold lg:text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
+          <Link to="/create-cv" className='hidden group lg:flex items-center font-semibold lg:text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
             <p className='font-semibold text-[1.2rem] leading-[1.68rem] '>
                Get started
             </p>
@@ -96,7 +98,7 @@ useEffect(()=> {
         </div>  
        
         {/* upload cv part */}
-        <Link to="/welcome" className='flex items-center justify-center flex-col gap-[1.35rem] mt-[3.3rem] mb-0'>
+        <Link to="/create-cv" className='flex items-center justify-center flex-col gap-[1.35rem] mt-[3.3rem] mb-0'>
           <div className='flex items-center justify-center px-[1.69rem] py-[1.11rem] h-[12.6rem] w-[12.6rem] rounded-full border-8 border-[#5D6078] group hover:border-black'>
           <FaPlus className='w-[9.2rem] h-[9.2rem] text-[#5D6078] group-hover:text-black'/>
           </div>
@@ -120,11 +122,11 @@ useEffect(()=> {
           {/* get started button */}
           <div className="group flex lg:hidden items-center hover:bg-black rounded-full hover:p-2 hover:text-white transition-all delay-300">
             <span className="hidden items-center text-white gap-2 px-4 cursor-pointer group-hover:flex group-hover:transition-all group-hover:duration-300 group-hover:ease-in">
-            <Link to="/welcome"><h5 className='font-medium text-[1.125rem]'>Get started</h5></Link>
+            <Link to="/create-cv"><h5 className='font-medium text-[1.125rem]'>Get started</h5></Link>
           </span>
           <img src={build_icon} alt="build icon" className='w-[3rem] h-[3rem] cursor-pointer group-hover:transition-all group-hover:duration-300 group-hover:ease-in group-hover:w-[2rem] group-hover:h-[2rem] group-hover:rotate-[40deg]' />
         </div>
-          <Link to="/welcome" className='hidden group lg:flex items-center font-semibold lg:text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
+          <Link to="/create-cv" className='hidden group lg:flex items-center font-semibold lg:text-[1.34rem] leading-[1.68rem] bg-black text-white gap-2 rounded-3xl px-[1.03rem] py-[0.41rem] hover:gap-8 transition-all delay-300'>
             <p className='font-semibold text-[1.2rem] leading-[1.68rem] '>
                Get started
             </p>

@@ -17,6 +17,7 @@ import JobDescription from "./Pages/WelcomeScreen/jobDescription";
 import CvTemplate from "./Pages/WelcomeScreen/cvTemplates";
 import SavedTemplates from "./Pages/WelcomeScreen/saved-templates";
 import CreativeResume from "./Pages/WelcomeScreen/creativeResume";
+import CreateCvFlow from "./Pages/Cvflow/Cvflow";
 
 // Auth pages
 import AuthWelcome from "./Pages/Auth/authWelcome";
@@ -69,6 +70,7 @@ function App() {
           <Route path="/cv-templates" element={<CvTemplate />} />
           <Route path="/saved-templates" element={<SavedTemplates />} />
           <Route path="/creative-resume" element={<CreativeResume />} />
+          <Route path="/create-cv" element={<CreateCvFlow />} />
 
           {/* auth pages */}
           <Route path="/auth-welcome" element={<AuthWelcome />} />

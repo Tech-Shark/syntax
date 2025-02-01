@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { AuthClient } from "@dfinity/auth-client";
 import { toast } from 'react-toastify';
 import { 
-  initializeAuth, 
-  authenticateUser, 
-  addNewUser,
-  AUTH_MESSAGES,
   UserInput,
-  getSingleUser
-} from "../Api/apiService";
+  icServiceUsers
+} from "../Api/userHandlers/userHandlers";
+import { 
+  initializeAuth, 
+  authenticateUser,
+  AUTH_MESSAGES,
+} from "../Api/apiServiceSettings";
 
 interface UserDetails {
   principal: string | null;
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   
     const singleUserData = async() => {
-      const result:any = await getSingleUser()
+      const result:any = await icServiceUsers.getSingleUser()
       console.log('res', result.other.bio[0])
       return setUserDetails(result.other.bio[0])
     }
@@ -67,20 +68,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             isAuthenticated: true,
             authClient,
           });
-          const userCheck = await getSingleUser();
+          const userCheck = await icServiceUsers.getSingleUser();
           if ('Err' in userCheck) {
             const userInput: UserInput = {
               bio: [],
               plan: "Free"
             };
-            await addNewUser(userInput);
+            await icServiceUsers.addNewUser(userInput);
             toast.success("Authentication Successful")
           }
           navigate("/user-dashboard");
-          toast.success("Welcome back!");
+          return toast.success("Welcome back!");
         } else {
-          setUser(prev => ({ ...prev, authClient }));
-          navigate("/signup");
+          return setUser(prev => ({ ...prev, authClient }));
         }
       } catch (error) {
         console.error("Error initializing auth:", error);
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         };
         
         try {
-          await addNewUser(userInput);
+          await icServiceUsers.addNewUser(userInput);
           toast.success("Account created successfully!");
           navigate("/user-dashboard");
         } catch (error) {
@@ -125,13 +125,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       } else if (result === AUTH_MESSAGES.ALREADY_LOGGED_IN) {
         try {
-          const userCheck = await getSingleUser();
+          const userCheck = await icServiceUsers.getSingleUser();
           if ('Err' in userCheck) {
             const userInput: UserInput = {
               bio: [],
               plan: "Free"
             };
-            await addNewUser(userInput);
+            await icServiceUsers.addNewUser(userInput);
           }
           toast.success("Welcome back!");
           navigate("/user-dashboard");
