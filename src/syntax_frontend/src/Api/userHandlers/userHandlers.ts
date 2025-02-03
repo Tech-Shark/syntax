@@ -49,7 +49,6 @@ export const icServiceUsers = {
   async updateUser(userInput: any) {
     try {
         const response = await api.update_user(userInput);
-        return response;
       } catch (error) {
         console.error('Error in updating user:', error);
         throw error;

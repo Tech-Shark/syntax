@@ -39,7 +39,7 @@ const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
 const CvTemplateCarousel: React.FC = () => {
   const navigate = useNavigate();
 
-  const templates = Array.from({ length: 22 }, (_, index) => ({
+  const templates = Array.from({ length: 3 }, (_, index) => ({
     id: index + 1,
     title: `Template ${index + 1}`,
     description: `Description for template ${index + 1}. Showcase your creativity with a bold yet structured design. Perfect for creative professionals, it highlights key accomplishments, skills, and portfolio work.`,
