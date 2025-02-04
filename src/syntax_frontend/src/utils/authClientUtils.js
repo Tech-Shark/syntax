@@ -62,14 +62,16 @@ export const useAuthClient = (options = defaultOptions) => {
 
     if (isAuthenticated) {
       // Check if user has a profile
-    //   const role = await callFunction.get_user_role();
-      const role = await syntax_backend.get_user_role();
+      const role = await callFunction.get_user_role();
+
       console.log("role: ", role);
 
       if (role && role == "ADMIN") {
         console.log("admin");
+        navigate("/admin-dashboard");
       } else if (role && role == "USER") {
         console.log("user");
+        navigate("/user-dashboard");
       } else {
         console.log("no role");
       }
@@ -96,7 +98,7 @@ export const useAuthClient = (options = defaultOptions) => {
 
     // Methods for interacting with the backend actor
     const get_user_role = () => callFunction?.get_user_role();
-   
+
 
   return {
     isAuth,
