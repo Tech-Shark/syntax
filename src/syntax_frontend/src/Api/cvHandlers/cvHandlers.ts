@@ -12,12 +12,13 @@ export const icServiceCV = {
       const response: any = await Promise.race([apiPromise, timeoutPromise]);
 
       if ("Ok" in response) {
-        // Combine the result from local storage and API response
-        const combinedData = {
-          ...response.Ok,
-          localStorageData: JSON.parse(localStorage.getItem('cvData') || '{}') // Assuming 'cvData' is saved in localStorage
-        };
-        return combinedData;
+        return response.Ok;
+        // // Combine the result from local storage and API response
+        // const combinedData = {
+        //   ...response.Ok,
+        //   localStorageData: JSON.parse(localStorage.getItem('cvData') || '{}') // Assuming 'cvData' is saved in localStorage
+        // };
+        // return combinedData;
       } else if ("Err" in response) {
         throw new Error(response.Err.message);
       }
