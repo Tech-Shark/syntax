@@ -111,7 +111,7 @@ async fn initialise_payment(credit_plan: String) -> PaystackResponse {
         Err(_) => None,
         Ok(json_data) => Some(
             interact_with_paystack(
-                json_data,
+                Some(json_data),
                 endpoint,
                 request_method,
                 setting_data.unwrap().paystack_secret.unwrap(),
@@ -127,6 +127,73 @@ async fn initialise_payment(credit_plan: String) -> PaystackResponse {
     }
 
     match serde_json::from_str(&response.unwrap()) {
+        Err(_) => {
+            return PaystackResponse::Err(Error {
+                message: "Something went wrong while parsing transaction!".to_string(),
+            });
+        }
+        Ok(json_response) => {
+            return PaystackResponse::Ok(json_response);
+        }
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                               CONFIRM PAYMENT                              */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                      -                                     */
+/* -------------------------------------------------------------------------- */
+
+#[ic_cdk::update]
+async fn confirm_payment(reference: String) -> PaystackResponse {
+    let principal = ic_cdk::api::caller().to_text();
+    let endpoint = format!("/transaction/verify/{reference}");
+    let request_method: HttpMethod = HttpMethod::GET;
+
+    let user: Option<User> = USER_MAP.with(|map| map.borrow().get(&principal));
+    // let credit: Option<Credit> = CREDIT_MAP.with(|map| map.borrow().get(&credit_plan));
+
+    // Throw error if no user was found
+    if user.is_none() {
+        return PaystackResponse::Err(Error {
+            message: "This user hasn't registered!".to_string(),
+        });
+    }
+
+    // Throw error if no valid credit plan was found
+    // if credit.is_none() {
+    //     return PaystackResponse::Err(Error {
+    //         message: "An invalid credit plan was selected!".to_string(),
+    //     });
+    // }
+
+    let setting_data = get_setting();
+
+    if setting_data.is_none() {
+        return PaystackResponse::Err(Error {
+            message: "No setting was found!".to_string(),
+        });
+    }
+
+    if setting_data.clone().unwrap().paystack_secret.is_none() {
+        return PaystackResponse::Err(Error {
+            message: "No paystack token was found!".to_string(),
+        });
+    }
+
+    let response = interact_with_paystack(
+        None,
+        &endpoint,
+        request_method,
+        setting_data.unwrap().paystack_secret.unwrap(),
+    )
+    .await;
+
+    match serde_json::from_str(&response) {
         Err(_) => {
             return PaystackResponse::Err(Error {
                 message: "Something went wrong while initialising transaction!".to_string(),
