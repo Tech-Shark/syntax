@@ -47,8 +47,8 @@ interface CvDataState {
   portfolio: PortfolioDetails;
 }
 
-interface Education {
-  id:number;
+export interface Education {
+  id: number;
   degreeType: string;
   fieldStudy: string;
   universityName: string;

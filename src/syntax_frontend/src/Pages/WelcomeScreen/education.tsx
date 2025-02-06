@@ -10,7 +10,7 @@ import { RootState, AppDispatch } from "@/redux/store";
 import { addEducation, } from "@/redux/cvDataSlice";
 import { useNavigate } from "react-router-dom";
 
-interface EducationRecord {
+interface Education {
   id: number;
   degreeType: string;
   fieldStudy: string;
@@ -22,8 +22,13 @@ interface EducationRecord {
 }
 
 const Education: React.FC = () => {
-  const [educationRecords, setEducationRecords] = useState<EducationRecord[]>([]);
-  const [currentEducation, setCurrentEducation] = useState<EducationRecord>({
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch<AppDispatch>();
+  const education = useSelector((state: RootState) => state.cvData.education);
+
+  const [educationRecords, setEducationRecords] = useState<any>([]);
+  const [currentEducation, setCurrentEducation] = useState<Education>({
     id: Date.now(),
     degreeType: "",
     fieldStudy: "",
@@ -33,12 +38,15 @@ const Education: React.FC = () => {
     endDate: "",
     degreeClass: "",
   });
-  
-  const dispatch = useDispatch<AppDispatch>();
-  
-  const navigate = useNavigate();
 
-  const handleInputChange = (key: keyof EducationRecord, value: string) => {
+  // Auto-populate the form with Education from Redux
+  useEffect(() => {
+    if (education) {
+      setEducationRecords(education);
+    }
+  }, [education]);
+
+  const handleInputChange = (key: keyof Education, value: string) => {
     setCurrentEducation({ ...currentEducation, [key]: value });
   };
 
@@ -74,10 +82,10 @@ const Education: React.FC = () => {
   };
 
   const handleEditEducation = (id: number) => {
-    const educationToEdit = educationRecords.find((edu) => edu.id === id);
+    const educationToEdit = educationRecords.find((edu: { id: number; }) => edu.id === id);
     if (educationToEdit) {
       setCurrentEducation(educationToEdit);
-      setEducationRecords(educationRecords.filter((edu) => edu.id !== id));
+      setEducationRecords(educationRecords.filter((edu: { id: number; }) => edu.id !== id));
     }
   };
 
@@ -178,7 +186,7 @@ const handleNext = () => {
 
             {/* Render Added Education */}
             <div className="mt-10 w-full flex flex-col gap-6">
-              {educationRecords.map((education) => (
+              {educationRecords.map((education: Education) => (
                 <div
                   key={education.id}
                   className="bg-gray-100 p-4 rounded-lg shadow-md flex justify-between items-start"

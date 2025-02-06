@@ -10,6 +10,7 @@ export const icServiceCV = {
       const apiPromise = api.analyze_cv(cvData);
 
       const response: any = await Promise.race([apiPromise, timeoutPromise]);
+      console.log("CV Analysis Promise: ", response);
 
       if ("Ok" in response) {
         return response.Ok;

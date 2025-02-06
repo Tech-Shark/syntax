@@ -1,8 +1,10 @@
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "./redux/store";
+
 // homepage
 import Homepage from "./Pages/Homepage/homepage";
+
 // setup pages
 import WelcomeScreen from "./Pages/WelcomeScreen/WelcomeScreen";
 import UploadCv from "./Pages/WelcomeScreen/Uploadcv";
@@ -58,6 +60,7 @@ function App() {
             pauseOnHover
             theme="light"
           />
+
           <Routes>
             <Route path="/" element={<Homepage/>} />
             <Route path="/welcome" element={<WelcomeScreen />} />

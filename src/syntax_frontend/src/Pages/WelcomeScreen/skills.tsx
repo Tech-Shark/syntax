@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import WelcomeHeader from "@/components/welcomeHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
@@ -14,6 +14,9 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Skills: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const skills = useSelector((state: RootState) => state.cvData.skills);
+
   const [technicalSkill, setTechnicalSkill] = useState("");
   const [technicalSkillsList, setTechnicalSkillsList] = useState<string[]>([]);
 
@@ -27,12 +30,21 @@ const Skills: React.FC = () => {
   const [additionalSkillsList, setAdditionalSkillsList] = useState<string[]>([]);
 
   const navigate = useNavigate();
-  
+
   let cvData = useSelector(
     (state: RootState) => state.cvData
   );
 
-  const dispatch = useDispatch<AppDispatch>();
+  // Auto-populate the form with skills from Redux
+  useEffect(() => {
+    if (skills) {
+      setTechnicalSkillsList(skills.technicalSkill.map((skill) => skill.skillName));
+      setSoftSkillsList(skills.softSkill.map((skill) => skill.skillName));
+      setIndustrySkillsList(skills.industrySkill.map((skill) => skill.skillName));
+      setAdditionalSkillsList(skills.additionalSkill.map((skill) => skill.skillName));
+    }
+  }, [skills]);
+
 
   const addSkill = (
     skill: string,
@@ -79,9 +91,9 @@ const Skills: React.FC = () => {
     } else {
       finalCat = "additionalSkill" as keyof typeof cvData.skills;
     }
-  
+
     const updatedSkills = cvData.skills[finalCat].filter((_, i) => i !== index);
-  
+
     dispatch(updateSkills({
       category: finalCat,
       updatedSkills,
