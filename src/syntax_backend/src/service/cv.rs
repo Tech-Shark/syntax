@@ -59,6 +59,8 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
     // Check if the monthly limit has been exhausted for free users
     if user_current_plan == FREE_PLAN.to_string() {
         let cv_storage_map_response = CV_STORAGE_MAP.with(|map| {
+            return None;
+
             let map = map.borrow_mut();
 
             let res = map.get(&principal);
