@@ -12,6 +12,7 @@ fn reset_credit() {
     let updated_data = Credit {
         name: Some(FREE_PLAN.to_string()),
         value: Some(0),
+        price: Some(0),
     };
 
     CREDIT_MAP.with(|map| map.borrow_mut().insert(FREE_PLAN.to_string(), updated_data));

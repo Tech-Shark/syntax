@@ -4,5 +4,6 @@ pub mod credit;
 pub mod cv;
 pub mod grammar;
 pub mod notificatons;
+pub mod setting;
 pub mod user;
 pub mod util;

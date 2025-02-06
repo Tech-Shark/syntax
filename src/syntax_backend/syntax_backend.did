@@ -32,7 +32,7 @@ type CVUserInput = record {
   cv_text : text;
   job_description : text;
 };
-type Credit = record { value : opt nat64; name : opt text };
+type Credit = record { value : opt nat64; name : opt text; price : opt nat16 };
 type CreditResponse = variant { Ok : CreditResponseOk; Err : Error_1 };
 type CreditResponseOk = variant { Message : text; Credit : Credit };
 type Error = record { message : text };
@@ -141,6 +141,35 @@ type NotificationForTierResponse_1 = variant {
   Ok : NotificationForTierResponseOk_1;
   Err : Error_1;
 };
+type Paystack = record { value : opt nat64; name : opt text };
+type PaystackInitialiseResponse = record {
+  status : bool;
+  data : PaystackInitialiseResponseData;
+  message : text;
+};
+type PaystackInitialiseResponseData = record {
+  authorization_url : text;
+  reference : text;
+  access_code : text;
+};
+type PaystackResponse = variant { Ok : PaystackResponseOk; Err : Error_1 };
+type PaystackResponseOk = variant {
+  Message : text;
+  Paystack : Paystack;
+  PaystackInitialiseResponse : PaystackInitialiseResponse;
+};
+type Setting = record {
+  paystack_secret : opt text;
+  password : text;
+  max_freemium_users : nat64;
+};
+type SettingInput = record {
+  paystack_secret : opt text;
+  password : opt text;
+  max_freemium_users : opt nat64;
+};
+type SettingResponse = variant { Ok : SettingResponseOk; Err : Error_1 };
+type SettingResponseOk = variant { Message : text; Setting : Setting };
 type TransformArgs = record { context : blob; response : HttpResponse };
 type User = record {
   id : text;
@@ -168,9 +197,10 @@ service : () -> {
       NotificationForTierResponse,
     );
   add_new_user : (UserInput) -> (UserResponse);
-  add_single_credit_plan : (text, nat64, text) -> (CreditResponse);
+  add_single_credit_plan : (text, nat64, nat16, text) -> (CreditResponse);
   analyze_cv : (CVUserInput) -> (CVResponse);
   analyze_grammar : (GrammarUserInput) -> (GrammarResponse);
+  confirm_payment : (text) -> (PaystackResponse);
   cv_total_users : () -> (int64) query;
   delete_cv_analysis : (text) -> (text);
   delete_grammar_analysis : (text) -> (text);
@@ -209,6 +239,7 @@ service : () -> {
   get_user_role : () -> (UserResponse_1) query;
   get_users_by_tier : (text) -> (vec User) query;
   gr_total_users : () -> (int64) query;
+  initialise_payment : (text) -> (PaystackResponse);
   mark_notification_as_read : (text) -> (NotificationForSingleUserResponse_1);
   put_cv_analysis : (text, text, CVUserInput, AnalysisResult) -> (text);
   put_grammar_analysis : (text, text, GrammarUserInput, GrammarCheckResult) -> (
@@ -227,6 +258,7 @@ service : () -> {
   update_grammar_analysis : (text, GrammarUserInput, GrammarCheckResult) -> (
       text,
     );
+  update_setting : (text, SettingInput) -> (SettingResponse);
   update_single_credit_plan : (text, nat64, text) -> (CreditResponse);
   update_user : (UserInput) -> (UserResponse);
 }

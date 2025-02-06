@@ -49,12 +49,12 @@ const SavedTemplates: React.FC = () => {
 
   const renderTemplate = () => {
     if (!savedTemplate) return null;
-    
+
     switch (savedTemplate.id) {
-       case 1:
-        // return <Template1 cvData={cvData} />;
+      case 1:
+      // return <Template1 cvData={cvData} />;
       case 2:
-        return <Template2 cvData={cvData}/>;
+      // return <Template2 cvData={cvData}/>;
       case 3:
         return <Template3 />;
       case 4:
@@ -102,35 +102,66 @@ const SavedTemplates: React.FC = () => {
 
   return (
     <section>
-      <WelcomeHeader leftLabel="Edit my Info" leftLink="/edit-cv" rightLabel="View Templates" rightLink="/templates">
+      <WelcomeHeader
+        leftLabel="Edit my Info"
+        leftLink="/edit-cv"
+        rightLabel="View Templates"
+        rightLink="/templates"
+      >
         <div className="flex justify-center items-center flex-col h-auto w-full pt-32 pr-[0.8125rem] pb-10 pl-3.5 gap-[6.25rem]">
           <div className="flex flex-col justify-center items-center gap-5">
-            <WelcomeDescription 
+            <WelcomeDescription
               heading="Your Template Has Been Saved!"
               subheading="We've saved all your details, and they're ready to be used for creating your standout CV."
             />
             <div className="group relative lg:h-[17.8rem] h-[25vh] md:h-[30vh] w-full md:w-4/5 mt-8 overflow-hidden cursor-pointer pt-10">
-              <img src={purple_hero} alt="Saved Template" className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] left-0 md:left-0 group-hover:-translate-y-4 group-hover:-translate-x-2lg:group-hover:-translate-y-4 lg:group-hover:-translate-x-3 transform-gpu" />
-              <img src={purple_hero2} alt="Saved templates"  className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-4 md:-translate-x-8 lg:-translate-x-12 group-hover:translate-y-2 group-hover:-translate-x-6 group-hover:-rotate-12 lg:group-hover:translate-y-4 lg:group-hover:-translate-x-14 transform-gpu" />
-              <img src={purple_hero3} alt="Saved templates" className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-4 md:translate-x-8 lg:translate-x-12 group-hover:translate-y-2 group-hover:translate-x-6 group-hover:rotate-12 lg:group-hover:translate-y-4 lg:group-hover:translate-x-14 transform-gpu" />
-            </div>
-          </div>
-          
-          {/* Hidden template renderer for PDF */}
-          <div className="hidden">
-            <div ref={resumeRef}>
-              {renderTemplate()}
+              <img
+                src={purple_hero}
+                alt="Saved Template"
+                className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] left-0 md:left-0 group-hover:-translate-y-4 group-hover:-translate-x-2lg:group-hover:-translate-y-4 lg:group-hover:-translate-x-3 transform-gpu"
+              />
+              <img
+                src={purple_hero2}
+                alt="Saved templates"
+                className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] -translate-x-4 md:-translate-x-8 lg:-translate-x-12 group-hover:translate-y-2 group-hover:-translate-x-6 group-hover:-rotate-12 lg:group-hover:translate-y-4 lg:group-hover:-translate-x-14 transform-gpu"
+              />
+              <img
+                src={purple_hero3}
+                alt="Saved templates"
+                className="h-full w-full md:w-full absolute transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] translate-x-4 md:translate-x-8 lg:translate-x-12 group-hover:translate-y-2 group-hover:translate-x-6 group-hover:rotate-12 lg:group-hover:translate-y-4 lg:group-hover:translate-x-14 transform-gpu"
+              />
             </div>
           </div>
 
+          {/* Hidden template renderer for PDF */}
+          <div className="hidden">
+            <div ref={resumeRef}>{renderTemplate()}</div>
+          </div>
+
           <div className="flex flex-col gap-5 items-center">
-            <button className="flex items-center justify-center gap-2 py-[0.41rem] px-[1.03rem] bg-[#000006] rounded-3xl" onClick={handleDownload}>
-              <p className="text-white text-center font-semibold leading-7 text-lg">Download</p>
-              <img src={arrow1} alt="Upload CV" className="w-[1.92rem] h-[1.92rem]"/>
+            <button
+              className="flex items-center justify-center gap-2 py-[0.41rem] px-[1.03rem] bg-[#000006] rounded-3xl"
+              onClick={handleDownload}
+            >
+              <p className="text-white text-center font-semibold leading-7 text-lg">
+                Download
+              </p>
+              <img
+                src={arrow1}
+                alt="Upload CV"
+                className="w-[1.92rem] h-[1.92rem]"
+              />
             </button>
-            <Link to="/user-dashboard" className="flex items-center justify-center gap-2 self-stretch rounded-[1.8rem] py-[0.65rem] px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)]">
-              <p className="text-[#3D3F4E] text-center text-lg font-semibold leading-8">Go to Dashboard</p>
-              <div className="flex items-center justify-center bg-[#3D3F4E] w-[2.33rem] h-[2.33rem] rounded-full"><img src={arrow2} alt="Build new cv" /></div>
+            <Link
+              to="/user-dashboard"
+              className="flex items-center justify-center gap-2 self-stretch rounded-[1.8rem] py-[0.65rem] px-5 bg-white [box-shadow:-2px_-4px_25.7px_0_rgba(0,0,0,0.1),_2px_4px_28.7px_0_rgba(0,0,0,0.1)]"
+            >
+              <p className="text-[#3D3F4E] text-center text-lg font-semibold leading-8">
+                Go to Dashboard
+              </p>
+              <div className="flex items-center justify-center bg-[#3D3F4E] w-[2.33rem] h-[2.33rem] rounded-full">
+                <img src={arrow2} alt="Build new cv" />
+              </div>
             </Link>
           </div>
         </div>

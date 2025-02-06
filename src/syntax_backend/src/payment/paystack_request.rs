@@ -2,10 +2,8 @@
 //This includes all methods and types needed
 use crate::service::util;
 use ic_cdk::api::management_canister::http_request::{
-    http_request, CanisterHttpRequestArgument, HttpHeader, HttpMethod, HttpResponse, TransformArgs,
-    TransformContext,
+    http_request, CanisterHttpRequestArgument, HttpHeader, HttpMethod, TransformContext,
 };
-use ic_cdk_macros::{self, query};
 use serde::{Deserialize, Serialize};
 use serde_json::{self, Value};
 
@@ -18,7 +16,7 @@ struct Context {
 
 //Update method using the HTTPS outcalls feature
 pub async fn interact_with_paystack(
-    data: Value,
+    data: Option<Value>,
     endpoint: &str,
     request_method: HttpMethod,
     secret_token: String,
@@ -26,7 +24,7 @@ pub async fn interact_with_paystack(
     //2. SETUP ARGUMENTS FOR HTTP GET request
 
     // 2.1 Setup the URL
-    let host = "https://api.paystack.co/";
+    let host = "https://api.paystack.co";
     let url = format!("{host}{endpoint}");
     let new_idx: Option<String> = util::generate_random_string().await;
 
@@ -89,12 +87,20 @@ pub async fn interact_with_paystack(
     //1. Declare a JSON string to send
     //2. Convert that JSON string to array of UTF8 (u8)
     //3. Wrap that array in an optional
-    let json_string: String = data.to_string();
+    let json_string: String = if data.is_some() {
+        data.unwrap().to_string()
+    } else {
+        "{}".to_string()
+    };
 
     //note: here, r#""# is used for raw strings in Rust, which allows you to include characters like " and \ without needing to escape them.
     //We could have used "serde_json" as well.
     let json_utf8: Vec<u8> = json_string.into_bytes();
-    let request_body: Option<Vec<u8>> = Some(json_utf8);
+    let request_body: Option<Vec<u8>> = if request_method == HttpMethod::GET {
+        None
+    } else {
+        Some(json_utf8)
+    };
 
     // This struct is legacy code and is not really used in the code. Need to be removed in the future
     // The "TransformContext" function does need a CONTEXT parameter, but this implementation is not necessary
@@ -151,48 +157,4 @@ pub async fn interact_with_paystack(
             message
         }
     }
-}
-
-// Strips all data that is not needed from the original response.
-#[query]
-fn transform(raw: TransformArgs) -> HttpResponse {
-    let headers = vec![
-        HttpHeader {
-            name: "Content-Security-Policy".to_string(),
-            value: "default-src 'self'".to_string(),
-        },
-        HttpHeader {
-            name: "Referrer-Policy".to_string(),
-            value: "strict-origin".to_string(),
-        },
-        HttpHeader {
-            name: "Permissions-Policy".to_string(),
-            value: "geolocation=(self)".to_string(),
-        },
-        HttpHeader {
-            name: "Strict-Transport-Security".to_string(),
-            value: "max-age=63072000".to_string(),
-        },
-        HttpHeader {
-            name: "X-Frame-Options".to_string(),
-            value: "DENY".to_string(),
-        },
-        HttpHeader {
-            name: "X-Content-Type-Options".to_string(),
-            value: "nosniff".to_string(),
-        },
-    ];
-
-    let mut res = HttpResponse {
-        status: raw.response.status.clone(),
-        body: raw.response.body.clone(),
-        headers,
-        ..Default::default()
-    };
-    if res.status.to_string() == "200" {
-        res.body = raw.response.body;
-    } else {
-        ic_cdk::api::print(format!("Received an error from paystack: err = {:?}", raw));
-    }
-    res
 }

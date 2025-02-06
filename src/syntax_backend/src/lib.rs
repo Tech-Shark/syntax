@@ -1,4 +1,5 @@
 // All these imports are relevant to the export_candid macro
+use crate::payment::paystack_schema::PaystackResponse;
 use crate::schema::admin::Admin;
 use crate::schema::admin::AdminInput;
 use crate::schema::admin::AdminResponse;
@@ -21,12 +22,15 @@ use crate::schema::notifications::notification_for_single_user::NotificationForS
 use crate::schema::notifications::notification_for_tier::NotificationForTier;
 use crate::schema::notifications::notification_for_tier::NotificationForTierInput;
 use crate::schema::notifications::notification_for_tier::NotificationForTierResponse;
+use crate::schema::setting::SettingInput;
+use crate::schema::setting::SettingResponse;
 use crate::schema::user::User;
 use crate::schema::user::UserInput;
 use crate::schema::user::UserResponse;
 use ic_cdk::api::management_canister::http_request::HttpResponse;
 use ic_cdk::api::management_canister::http_request::TransformArgs;
 
+pub mod payment;
 pub mod schema;
 pub mod service;
 pub mod storage;
