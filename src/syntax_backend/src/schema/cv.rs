@@ -9,9 +9,9 @@ const MAX_VALUE_SIZE: u32 = 1000000;
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct CVUserInput {
-    pub cv_template: String,
-    pub cv_text: String,
     pub job_description: String,
+    pub cv_text: String,
+    pub cv_template: String,
 }
 
 impl Storable for CVUserInput {
@@ -29,12 +29,43 @@ impl Storable for CVUserInput {
     };
 }
 
+// #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+// pub struct AnalysisResult {
+//     pub skills: String,
+//     pub work_experience: String,
+//     pub professional_summary: String,
+// }
+
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+pub struct WorkExperience {
+    pub company_name: String,
+    pub job_title: String,
+    pub duration: String,
+    pub duties: Vec<String>, // List of duties
+}
+
+impl Storable for WorkExperience {
+    fn to_bytes(&self) -> Cow<[u8]> {
+        Cow::Owned(Encode!(self).unwrap()) // Correct: Candid encoding
+    }
+
+    fn from_bytes(bytes: Cow<[u8]>) -> Self {
+        Decode!(bytes.as_ref(), Self).unwrap() // Correct: Candid decoding
+    }
+
+    const BOUND: Bound = Bound::Bounded {
+        max_size: MAX_VALUE_SIZE, // Adjust according to your needs
+        is_fixed_size: false,
+    };
+}
+
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct AnalysisResult {
-    pub skills: String,
-    pub work_experience: String,
-    pub professional_summary: String,
+    pub work_experience: Vec<WorkExperience>, // Expecting a list of work experiences
+    pub skills: Vec<String>, // Expecting a list of skills instead of a single String
+    pub professional_summary: String, // Unchanged
 }
+
 
 impl Storable for AnalysisResult {
     fn to_bytes(&self) -> Cow<[u8]> {
@@ -50,6 +81,29 @@ impl Storable for AnalysisResult {
         is_fixed_size: false,
     };
 }
+
+
+// #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+// pub struct CVEnhancer {
+//     pub enhanced_cv: String,
+//     pub enhanced_ats_score: String,
+//     pub interview_prep: String,
+// }
+
+// impl Storable for CVEnhancer {
+//     fn to_bytes(&self) -> Cow<[u8]> {
+//         Cow::Owned(Encode!(self).unwrap())
+//     }
+
+//     fn from_bytes(bytes: Cow<[u8]>) -> Self {
+//         Decode!(bytes.as_ref(), Self).unwrap()
+//     }
+
+//     const BOUND: Bound = Bound::Bounded {
+//         max_size: MAX_VALUE_SIZE,
+//         is_fixed_size: false,
+//     };
+// }
 
 #[derive(CandidType, Deserialize, Debug, Clone)]
 pub struct CVAnalysis {

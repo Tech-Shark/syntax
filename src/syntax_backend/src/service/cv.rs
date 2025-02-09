@@ -86,7 +86,8 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
 
     // Make the AI call
     let response = ai::call_ai_service(json_value, "cv-analysis").await;
-    let result = serde_json::from_str(&response);
+    // let response = ai::call_ai_service(json_value, "cv-enhancer").await; // for cv-enhancer
+    let result = serde_json::from_str::<AnalysisResult>(&response);
 
     let result: AnalysisResult = match result {
         Ok(result) => result,
@@ -95,6 +96,17 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
                 message: format!("error validating result, string response {response}: {e}"),
             })
         }
+
+        // cv-enhancer
+    // let result = serde_json::from_str::<AnalysisResult>(&response);
+
+    // let result: AnalysisResult = match result {
+    //     Ok(result) => result,
+    //     Err(e) => {
+    //         return CVResponse::Err(Error {
+    //             message: format!("error validating result, string response {response}: {e}"),
+    //         })
+    //     }
     };
 
     let idx =

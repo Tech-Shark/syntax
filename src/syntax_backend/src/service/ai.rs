@@ -23,7 +23,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
     // 2.1 Setup the URL
     // let host = "https://ai-service-manager.fly.dev";
     let host = "https://ai-proxy-service-icp.fly.dev";
-    let url = format!("https://ai-proxy-service-icp.fly.dev{endpoint}");
+    let url = format!("https://ai-proxy-service-icp.fly.dev/{endpoint}");
     let new_idx: Option<String> = util::generate_random_string().await;
     if new_idx.is_none() {
         return "Failed to generate Idempotency key".to_string();
@@ -136,7 +136,7 @@ pub async fn call_ai_service(data: Value, endpoint: &str) -> String {
         Err((r, m)) => {
             let message =
                 format!("The http_request resulted into error. RejectionCode: {r:?}, Error: {m}");
-
+                ic_cdk::api::print(&message); // Log the error message
             //Return the error as a string and end the method
             message
         }
