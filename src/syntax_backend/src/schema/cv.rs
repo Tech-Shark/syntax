@@ -31,9 +31,17 @@ impl Storable for CVUserInput {
 
 #[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
 pub struct AnalysisResult {
-    pub skills: String,
-    pub work_experience: String,
+    pub skills: Vec<String>,
+    pub work_experience: Vec<WorkExperience>,
     pub professional_summary: String,
+}
+
+#[derive(CandidType, Serialize, Deserialize, Debug, Clone)]
+pub struct WorkExperience {
+    company_name: String,
+    job_title: String,
+    duration: String,
+    duties: Vec<String>,
 }
 
 impl Storable for AnalysisResult {
@@ -127,7 +135,7 @@ pub struct Error {
 }
 
 #[derive(CandidType, Deserialize)]
-pub enum CVResponse {
-    Ok(CVAnalysisResponse),
+pub enum CVResponse<T = CVAnalysisResponse> {
+    Ok(T),
     Err(Error),
 }

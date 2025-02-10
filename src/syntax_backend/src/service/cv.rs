@@ -8,7 +8,7 @@ use crate::QUOTA_ERROR;
 use crate::{storage, MONTHLY_TRIAL_ERROR};
 
 #[ic_cdk::update]
-async fn analyze_cv(request: CVUserInput) -> CVResponse {
+async fn analyze_cv(request: CVUserInput) -> CVResponse<String> {
     let principal = ic_cdk::api::caller().to_text();
     let mut user_current_plan = FREE_PLAN.to_string();
     let json_value = serde_json::to_value(request.clone());
@@ -23,22 +23,24 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
     };
 
     // Check if the user has enough credits
-    let user_has_credit = {
-        match USER_MAP.with(|map| map.borrow().get(&principal)) {
-            Some(data) => {
-                user_current_plan = data.other.plan;
+    let user_has_credit = Some("PROCEED".to_string());
+    // {
 
-                if data.amount_of_credits == 0 {
-                    Some(INSUFFICIENT_CREDIT.to_string())
-                } else {
-                    // Proceed
-                    Some("PROCEED".to_string())
-                }
-            }
+    //     match USER_MAP.with(|map| map.borrow().get(&principal)) {
+    //         Some(data) => {
+    //             user_current_plan = data.other.plan;
 
-            None => None,
-        }
-    };
+    //             if data.amount_of_credits == 0 {
+    //                 Some(INSUFFICIENT_CREDIT.to_string())
+    //             } else {
+    //                 // Proceed
+    //                 Some("PROCEED".to_string())
+    //             }
+    //         }
+
+    //         None => None,
+    //     }
+    // };
 
     // No user found
     if user_has_credit.is_none() {
@@ -86,43 +88,45 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
 
     // Make the AI call
     let response = ai::call_ai_service(json_value, "cv-analysis").await;
-    let result = serde_json::from_str(&response);
+    // let result = serde_json::from_str(&response);
 
-    let result: AnalysisResult = match result {
-        Ok(result) => result,
-        Err(e) => {
-            return CVResponse::Err(Error {
-                message: format!("error validating result, string response {response}: {e}"),
-            })
-        }
-    };
+    // let result: AnalysisResult = match result {
+    //     Ok(result) => result,
+    //     Err(e) => {
+    //         return CVResponse::Err(Error {
+    //             message: format!("error validating result, string response {response}: {e}"),
+    //         })
+    //     }
+    // };
 
-    let idx =
-        storage::cv::add_cv_analysis(principal.clone(), request.clone(), result.clone()).await;
+    // let idx =
+    //     storage::cv::add_cv_analysis(principal.clone(), request.clone(), result.clone()).await;
 
-    if idx.is_none() {
-        CVResponse::Err(Error {
-            message: "error storing analysis".to_string(),
-        })
-    } else {
-        let val = idx.unwrap();
+    // if idx.is_none() {
+    //     CVResponse::Err(Error {
+    //         message: "error storing analysis".to_string(),
+    //     })
+    // } else {
+    //     let val = idx.unwrap();
 
-        if val.to_string() == QUOTA_ERROR.to_string() {
-            return CVResponse::Err(Error {
-                message: "Quota Error: number of trails exceeded.".to_string(),
-            });
-        }
+    //     if val.to_string() == QUOTA_ERROR.to_string() {
+    //         return CVResponse::Err(Error {
+    //             message: "Quota Error: number of trails exceeded.".to_string(),
+    //         });
+    //     }
 
-        if let Some(response) = subtract_credit_from_user(&principal) {
-            return CVResponse::Err(Error { message: response });
-        }
+    //     if let Some(response) = subtract_credit_from_user(&principal) {
+    //         return CVResponse::Err(Error { message: response });
+    //     }
 
-        CVResponse::Ok(CVAnalysisResponse {
-            idx: val,
-            request,
-            result,
-        })
-    }
+    //     CVResponse::Ok(CVAnalysisResponse {
+    //         idx: val,
+    //         request,
+    //         result,
+    //     })
+    // }
+
+    CVResponse::Ok(response)
 }
 
 #[ic_cdk::query]
