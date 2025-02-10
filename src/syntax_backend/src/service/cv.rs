@@ -87,15 +87,24 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
     // Make the AI call
     let response = ai::call_ai_service(json_value, "cv-analysis").await;
     // let response = ai::call_ai_service(json_value, "cv-enhancer").await; // for cv-enhancer
-    let result = serde_json::from_str::<AnalysisResult>(&response);
+    // let result = serde_json::from_str::<AnalysisResult>(&response).unwrap();
 
-    let result: AnalysisResult = match result {
-        Ok(result) => result,
+    // let result: AnalysisResult = match result {
+    //     Ok(result) => result,
+    //     Err(e) => {
+    //         return CVResponse::Err(Error {
+    //             message: format!("error validating result, string response {response}: {e}"),
+    //         })
+    //     }
+
+    let result: AnalysisResult = match serde_json::from_str::<AnalysisResult>(&response) {
+        Ok(result) => result,  // Correct: Handle the Ok case
         Err(e) => {
             return CVResponse::Err(Error {
-                message: format!("error validating result, string response {response}: {e}"),
-            })
+                message: format!("error validating result, string response {response}: {e}"), // Correct: Handle the Err case
+            });
         }
+    };
 
         // cv-enhancer
     // let result = serde_json::from_str::<AnalysisResult>(&response);
@@ -107,34 +116,47 @@ async fn analyze_cv(request: CVUserInput) -> CVResponse {
     //             message: format!("error validating result, string response {response}: {e}"),
     //         })
     //     }
-    };
+    // };
 
-    let idx =
-        storage::cv::add_cv_analysis(principal.clone(), request.clone(), result.clone()).await;
-
-    if idx.is_none() {
-        CVResponse::Err(Error {
-            message: "error storing analysis".to_string(),
-        })
-    } else {
-        let val = idx.unwrap();
-
-        if val.to_string() == QUOTA_ERROR.to_string() {
-            return CVResponse::Err(Error {
-                message: "Quota Error: number of trails exceeded.".to_string(),
-            });
-        }
-
+    // let idx =
+    //     storage::cv::add_cv_analysis(principal.clone(), request.clone(), result.clone()).await;
+        // Construct the CVAnalysisResponse directly - DO NOT call storage::cv::add_cv_analysis
+    
+        let cv_analysis_response = CVAnalysisResponse {
+            idx: "".to_string(), // Or some other placeholder if 'idx' is required by your frontend
+            request: request.clone(), // Clone request here
+            result: result.clone(), // Clone result here
+        };
+    
         if let Some(response) = subtract_credit_from_user(&principal) {
             return CVResponse::Err(Error { message: response });
         }
+    
+        CVResponse::Ok(cv_analysis_response) // Return the response directly
 
-        CVResponse::Ok(CVAnalysisResponse {
-            idx: val,
-            request,
-            result,
-        })
-    }
+    // if idx.is_none() {
+    //     CVResponse::Err(Error {
+    //         message: "error storing analysis".to_string(),
+    //     })
+    // } else {
+    //     let val = idx.unwrap();
+
+    //     if val.to_string() == QUOTA_ERROR.to_string() {
+    //         return CVResponse::Err(Error {
+    //             message: "Quota Error: number of trails exceeded.".to_string(),
+    //         });
+    //     }
+
+    //     if let Some(response) = subtract_credit_from_user(&principal) {
+    //         return CVResponse::Err(Error { message: response });
+    //     }
+
+    //     CVResponse::Ok(CVAnalysisResponse {
+    //         idx: val,
+    //         request,
+    //         result,
+    //     })
+    // }
 }
 
 #[ic_cdk::query]

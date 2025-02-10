@@ -5,8 +5,8 @@ type AdminResponseOk = variant { Message : text; Admin : Admin };
 type AdminRole = variant { READ; WRITE };
 type AnalysisResult = record {
   professional_summary : text;
-  work_experience : text;
-  skills : text;
+  work_experience : vec WorkExperience;
+  skills : vec text;
 };
 type BioData = record {
   linkedin : opt text;
@@ -28,8 +28,8 @@ type CVAnalysisResponse = record {
 };
 type CVResponse = variant { Ok : CVAnalysisResponse; Err : Error_1 };
 type CVUserInput = record {
-  cv_template : text;
   cv_text : text;
+  cv_template : text;
   job_description : text;
 };
 type Credit = record { value : opt nat64; name : opt text };
@@ -151,22 +151,28 @@ type User = record {
 type UserInput = record { bio : opt BioData; plan : text };
 type UserResponse = variant { Ok : User; Err : Error_1 };
 type UserResponse_1 = variant { Ok : text; Err : Error_1 };
+type WorkExperience = record {
+  duration : text;
+  job_title : text;
+  company_name : text;
+  duties : vec text;
+};
 service : () -> {
   add_credits_to_user : () -> (UserResponse);
   add_cv_analysis : (text, CVUserInput, AnalysisResult) -> (opt text);
   add_grammar_analysis : (text, GrammarUserInput, GrammarCheckResult) -> (
-    opt text
-  );
+      opt text,
+    );
   add_new_admin : (text) -> (AdminResponse);
   add_new_notification_for_everybody : (NotificationForEverybodyInput) -> (
-    NotificationForEverybodyResponse
-  );
+      NotificationForEverybodyResponse,
+    );
   add_new_notification_for_single_user : (NotificationForEverybodyInput) -> (
-    NotificationForSingleUserResponse
-  );
+      NotificationForSingleUserResponse,
+    );
   add_new_notification_for_tier : (NotificationForTierInput) -> (
-    NotificationForTierResponse
-  );
+      NotificationForTierResponse,
+    );
   add_new_user : (UserInput) -> (UserResponse);
   add_single_credit_plan : (text, nat64, text) -> (CreditResponse);
   analyze_cv : (CVUserInput) -> (CVResponse);
@@ -177,25 +183,25 @@ service : () -> {
   delete_single_credit_plan : (text, text) -> (CreditResponse);
   fetch_all_cv_analysis_for_identity : (text) -> (vec CVAnalysisResponse) query;
   fetch_all_grammar_analysis_for_identity : (text) -> (
-    vec GrammarAnalysisResponse
-  ) query;
+      vec GrammarAnalysisResponse,
+    ) query;
   fetch_cv_analysis : (text, text) -> (opt CVAnalysisResponse) query;
   fetch_grammar_analysis : (text, text) -> (opt GrammarAnalysisResponse) query;
   fetch_single_cv_analysis_for_identity : (text, text) -> (
-    vec CVAnalysisResponse
-  ) query;
+      vec CVAnalysisResponse,
+    ) query;
   get_all_admin_profile : () -> (vec Admin) query;
   get_all_credit_plan : () -> (vec Credit) query;
   get_all_cv_analysis_for_identity : () -> (vec CVAnalysisResponse) query;
   get_all_grammar_analysis_for_identity : () -> (
-    vec GrammarAnalysisResponse
-  ) query;
+      vec GrammarAnalysisResponse,
+    ) query;
   get_all_notification_for_everybody : () -> (
-    NotificationForEverybodyResponse_1
-  ) query;
+      NotificationForEverybodyResponse_1,
+    ) query;
   get_all_notification_for_single_user : () -> (
-    NotificationForSingleUserResponse
-  ) query;
+      NotificationForSingleUserResponse,
+    ) query;
   get_all_notification_for_tier : () -> (NotificationForTierResponse_1) query;
   get_all_user_profile : () -> (vec User) query;
   get_cv_analysis : (text) -> (CVResponse) query;
@@ -203,8 +209,8 @@ service : () -> {
   get_grammar_analysis : (text) -> (GrammarResponse) query;
   get_single_admin : (text) -> (AdminResponse) query;
   get_single_cv_analysis_for_identity : (text) -> (
-    vec CVAnalysisResponse
-  ) query;
+      vec CVAnalysisResponse,
+    ) query;
   get_single_user : () -> (UserResponse) query;
   get_user_role : () -> (UserResponse_1) query;
   get_users_by_tier : (text) -> (vec User) query;
@@ -212,8 +218,8 @@ service : () -> {
   mark_notification_as_read : (text) -> (NotificationForSingleUserResponse_1);
   put_cv_analysis : (text, text, CVUserInput, AnalysisResult) -> (text);
   put_grammar_analysis : (text, text, GrammarUserInput, GrammarCheckResult) -> (
-    text
-  );
+      text,
+    );
   remove_all_credit : (text) -> (AdminResponse);
   remove_all_cv_analysis : (text) -> (AdminResponse);
   remove_all_grammar : (text) -> (AdminResponse);
@@ -225,8 +231,8 @@ service : () -> {
   update_admin : (text, AdminInput) -> (AdminResponse);
   update_cv_analysis : (text, CVUserInput, AnalysisResult) -> (text);
   update_grammar_analysis : (text, GrammarUserInput, GrammarCheckResult) -> (
-    text
-  );
+      text,
+    );
   update_single_credit_plan : (text, nat64, text) -> (CreditResponse);
   update_user : (UserInput) -> (UserResponse);
-};
+}
