@@ -176,13 +176,14 @@ fn transform(raw: TransformArgs) -> HttpResponse {
     let mut res = HttpResponse {
         status: raw.response.status.clone(),
         body: raw.response.body.clone(),
+        // body: raw.response.body,
         headers,
         ..Default::default()
     };
-    if res.status.to_string() == "200" {
-        res.body = raw.response.body;
-    } else {
-        ic_cdk::api::print(format!("Received an error from coinbase: err = {:?}", raw));
-    }
+    // if res.status.to_string() == "200" {
+    //     res.body = raw.response.body;
+    // } else {
+    //     ic_cdk::api::print(format!("Received an error from coinbase: err = {:?}", raw));
+    // }
     res
 }
