@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { GiRotaryPhone } from "react-icons/gi";
 import { IoMailSharp } from "react-icons/io5";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -39,7 +39,7 @@ interface CvData {
 }
 
 interface Template2Props {
-  cvData?: CvData;
+  cvData?: Profile;
   onEdit?: () => void; // Callback to open the modal
 }
 
@@ -47,71 +47,125 @@ interface Template1Props {
   onEdit: (data: any) => void; // Callback to open the modal
 }
 
+interface Education {
+  id: number;
+  degreeType: string;
+  fieldStudy: string;
+  degreeClass: string;
+  startDate: string;
+  endDate: string;
+  universityName: string;
+  location: string;
+};
+
+interface WorkExperience {
+  company_name: string;
+  job_title: string;
+  duration: string;
+  duties: string[];
+};
+
+interface Profile {
+  work_experience: WorkExperience[];
+  skills: string[];
+  professional_summary: string;
+};
+
 const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
+  // const analysedCv: Profile = JSON.parse(localStorage.getItem("analysedCv") ?? "{}");
+  // const [mockData, setMockData] = useState<Profile | null>(null);
+  //
+  // useEffect(() => {
+  //   if (analysedCv) {
+  //     console.log("Analysed CV", analysedCv);
+  //     setMockData(analysedCv);
+  //   }
+  // }, [analysedCv]);
 
   // Mock data for demonstration
-  const mockData: CvData = cvData || {
-    name: "BAILEY DUPONT",
-    lastName: "SCHWAIGER",
-    title: "MARKETING MANAGER",
-    contact: {
-      phone: "0806-289-8015",
-      email: "john.doe@example.com",
-      address: "5 Quarters Road, GRA, Ikot Ekpene, Akwa Ibom State, Nigeria",
-      website: "www.abn.com"
-    },
-    interests: [
-      "TRAVELING",
-      "POLITICS",
-      "ARTS & ENTERTAINMENT",
-      "ILLUSTRATION"
-    ],
-    education: [
-      {
-        level: "MASTER'S DEGREE",
-        school: "Top University for Advanced Studies",
-        period: "2018 - 2020"
-      },
-      {
-        level: "COLLEGE",
-        school: "Amazing College of Technology",
-        period: "2014 - 2018"
-      },
-      {
-        level: "SECONDARY SCHOOL",
-        school: "Really Great High School",
-        period: "2010 - 2014"
-      }
-    ],
-    profile: "I am a qualified and professional web developer with five years of experience in database administration and website design. Strong creative and analytical skills. Team player with an eye for details.",
-    experience: [
-      {
-        title: "APPLICATIONS DEVELOPER",
-        company: "Really Great Company",
-        location: "Australia",
-        period: "2016 - Present",
-        description: "The opportunity to work in an organization that encourages its engineers to move across different areas such as backend, infrastructure, and mobile development is particularly appealing. I believe this would allow me to further develop my versatility as a developer, which has been a key strength throughout my career.",
-        achievements: [
-          "Database administration and website design",
-          "Built the logic for a streamlined ad-serving platform that scaled",
-          "Educational institutions and online classroom management"
-        ]
-      },
-      {
-        title: "APPLICATIONS DEVELOPER",
-        company: "Really Great Company",
-        location: "Australia",
-        period: "2016 - Present",
-        description: "The opportunity to work in an organization that encourages its engineers to move across different areas such as backend, infrastructure, and mobile development is particularly appealing. I believe this would allow me to further develop my versatility as a developer, which has been a key strength throughout my career.",
-        achievements: [
-          "Database administration and website design",
-          "Built the logic for a streamlined ad-serving platform that scaled",
-          "Educational institutions and online classroom management"
-        ]
-      }
-    ]
-  };
+  // @ts-ignore
+  // const mockData: Profile = cvData ?? {};
+  const storedCvData = JSON.parse(localStorage.getItem("cvData") ?? "{}");
+  const [mockData, setMockData] = useState<Profile | null>(null);
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("analysedCv");
+    if (storedData) {
+      try {
+        const parsedData: Profile = JSON.parse(JSON.parse(storedData));
+        console.log("Type of parsedData:", typeof parsedData);
+        console.log("Parsed CV Data:", parsedData); // Debugging
+        console.log("Parsed CV Data Work:", parsedData.work_experience); // Debugging
+        console.log("Parsed CV Data Skills:", parsedData.skills); // Debugging
+        setMockData(parsedData);
+      } catch (error) {
+        console.error("Error parsing analysedCv:", error);
+      }
+    }
+  }, []);
+
+    // name: "BAILEY DUPONT",
+    // lastName: "SCHWAIGER",
+    // title: "MARKETING MANAGER",
+    // contact: {
+    //   phone: "0806-289-8015",
+    //   email: "john.doe@example.com",
+    //   address: "5 Quarters Road, GRA, Ikot Ekpene, Akwa Ibom State, Nigeria",
+    //   website: "www.abn.com"
+    // },
+    // interests: [
+    //   "TRAVELING",
+    //   "POLITICS",
+    //   "ARTS & ENTERTAINMENT",
+    //   "ILLUSTRATION"
+    // ],
+    // education: [
+    //   {
+    //     level: "MASTER'S DEGREE",
+    //     school: "Top University for Advanced Studies",
+    //     period: "2018 - 2020"
+    //   },
+    //   {
+    //     level: "COLLEGE",
+    //     school: "Amazing College of Technology",
+    //     period: "2014 - 2018"
+    //   },
+    //   {
+    //     level: "SECONDARY SCHOOL",
+    //     school: "Really Great High School",
+    //     period: "2010 - 2014"
+    //   }
+    // ],
+    // profile: "I am a qualified and professional web developer with five years of experience in database administration and website design. Strong creative and analytical skills. Team player with an eye for details.",
+    // experience: [
+    //   {
+    //     title: "APPLICATIONS DEVELOPER",
+    //     company: "Really Great Company",
+    //     location: "Australia",
+    //     period: "2016 - Present",
+    //     description: "The opportunity to work in an organization that encourages its engineers to move across different areas such as backend, infrastructure, and mobile development is particularly appealing. I believe this would allow me to further develop my versatility as a developer, which has been a key strength throughout my career.",
+    //     achievements: [
+    //       "Database administration and website design",
+    //       "Built the logic for a streamlined ad-serving platform that scaled",
+    //       "Educational institutions and online classroom management"
+    //     ]
+    //   },
+    //   {
+    //     title: "APPLICATIONS DEVELOPER",
+    //     company: "Really Great Company",
+    //     location: "Australia",
+    //     period: "2016 - Present",
+    //     description: "The opportunity to work in an organization that encourages its engineers to move across different areas such as backend, infrastructure, and mobile development is particularly appealing. I believe this would allow me to further develop my versatility as a developer, which has been a key strength throughout my career.",
+    //     achievements: [
+    //       "Database administration and website design",
+    //       "Built the logic for a streamlined ad-serving platform that scaled",
+    //       "Educational institutions and online classroom management"
+    //     ]
+    //   }
+    // ]
+  // };
+
+  // @ts-ignore
   return (
     <div className="min-h-screen bg-gray-100">
       <button onClick={onEdit} className="hidden mt-4 px-4 py-2 bg-blue-600 text-white rounded-md">
@@ -122,9 +176,9 @@ const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
           {/* NAME AND TITLE */}
           <header className="w-full text-left p-10">
             <h1 className="text-4xl md:text-5xl font-bold">
-              {mockData.name} {mockData.lastName}
+              {storedCvData?.personalInformation?.firstName} {storedCvData?.personalInformation?.lastName}
             </h1>
-            <h5 className="text-base md:text-lg">{mockData.title}</h5>
+            <h5 className="text-base md:text-lg">{storedCvData?.personalInformation?.professionalTitle}</h5>
           </header>
 
           <hr className="bg-[#464A4E] font-bold h-[4px] w-full" />
@@ -140,33 +194,33 @@ const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
                 </h1>
                 <div className="font-light flex gap-3 items-center">
                   <GiRotaryPhone className="text-2xl" />
-                  <span className="text-sm">{mockData.contact.phone}</span>
+                  <span className="text-sm">{storedCvData?.personalInformation?.phoneNumber}</span>
                 </div>
                 <div className="font-light flex gap-3 items-center">
                   <IoMailSharp className="text-2xl" />
-                  <span className="text-sm">{mockData.contact.email}</span>
+                  <span className="text-sm">{storedCvData?.personalInformation?.email}</span>
                 </div>
                 <div className="font-light flex gap-3 items-center">
                   <RoomIcon />
-                  <span className="text-sm">{mockData.contact.address}</span>
+                  <span className="text-sm">{storedCvData?.personalInformation?.nationality}</span>
                 </div>
-                <div className="font-light text-sm flex gap-3 items-center">
-                  <LanguageIcon />
-                  <span>{mockData.contact.website}</span>
-                </div>
+                {/*<div className="font-light text-sm flex gap-3 items-center">*/}
+                {/*  <LanguageIcon />*/}
+                {/*  <span>{mockData.contact.website}</span>*/}
+                {/*</div>*/}
               </section>
 
               {/* INTERESTS */}
               <section className="mb-6 w-full">
                 <div className="pl-10 w-[100%]">
                   <h1 className="text-2xl md:text-2xl px-4 py-2 bg-[#EFEFEF] w-[94%] md:w-full font-normal mb-4">
-                    INTERESTS
+                    SKILLS
                   </h1>
                 </div>
                 <div className="px-10 flex flex-col gap-4">
-                  {mockData.interests.map((interest, index) => (
+                  {mockData?.skills?.slice(0, 10).map((skill: any, index: any) => (
                     <p key={index} className="font-light text-sm">
-                      {interest.toUpperCase()}
+                      {skill}
                     </p>
                   ))}
                 </div>
@@ -180,11 +234,11 @@ const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
                   </h1>
                 </div>
                 <div className="px-10 flex flex-col gap-8">
-                  {mockData.education.map((edu, index) => (
+                  {storedCvData?.education?.map((edu: Education, index: number) => (
                     <div key={index} className="mb-6">
-                      <p className="font-bold text-sm">{edu.level}</p>
-                      <p className="font-light text-sm">{edu.school}</p>
-                      <p className="font-normal text-sm">{edu.period}</p>
+                      <p className="font-bold text-sm">{edu?.degreeType}</p>
+                      <p className="font-light text-sm">{edu?.universityName}</p>
+                      <p className="font-normal text-sm">{edu?.startDate} to {edu?.endDate}</p>
                     </div>
                   ))}
                 </div>
@@ -200,7 +254,7 @@ const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
                     PROFILE
                   </h1>
                   <div className="font-light text-sm px-2 py-4">
-                    {mockData.profile}
+                    {mockData?.professional_summary}
                   </div>
                 </div>
               </div>
@@ -210,40 +264,40 @@ const Template2: React.FC<Template2Props> = ({ cvData, onEdit }) => {
                 <h1 className="text-2xl md:text-2xl w-[94%] md:w-full font-normal mb-4 bg-[#EFEFEF] p-2 sm:text-left">
                   EXPERIENCE
                 </h1>
-                {mockData.experience.map((exp, index) => (
+                {mockData?.work_experience?.map((exp: any, index: any) => (
                   <div key={index} className="mb-8">
                     <div className="flex flex-col gap-4">
                       <div className="font-bold text-sm sm:text-base">
-                        {exp.title}
+                        {exp.job_title}
                       </div>
                       <div className="flex flex-col sm:flex-row gap-2">
                         <div className="font-bold text-sm sm:text-base">
-                          {exp.company}
+                          {exp.company_name}
                         </div>
-                        {exp.location && (
-                          <>
-                            <div className="bg-black w-full sm:w-0.5 md:h-6 sm:h-4 sm:mx-2 mt-2 sm:mt-0"></div>
-                            <div className="font-bold text-sm sm:text-base">
-                              {exp.location}
-                            </div>
-                          </>
-                        )}
+                        {/*{exp.location && (*/}
+                        {/*  <>*/}
+                        {/*    <div className="bg-black w-full sm:w-0.5 md:h-6 sm:h-4 sm:mx-2 mt-2 sm:mt-0"></div>*/}
+                        {/*    <div className="font-bold text-sm sm:text-base">*/}
+                        {/*      {exp.location}*/}
+                        {/*    </div>*/}
+                        {/*  </>*/}
+                        {/*)}*/}
                         <div className="bg-black w-full sm:w-0.5 md:h-6 sm:h-4 sm:mx-2 mt-2 sm:mt-0"></div>
                         <div className="font-bold text-sm sm:text-base">
-                          {exp.period}
+                          {exp.duration}
                         </div>
                       </div>
-                      {exp.description && (
-                        <div className="font-light text-sm sm:text-base px-2 py-4">
-                          {exp.description}
-                        </div>
-                      )}
+                      {/*{exp.description && (*/}
+                      {/*  <div className="font-light text-sm sm:text-base px-2 py-4">*/}
+                      {/*    {exp.description}*/}
+                      {/*  </div>*/}
+                      {/*)}*/}
                     </div>
 
                     <ul className="list-disc mt-6 pl-6 sm:pl-10 space-y-2">
-                      {exp.achievements.map((achievement, idx) => (
-                        <li key={idx} className="font-light text-sm sm:text-base">
-                          {achievement}
+                      {exp.duties.map((duties: any, index: any) => (
+                        <li key={index} className="font-light text-sm sm:text-base">
+                          {duties}
                         </li>
                       ))}
                     </ul>

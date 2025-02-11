@@ -5,6 +5,7 @@ import {NextButton} from "@/components/welcomeNavButtons";
 import {useState} from "react";
 import {icServiceCV} from "@/Api/cvHandlers/cvHandlers";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 interface CVUserInput {
@@ -20,6 +21,7 @@ interface createJobData {
 }
 
 const JobDescription: React.FC = () => {
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false)
 
@@ -52,10 +54,11 @@ const JobDescription: React.FC = () => {
             const analysis = await icServiceCV.analyzeCvData(analyseCvData)
             console.log("CV Analysis: ", analysis);
 
-            if ('Ok' in analysis) {
+            if (analysis) {
                 setLoading(false)
-                toast.success("CV data saved successfully and user profile updated successfully with recent data!");
-                // return navigate("/saved-info");
+                toast.success("Analysed CV data saved successfully");
+                localStorage.setItem("analysedCv", JSON.stringify(analysis));
+                navigate("/user-dashboard");
             } else if ('Err' in analysis) {
                 setLoading(false)
                 toast.error(analysis.Err.message);
