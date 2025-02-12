@@ -5,10 +5,27 @@ import WelcomeHeroBanner from "../../assets/images/welcomeHerobanner.svg";
 import arrow1 from "../../assets/images/arrow1.svg";
 import arrow2 from "../../assets/images/arrow2.svg";
 import {useEffect} from "react";
-import {UserInput} from "@/Api/userHandlers/userHandlers";
 import {toast} from "react-toastify";
 import {useAuth} from "@/contexts/AuthenticationContext";
-import {syntax_backend} from "../../../../declarations/syntax_backend/index.js";
+
+export interface BioData {
+  linkedin?: string;
+  marital_status?: string;
+  education?: any;
+  nationality?: string;
+  email?: string;
+  summary?: string;
+  contact_number?: string;
+  address?: string;
+  date_of_birth?: string;
+  full_name?: string;
+  github?: string;
+}
+
+export interface UserInput {
+  bio: [] | [BioData];
+  plan: string;
+}
 
 const WelcomeScreen: React.FC = () => {
 
@@ -43,10 +60,12 @@ const WelcomeScreen: React.FC = () => {
 
                 if ('Err' in userCheck) {
                     console.log("User not found, adding new user");
+
                     const userInput: UserInput = {
                         bio: [],
                         plan: "Free"
                     };
+
                     const newUser = await callFunction.add_new_user(userInput);
                     console.log("New user added:", newUser);
                 }
