@@ -7,6 +7,7 @@ import {
 } from "../../../declarations/syntax_backend/index";
 import { useNavigate } from "react-router-dom";
 import { Actor } from "@dfinity/agent";
+import {UserInput} from "@/Api/userHandlers/userHandlers.js";
 
 const defaultOptions = {
   createOptions: {
@@ -18,6 +19,11 @@ const defaultOptions = {
   loginOptions: {
     identityProvider: "https://identity.ic0.app/#authorize",
   },
+};
+
+const userInput = {
+  bio: [],
+  plan: "Free"
 };
 
 export const useAuthClient = (options = defaultOptions) => {
@@ -74,6 +80,9 @@ export const useAuthClient = (options = defaultOptions) => {
         navigate("/user-dashboard");
       } else {
         console.log("no role");
+        const res = await callFunction.add_new_user(userInput);
+        console.log("Adding User Res: ", res);
+        navigate("/user-dashboard");
       }
     }
   }
