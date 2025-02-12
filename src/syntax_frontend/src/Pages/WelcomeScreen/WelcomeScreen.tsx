@@ -5,19 +5,16 @@ import WelcomeHeroBanner from "../../assets/images/welcomeHerobanner.svg";
 import arrow1 from "../../assets/images/arrow1.svg";
 import arrow2 from "../../assets/images/arrow2.svg";
 import {useEffect} from "react";
-import {icServiceUsers, UserInput} from "@/Api/userHandlers/userHandlers";
+import {UserInput} from "@/Api/userHandlers/userHandlers";
 import {toast} from "react-toastify";
-import {useUser} from "@/contexts/AuthContext";
-import api from "@/Api/apiServiceSettings";
 import {useAuth} from "@/contexts/AuthenticationContext";
+import {syntax_backend} from "../../../../declarations/syntax_backend/index.js";
 
 const WelcomeScreen: React.FC = () => {
 
     const navigate = useNavigate();
 
     const location = useLocation();
-
-    const {user} = useUser()
 
     const {isAuth, callFunction} = useAuth();
 
@@ -42,12 +39,16 @@ const WelcomeScreen: React.FC = () => {
                 }
 
                 const userCheck = await getSingleUser();
+                console.log("User check:", userCheck);
+
                 if ('Err' in userCheck) {
+                    console.log("User not found, adding new user");
                     const userInput: UserInput = {
                         bio: [],
                         plan: "Free"
                     };
-                    await callFunction.add_new_user(userInput);
+                    const newUser = await callFunction.add_new_user(userInput);
+                    console.log("New user added:", newUser);
                 }
                 toast.success("Welcome back!");
                 if (isAuth && !location.state?.fromDashboard) {
