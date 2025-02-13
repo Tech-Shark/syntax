@@ -1,4 +1,4 @@
-use super::util::{map_biodata_for_add_new_user, map_biodata_for_update_user, plan_is_valid};
+use super::util::{map_biodata_for_update_user, plan_is_valid};
 use crate::{
     schema::{
         credit::INVALID_CREDIT_PLAN,
@@ -33,10 +33,8 @@ async fn get_single_user() -> UserResponse {
 }
 
 #[ic_cdk::update]
-async fn add_new_user(profile: UserInput) -> UserResponse {
+async fn add_new_user() -> UserResponse {
     let principal = ic_cdk::api::caller().to_text();
-    let input_tier = profile.clone().plan;
-    let valid_tier = plan_is_valid(&input_tier);
 
     let total_users = USER_MAP.with(|map| {
         map.borrow()
@@ -52,12 +50,6 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
             .unwrap_or_default()
     });
 
-    if !valid_tier {
-        return UserResponse::Err(Error {
-            message: INVALID_CREDIT_PLAN.to_string(),
-        });
-    }
-
     if let Some(_user) = USER_MAP.with(|map| map.borrow().get(&principal)) {
         return UserResponse::Err(Error {
             message: "You already have a registered profile!".to_string(),
@@ -65,7 +57,7 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
     }
 
     // Check if there's still slot for FREEMIUM
-    if (total_users >= setting.max_freemium_users.value) && (input_tier == FREE_PLAN) {
+    if (total_users >= setting.max_freemium_users.value) {
         return UserResponse::Err(Error {
             message: "Maximum number of users on the free plan has been exhausted!".to_string(),
         });
@@ -76,8 +68,8 @@ async fn add_new_user(profile: UserInput) -> UserResponse {
         cv_last_checked: None,
         amount_of_credits: 0,
         other: UserInput {
-            bio: map_biodata_for_add_new_user(profile.clone()),
-            plan: input_tier,
+            bio: None,
+            plan: FREE_PLAN.to_string(),
         },
     };
 
