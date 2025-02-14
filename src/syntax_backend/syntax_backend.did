@@ -173,7 +173,7 @@ service : () -> {
   add_new_notification_for_tier : (NotificationForTierInput) -> (
       NotificationForTierResponse,
     );
-  add_new_user : (UserInput) -> (UserResponse);
+  add_new_user : () -> (UserResponse);
   add_single_credit_plan : (text, nat64, text) -> (CreditResponse);
   analyze_cv : (CVUserInput) -> (CVResponse);
   analyze_grammar : (GrammarUserInput) -> (GrammarResponse);

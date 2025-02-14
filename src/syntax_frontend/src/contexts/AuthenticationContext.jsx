@@ -78,22 +78,22 @@ function useAuthClient(options = defaultOptions) {
     if (isAuthenticated) {
       // Check if user has a profile
       const role = await actor.get_user_role();
-      const user = await callFunction.get_single_user();
+      const user = await actor.get_single_user();
       setAuthUser(user);
       console.log("role:", role);
 
-      if (role && role === "ADMIN") {
+      if (!role) {
+        console.log("no role");
+        const res = await actor.add_new_user(userInput);
+        console.log("Adding User Res:", res);
+        navigate("/user-dashboard");
+      } else if (role && role === "ADMIN") {
         console.log("admin");
         navigate("/admin-dashboard");
       } else if (role && role === "USER") {
         console.log("user");
         navigate("/user-dashboard");
       } else {
-        console.log("no role");
-        const res = await actor.add_new_user(userInput);
-        const response = await actor.get_all_credit_plan();
-        console.log("Credit Plan Response:", response);
-        console.log("Adding User Res:", res);
         navigate("/");
       }
     }

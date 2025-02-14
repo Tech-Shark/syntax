@@ -3,9 +3,12 @@ import { AuthClient } from "@dfinity/auth-client";
 import {
   canisterId,
   createActor,
+  syntax_backend,
 } from "../../../declarations/syntax_backend/index";
 import { useNavigate } from "react-router-dom";
-import { Actor } from "@dfinity/agent";
+import { Actor, Identity } from "@dfinity/agent";
+import { UserInput } from "@/Api/userHandlers/userHandlers.js";
+import { Principal } from "@dfinity/principal";
 
 const defaultOptions = {
   createOptions: {
@@ -21,17 +24,19 @@ const defaultOptions = {
 
 const userInput = {
   bio: [],
-  plan: "Free"
+  plan: "Free",
 };
 
 export const useAuthClient = (options = defaultOptions) => {
   const navigate = useNavigate();
 
   const [isAuth, setIsAuth] = useState(false);
-  const [authUser, setAuthUser] = useState(null);
-  const [identity, setIdentity] = useState(null);
-  const [principal, setPrincipal] = useState(null);
-  const [callFunction, setCallFunction] = useState(null);
+  const [authUser, setAuthUser] = useState<null | AuthClient>(null);
+  const [identity, setIdentity] = useState<null | Identity>(null);
+  const [principal, setPrincipal] = useState<null | Principal>(null);
+  const [callFunction, setCallFunction] = useState<ReturnType<
+    typeof createActor
+  > | null>(null);
 
   useEffect(() => {
     AuthClient.create(options.createOptions).then(async (client) => {
@@ -40,17 +45,17 @@ export const useAuthClient = (options = defaultOptions) => {
     });
   }, []);
 
-  async function updateClient(client) {
+  async function updateClient(client: AuthClient) {
     const isAuthenticated = await client?.isAuthenticated();
     setIsAuth(isAuthenticated);
     console.log("isAuthenticated: " + isAuthenticated);
 
     const identity = client?.getIdentity();
-    setIdentity(identity);
+    setIdentity(identity as unknown as Identity);
     console.log("identityStringify: " + JSON.stringify(identity));
 
     const principal = identity?.getPrincipal();
-    setPrincipal(principal);
+    setPrincipal(principal as unknown as Principal);
     console.log("principal: " + principal);
 
     setAuthUser(client);
@@ -66,7 +71,7 @@ export const useAuthClient = (options = defaultOptions) => {
 
     if (isAuthenticated) {
       // Check if user has a profile
-      const role = await callFunction.get_user_role();
+      const role = (await callFunction?.get_user_role()) as unknown;
 
       console.log("role: ", role);
 
@@ -78,21 +83,21 @@ export const useAuthClient = (options = defaultOptions) => {
         navigate("/user-dashboard");
       } else {
         console.log("no role");
-        const res = await callFunction.add_new_user(userInput);
-        const response = await callFunction.get_all_credit_plan();
-        console.log("Credit Plan Response: ", response);
-        console.log("Adding User Res: ", res);
+        // const res = await callFunction?.add_new_user();
+        // console.log("Adding User Res: ", res);
         navigate("/user-dashboard");
       }
     }
   }
 
   const login = () => {
-    authUser.login({
+    authUser?.login({
       ...options.loginOptions,
       onSuccess: () => {
         updateClient(authUser).then(() => {
-          Actor.agentOf(callFunction).replaceIdentity(identity);
+          Actor.agentOf?.(callFunction as unknown as Actor)?.replaceIdentity?.(
+            identity!
+          );
         });
       },
     });
@@ -100,14 +105,13 @@ export const useAuthClient = (options = defaultOptions) => {
 
   async function logout() {
     await authUser?.logout();
-    await updateClient(authUser);
+    await updateClient(authUser!);
     localStorage.clear();
     navigate("/");
   }
 
-    // Methods for interacting with the backend actor
-    const get_user_role = () => callFunction?.get_user_role();
-
+  // Methods for interacting with the backend actor
+  const get_user_role = () => callFunction?.get_user_role();
 
   return {
     isAuth,
@@ -117,6 +121,6 @@ export const useAuthClient = (options = defaultOptions) => {
     identity,
     principal,
     callFunction,
-    get_user_role
+    get_user_role,
   };
 };
