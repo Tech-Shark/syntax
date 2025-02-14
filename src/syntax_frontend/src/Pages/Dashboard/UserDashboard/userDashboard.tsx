@@ -16,19 +16,17 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {useUser} from '@/contexts/AuthContext';
-import {useEffect, useState} from 'react';
-import {icServiceUsers} from "@/Api/userHandlers/userHandlers"
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useAuth} from "@/contexts/AuthenticationContext";
 
 
 const Dashboard: React.FC = () => {
     const [name, setName] = useState("")
 
-    const {userDetails} = useUser()
+    const { authUser } = useAuth();
 
     const singleUserData = async () => {
-        const details = userDetails?.full_name[0].split(" ")
+        const details = authUser?.full_name[0].split(" ")
         if (details.length) {
             return setName(details[0])
         }

@@ -3,11 +3,9 @@ import { AuthClient } from "@dfinity/auth-client";
 import {
   canisterId,
   createActor,
-  syntax_backend,
 } from "../../../declarations/syntax_backend/index";
 import { useNavigate } from "react-router-dom";
 import { Actor } from "@dfinity/agent";
-import {UserInput} from "@/Api/userHandlers/userHandlers.js";
 
 const defaultOptions = {
   createOptions: {
@@ -81,6 +79,8 @@ export const useAuthClient = (options = defaultOptions) => {
       } else {
         console.log("no role");
         const res = await callFunction.add_new_user(userInput);
+        const response = await callFunction.get_all_credit_plan();
+        console.log("Credit Plan Response: ", response);
         console.log("Adding User Res: ", res);
         navigate("/user-dashboard");
       }

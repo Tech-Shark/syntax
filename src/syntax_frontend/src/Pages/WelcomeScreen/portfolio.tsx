@@ -3,15 +3,17 @@ import WelcomeDescription from "@/components/welcomeDescription";
 import SidebarLinks from "@/components/SidebarLinks";
 import WelcomeInput from "@/components/welcomeInput";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState, AppDispatch} from "@/redux/store";
-import {NextButton, BackButton} from "@/components/welcomeNavButtons";
+import {AppDispatch, RootState} from "@/redux/store";
+import {BackButton, NextButton} from "@/components/welcomeNavButtons";
 import {useEffect, useState} from "react";
-import {updateField, updatePortfolio} from "@/redux/cvDataSlice";
+import {updatePortfolio} from "@/redux/cvDataSlice";
 import {useNavigate} from "react-router-dom";
-import {icServiceUsers} from "@/Api/userHandlers/userHandlers";
 import {toast} from "react-toastify";
+import {useAuth} from "@/contexts/AuthenticationContext";
 
 const Portfolio: React.FC = () => {
+    const { callFunction } = useAuth();
+
     const dispatch = useDispatch<AppDispatch>();
     const portfolio = useSelector((state: RootState) => state.cvData.portfolio);
 
@@ -92,7 +94,16 @@ const Portfolio: React.FC = () => {
             }
 
             try {
-                const updateResponse = await icServiceUsers.updateUser(userInput);
+                const updateUser = async (userInput: any) => {
+                    try {
+                        return await callFunction.update_user(userInput);
+                    } catch (error) {
+                        console.error('Error in updating user:', error);
+                        throw error;
+                    }
+                }
+
+                const updateResponse = await updateUser(userInput);
 
                 if ('Ok' in updateResponse) {
                     setLoading(false)

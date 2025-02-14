@@ -6,6 +6,8 @@ import {useState} from "react";
 import {icServiceCV} from "@/Api/cvHandlers/cvHandlers";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "@/contexts/AuthenticationContext";
+import api from "@/Api/apiServiceSettings";
 
 
 interface CVUserInput {
@@ -21,6 +23,8 @@ interface createJobData {
 }
 
 const JobDescription: React.FC = () => {
+    const { callFunction } = useAuth();
+
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false)
@@ -51,7 +55,33 @@ const JobDescription: React.FC = () => {
         }
 
         try {
-            const analysis = await icServiceCV.analyzeCvData(analyseCvData)
+            const analyzeCvData = async (cvData: { cv_template: string; cv_text: string; job_description: string }) => {
+                try {
+                    const timeoutPromise = new Promise((_, reject) => {
+                        setTimeout(() => reject(new Error("Request timed out")), 30000);
+                    });
+
+                    const apiPromise = callFunction.analyze_cv(cvData);
+
+                    const response: any = await Promise.race([apiPromise, timeoutPromise]);
+                    console.log("CV Analysis Promise: ", response);
+
+                    if ("Ok" in response) {
+                        return response.Ok;
+                    } else if ("Err" in response) {
+                        throw new Error(response.Err.message);
+                    }
+                    return response;
+                } catch (error: any) {
+                    console.error("Error in CV analysis:", error);
+                    if (error.message === "Request timed out") {
+                        throw new Error("CV analysis took too long. Please try again.");
+                    }
+                    throw error;
+                }
+            }
+
+            const analysis = await analyzeCvData(analyseCvData)
             console.log("CV Analysis: ", analysis);
 
             if (analysis) {

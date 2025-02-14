@@ -66,6 +66,9 @@ const WelcomeScreen: React.FC = () => {
                         plan: "Free"
                     };
 
+                    const response = await callFunction.get_all_credit_plan();
+                    console.log("Credit Plan Response: ", response);
+
                     const newUser = await callFunction.add_new_user(userInput);
                     console.log("New user added:", newUser);
                 }
