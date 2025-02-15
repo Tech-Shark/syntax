@@ -63,7 +63,7 @@ pub fn get_current_time() -> OffsetDateTime {
     let current_time = OffsetDateTime::from_unix_timestamp(seconds).unwrap()
         + Duration::nanoseconds(nanos_remainder);
 
-    ic_cdk::api::print(format!("current time is {:?}", &current_time));
+    ic_cdk::api::print(format!("Current time is {:?}", &current_time));
 
     current_time
 }

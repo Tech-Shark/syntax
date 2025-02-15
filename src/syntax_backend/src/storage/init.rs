@@ -1,3 +1,4 @@
+use ic_cdk::post_upgrade;
 use ic_cdk_macros::init;
 
 use crate::schema::{
@@ -49,15 +50,20 @@ fn init() {
     ic_cdk::api::print(format!("Finished initializing canister."));
 }
 
-// #[post_upgrade]
-// fn post_upgrade() {
-//     ic_cdk::api::print(format!("Re initializing canister..."));
+#[post_upgrade]
+fn post_upgrade() {
+    ic_cdk::api::print(format!("Re initializing canister..."));
 
-//     ic_cdk::api::print(format!("Adding {:#?} to list of credit plans", FREE_PLAN));
-//     reset_credit();
-//     ic_cdk::api::print(format!("Added {:#?} to list of credit plans", FREE_PLAN));
+    ic_cdk::api::print(format!("Adding {:#?} to list of credit plans", FREE_PLAN));
+    reset_credit();
+    ic_cdk::api::print(format!("Added {:#?} to list of credit plans", FREE_PLAN));
 
-//     clear_maps();
+    clear_maps();
 
-//     ic_cdk::api::print(format!("Finished re initializing canister."));
-// }
+    SETTING_MAP.with(|map| {
+        map.borrow_mut()
+            .insert(SETTING_KEY.to_string(), Setting::default())
+    });
+
+    ic_cdk::api::print(format!("Finished re initializing canister."));
+}
