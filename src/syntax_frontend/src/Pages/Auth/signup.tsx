@@ -1,28 +1,26 @@
 import AuthLayout from "@/components/authLayout";
-import { useUser } from "../../contexts/AuthContext";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "@/contexts/AuthenticationContext";
 
 const Signup: React.FC = () => {
-  const { user } = useUser();
-  const navigate = useNavigate();
+    const {isAuth} = useAuth();
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user.isAuthenticated) {
-      navigate("/user-dashboard");
-    }
-  }, [user.isAuthenticated, navigate]);
+    useEffect(() => {
+        if (isAuth) {
+            navigate("/user-dashboard");
+        }
+    }, [isAuth]);
 
-  return (
-    <>
-      <AuthLayout
-        heading="Start Your Journey!"
-        subheading="Start Your Journey with Internet Identity."
-        altText="(Your anchor is a unique number provided by Internet Identity.)"
-        nextButtonTo="/signin-internet"
-      /> 
-    </>
-  );
+    return (
+        <AuthLayout
+            heading="Start Your Journey!"
+            subheading="Start Your Journey with Internet Identity."
+            altText="(Your anchor is a unique number provided by Internet Identity.)"
+            nextButtonTo="/signin-internet"
+        />
+    );
 };
 
 export default Signup;

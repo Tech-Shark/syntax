@@ -76,15 +76,17 @@ function useAuthClient(options = defaultOptions) {
             setAuthUser(user);
             console.log("role:", role);
 
-            if (role && role === "ADMIN") {
+            if (role && role?.Ok == "ADMIN") {
                 console.log("admin");
                 navigate("/admin-dashboard");
-            } else if (role && role === "USER") {
+            } else if (role && role?.Ok == "USER") {
                 console.log("user");
                 navigate("/user-dashboard");
             } else {
                 console.log("no role");
                 const res = await actor.add_new_user();
+                const newUser = await actor.get_single_user();
+                setAuthUser(newUser);
                 console.log("Adding User Res:", res);
                 navigate("/user-dashboard");
             }
@@ -113,8 +115,11 @@ function useAuthClient(options = defaultOptions) {
     const get_user_role = () => callFunction?.get_user_role();
 
     return {
+        authClient,
+        setAuthClient,
         isAuth,
         authUser,
+        setAuthUser,
         identity,
         principal,
         callFunction,

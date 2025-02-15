@@ -26,6 +26,7 @@ const Dashboard: React.FC = () => {
     const { authUser } = useAuth();
 
     const singleUserData = async () => {
+        console.log(authUser);
         const details = authUser?.full_name[0].split(" ")
         if (details.length) {
             return setName(details[0])
