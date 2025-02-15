@@ -22,11 +22,6 @@ export interface BioData {
   github?: string;
 }
 
-export interface UserInput {
-  bio: [] | [BioData];
-  plan: string;
-}
-
 const WelcomeScreen: React.FC = () => {
 
     const navigate = useNavigate();
@@ -40,6 +35,7 @@ const WelcomeScreen: React.FC = () => {
             try {
                 const getSingleUser = async () => {
                     try {
+                        console.log(callFunction);
                         const response = await callFunction.get_single_user();
                         if ('Ok' in response) {
                             return response.Ok;
@@ -61,15 +57,10 @@ const WelcomeScreen: React.FC = () => {
                 if ('Err' in userCheck) {
                     console.log("User not found, adding new user");
 
-                    const userInput: UserInput = {
-                        bio: [],
-                        plan: "Free"
-                    };
-
                     const response = await callFunction.get_all_credit_plan();
                     console.log("Credit Plan Response: ", response);
 
-                    const newUser = await callFunction.add_new_user(userInput);
+                    const newUser = await callFunction.add_new_user();
                     console.log("New user added:", newUser);
                 }
                 toast.success("Welcome back!");
