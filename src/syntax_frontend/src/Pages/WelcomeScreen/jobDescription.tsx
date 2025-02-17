@@ -32,7 +32,7 @@ const JobDescription: React.FC = () => {
     const [jobData, setJobData] = useState<createJobData>({
         jobTitle: "",
         jobDescription: "",
-        template: "",
+        template: "default",
     });
 
     const handleDataChange =
