@@ -36,16 +36,16 @@ import {icServiceUsers} from "@/Api/userHandlers/userHandlers";
 import {toast} from 'react-toastify';
 
 interface WorkExperience {
-  company_name: string;
-  job_title: string;
-  duration: string;
-  duties: string[];
+    company_name: string;
+    job_title: string;
+    duration: string;
+    duties: string[];
 };
 
 interface Profile {
-  work_experience: WorkExperience[];
-  skills: string[];
-  professional_summary: string;
+    work_experience: WorkExperience[];
+    skills: string[];
+    professional_summary: string;
 };
 
 
@@ -62,12 +62,12 @@ const CreativeResume: React.FC = () => {
 
     const [cv, setCv] = useState<Profile>();
 
-  useEffect(() => {
-    if (analysedCv) {
-      const parsedCv = JSON.parse(analysedCv);
-      setCv(parsedCv);
-    }
-  }, [analysedCv]);
+    useEffect(() => {
+        if (analysedCv) {
+            const parsedCv = JSON.parse(analysedCv);
+            setCv(parsedCv);
+        }
+    }, [analysedCv]);
 
     const [cvData, setCvData] = useState({
         name: "BAILEY DUPONT",
@@ -121,14 +121,22 @@ const CreativeResume: React.FC = () => {
 
 
     const handleDownload = () => {
-        if (!resumeRef.current) return;
+        if (!resumeRef.current) {
+            console.warn("Resume element not found");
+            return;
+        }
 
         const element = resumeRef.current; // The element to convert to PDF
-        console.log(element);
+        console.log("Downloading:", element);
+
         const options = {
+            margin: 10,
             filename: "resume.pdf",
-            jsPDF: {unit: "in", format: "letter", orientation: "portrait"},
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
         };
+
         html2pdf().set(options).from(element).save();
     };
 
@@ -319,7 +327,7 @@ const CreativeResume: React.FC = () => {
 
     return (
         <section className="flex font-outfit h-screen">
-                {/* <div className="hidden md:block w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
+            {/* <div className="hidden md:block w-[19rem] min-h-full bg-[rgba(225,224,243,0.50)] py-[2.44rem] px-[2rem]">
           <img src={syntax_logo} alt="syntax logo" />
           <div className="mt-20 flex flex-col gap-[1.62rem]">
             <span className="flex items-center justify-between text-lg font-semibold leading-normal text-[#000006]">
@@ -352,134 +360,135 @@ const CreativeResume: React.FC = () => {
             </span>
           </div>
         </div> */}
-                {/* Middle Content */}
-                <div className="flex-1 flex flex-col px-4 md:px-6 pt-8 pb-5 h-full overflow-y-auto ">
-                    <div className="flex justify-between">
-                        <div className="flex items-center gap-5">
-                            <img src={purple_arrow_2} alt="back"/>
-                            <p className="text-base text-[#3D3F4E] font-semibold leading-6 [text-shadow:0.67px_0.67px_13.28px_rgba(61,63,78,0.5)] cursor-pointer">
-                                Back
+            {/* Middle Content */}
+            <div className="flex-1 flex flex-col px-4 md:px-6 pt-8 pb-5 h-full overflow-y-auto ">
+                <div className="flex justify-between">
+                    <div className="flex items-center gap-5">
+                        <img src={purple_arrow_2} alt="back"/>
+                        <p className="text-base text-[#3D3F4E] font-semibold leading-6 [text-shadow:0.67px_0.67px_13.28px_rgba(61,63,78,0.5)] cursor-pointer">
+                            Back
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-5">
+                        <button
+                            className="flex items-center justify-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] font-semibold leading-[1.73rem] gap-[0.6rem]"
+                            onClick={handleDownload}>
+                            <BsDownload className="h-4 w-4 text-black cursor-pointer"/>
+                            Download
+                        </button>
+                        <img src={hamburger_menu} alt="hamburger menu" className="lg:hidden w-6 h-6 cursor-pointer"
+                             onClick={toggleSidebar}/>
+                    </div>
+                    <MobileSidebar isOpen={isSidebarOpen} onClose={toggleSidebar}/>
+                </div>
+
+                <div className="flex flex-col gap-[2.91rem] flex-grow mt-9 lg:mt-3">
+                    <div className="flex justify-center md:justify-between items-center">
+                        <div className="flex flex-col gap-[0.1rem] text-center md:text-left">
+                            <h5 className="text-[2.4rem] leading-normal font-bold">
+                                Creative Resume
+                            </h5>
+                            <p className="font-normal leading-normal text-[0.88rem] md:text-base">
+                                Pick a template that suits your style, or explore tailored <br/>
+                                recommendations based on your career goals.
                             </p>
                         </div>
-                        <div className="flex items-center gap-5">
-                            <button
-                                className="flex items-center justify-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] font-semibold leading-[1.73rem] gap-[0.6rem]"
-                                onClick={handleDownload}>
-                                <BsDownload className="h-4 w-4 text-black cursor-pointer"/>
-                                Download
-                            </button>
-                            <img src={hamburger_menu} alt="hamburger menu" className="lg:hidden w-6 h-6 cursor-pointer"
-                                 onClick={toggleSidebar}/>
-                        </div>
-                        <MobileSidebar isOpen={isSidebarOpen} onClose={toggleSidebar}/>
+                        <TopIcons/>
                     </div>
 
-                    <div className="flex flex-col gap-[2.91rem] flex-grow mt-9 lg:mt-3">
-                        <div className="flex justify-center md:justify-between items-center">
-                            <div className="flex flex-col gap-[0.1rem] text-center md:text-left">
-                                <h5 className="text-[2.4rem] leading-normal font-bold">
-                                    Creative Resume
-                                </h5>
-                                <p className="font-normal leading-normal text-[0.88rem] md:text-base">
-                                    Pick a template that suits your style, or explore tailored <br/>
-                                    recommendations based on your career goals.
-                                </p>
-                            </div>
-                            <TopIcons/>
-                        </div>
-
-                        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 md:gap-0">
+                    <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 md:gap-0">
+                        <button
+                            className="bg-black text-white self-center justify-center md:self-auto items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
+                            onClick={() => navigate("/user-dashboard")}>
+                            Change Template
+                        </button>
+                        <div className="flex justify-between w-full md:w-auto md:gap-[1.88rem]">
                             <button
-                                className="bg-black text-white self-center justify-center md:self-auto items-center px-[0.63rem] py-[0.31rem] rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
-                                onClick={() => navigate("/user-dashboard")}>
-                                Change Template
+                                className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
+                                onClick={handleOpenEditModal}>
+                                Edit CV
                             </button>
-                            <div className="flex justify-between w-full md:w-auto md:gap-[1.88rem]">
-                                <button
-                                    className="bg-white text-black justify-center items-center px-[1.6rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
-                                    onClick={handleOpenEditModal}>
-                                    Edit CV
-                                </button>
-                                <EditCvModal
-                                    isOpen={isEditModalOpen}
-                                    onClose={handleCloseEditModal}
-                                    cvData={cvData}
-                                    onSave={handleSaveCvData}
-                                    loading={saveLoading}
-                                />
-                                <button
-                                    className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
-                                    onClick={handleSaveAndContinue}>
-                                    Save and Continue
-                                </button>
-                            </div>
+                            <EditCvModal
+                                isOpen={isEditModalOpen}
+                                onClose={handleCloseEditModal}
+                                cvData={cvData}
+                                onSave={handleSaveCvData}
+                                loading={saveLoading}
+                            />
+                            <button
+                                className="bg-white text-black justify-center items-center px-[0.63rem] py-[0.31rem] border-[2px] border-black rounded-[0.25rem] text-[0.88rem] text-center leading-[1.7rem] font-semibold"
+                                onClick={handleSaveAndContinue}>
+                                Save and Continue
+                            </button>
                         </div>
-                    </div>
-
-                    <div className="h-full mt-6 flex-grow" ref={resumeRef}>
-                        {/*{renderTemplate()}*/}
-                        <Template2 cvData={cv} onEdit={handleOpenEditModal}/>
                     </div>
                 </div>
 
-                {/* AI Suggestion Section */}
-                <div
-                    className="hidden bg-[#E1E0F3] w-[22rem] border-[#000006] border-[1.04px] md:flex flex-col gap-8 h-full">
-                    {/* CV Score Section */}
-                    <div className="flex flex-col gap-8">
-            <span className="flex flex-col gap-1 px-7 py-5">
-              <p className="text-[0.88rem] leading-normal font-normal">Your CV Score</p>
-              <h5 className="text-[3.3rem] font-bold leading-normal">70%</h5>
-            </span>
-                        <div>
-                            <div className="flex">
+                <div className="h-full mt-6 flex-grow" ref={resumeRef}>
+                    {/*{renderTemplate()}*/}
+                    <Template2 cvData={cv} onEdit={handleOpenEditModal}/>
+                </div>
+            </div>
+
+            {/* AI Suggestion Section */}
+            <div className="relative hidden bg-[#E1E0F3] w-[22rem] border-[#000006] border-[1.04px] md:flex flex-col gap-8 h-full">
+                <div className="absolute h-full w-full inset-0 bg-white z-50 bg-opacity-20 backdrop-filter backdrop-blur-md" />
+
+                {/* CV Score Section */}
+                <div className="flex flex-col gap-8">
+                <span className="flex flex-col gap-1 px-7 py-5">
+                    <p className="text-[0.88rem] leading-normal font-normal">Your CV Score</p>
+                    <h5 className="text-[3.3rem] font-bold leading-normal">70%</h5>
+                </span>
+                    <div>
+                        <div className="flex">
                 <span
                     className="border-[#000006] border-[1.04px] flex items-center justify-center flex-col gap-[0.6rem] text-center w-1/3 p-3">
                   <p className="text-[0.8rem] font-semibold leading-normal">ATS Score</p>
                   <h5 className="text-[1.4rem] font-semibold leading-normal">70%</h5>
                 </span>
-                                <span
-                                    className="border-[#000006] border-[1.04px] flex items-center justify-center flex-col gap-[0.6rem] text-center w-1/3 p-3">
+                            <span
+                                className="border-[#000006] border-[1.04px] flex items-center justify-center flex-col gap-[0.6rem] text-center w-1/3 p-3">
                   <p className="text-[0.8rem] font-semibold leading-normal">Content Quality</p>
                   <h5 className="text-[1.4rem] font-semibold leading-normal">70%</h5>
                 </span>
-                                <span
-                                    className="border-[#000006] border-[1.04px] flex items-center justify-center flex-col gap-[0.6rem] text-center w-1/3 p-3">
+                            <span
+                                className="border-[#000006] border-[1.04px] flex items-center justify-center flex-col gap-[0.6rem] text-center w-1/3 p-3">
                   <p className="text-[0.8rem] font-semibold leading-normal">Formatting</p>
                   <h5 className="text-[1.4rem] font-semibold leading-normal">70%</h5>
                 </span>
-                            </div>
-                            <div
-                                className="flex gap-[0.7rem] items-center bg-[#B3B2FB] w-full border-black border-[1.04px] pl-[1.25rem] pr-[1.11rem] py-[0.7rem]">
-                                <img src={star_icon} alt="star icon"/>
-                                <p className="text-xs font-semibold leading-normal">Pro Suggestions</p>
-                            </div>
                         </div>
-                    </div>
-
-                    {/* AI Suggestions */}
-                    <div className="flex flex-col gap-10 px-3 flex-grow">
-                        <h5 className="text-lg font-semibold leading-normal text-center">AI Suggestions</h5>
-                        <div>
-                            <div className="flex flex-col gap-[1rem]">
-                <span className="flex items-center justify-between p-3">
-                  <h5>Content</h5>
-                  <img src={dropdown} alt="dropdown"/>
-                </span>
-                                <span
-                                    className="px-[0.63rem] py-[0.44rem] flex flex-start bg-[rgba(251,55,72,0.10)] line-through text-[0.88rem] font-normal leading-normal">
-                  Handled various tasks in the marketing department.
-                </span>
-                                <span
-                                    className="px-[0.63rem] py-[0.44rem] flex flex-start bg-[rgba(179,178,251,0.10)] font-normal leading-normal">
-                  Executed data-driven marketing campaigns that increased lead generation by 25% over three months.
-                </span>
-                            </div>
+                        <div
+                            className="flex gap-[0.7rem] items-center bg-[#B3B2FB] w-full border-black border-[1.04px] pl-[1.25rem] pr-[1.11rem] py-[0.7rem]">
+                            <img src={star_icon} alt="star icon"/>
+                            <p className="text-xs font-semibold leading-normal">Pro Suggestions</p>
                         </div>
                     </div>
                 </div>
 
-            </section>
+                {/* AI Suggestions */}
+                <div className="flex flex-col gap-10 px-3 flex-grow">
+                    <h5 className="text-lg font-semibold leading-normal text-center">AI Suggestions</h5>
+                    <div>
+                        <div className="flex flex-col gap-[1rem]">
+                <span className="flex items-center justify-between p-3">
+                  <h5>Content</h5>
+                  <img src={dropdown} alt="dropdown"/>
+                </span>
+                            <span
+                                className="px-[0.63rem] py-[0.44rem] flex flex-start bg-[rgba(251,55,72,0.10)] line-through text-[0.88rem] font-normal leading-normal">
+                  Handled various tasks in the marketing department.
+                </span>
+                            <span
+                                className="px-[0.63rem] py-[0.44rem] flex flex-start bg-[rgba(179,178,251,0.10)] font-normal leading-normal">
+                  Executed data-driven marketing campaigns that increased lead generation by 25% over three months.
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
     );
 };
 
